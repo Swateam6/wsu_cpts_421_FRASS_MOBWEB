@@ -1,0 +1,45 @@
+﻿.contentwrapper{
+    float: left;
+    width: 100%;
+}
+
+.contentcolumn{
+    margin-right: 300px; /*Set right margin to RightColumnWidth*/
+    padding-right: 20px;
+}
+
+.rightcolumn{
+    float: left;
+    width: 300px; /*Width of right column in pixels*/
+    margin-left: -300px; /*Set left margin to -(RightColumnWidth) */
+}
+
+.contentcolumn2{
+    margin-left: 400px; /*Set right margin to RightColumnWidth*/
+    padding-left: 20px;
+}
+
+.leftcolumn{
+    float: left;
+    width: 400px; /*Width of right column in pixels*/
+    margin-left: -100%; /*Set left margin to -(RightColumnWidth) */
+}
+
+body 
+{
+    font-family: Segoe UI; font-size: 12px; background-color: #143B00; padding: 0px; margin: 5px 0px 0px 0px; color: #444444;
+}
+
+.roundedDiv
+{
+    border-spacing: 0px;
+    border-style: solid;
+    border: 1px solid #69798C;
+    background-color: #ffffff;
+    padding: 4px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-collapse: separate !important;
+    color: #444;
+}
+

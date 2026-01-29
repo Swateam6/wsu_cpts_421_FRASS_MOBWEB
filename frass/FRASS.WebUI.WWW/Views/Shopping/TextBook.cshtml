@@ -1,0 +1,155 @@
+﻿@{
+	ViewBag.Title = "Natural Resource Econometrics Textbook";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/textbook.js")" type="text/javascript"></script>
+<style type="text/css">
+	.leftForm {
+		float: left;
+		width: 80px;
+		font-weight: bold;
+		margin-right: 5px;
+	}
+
+	.rightForm {
+		float: left;
+	}
+
+	.clearForm {
+		clear: both;
+		padding: 3px;
+	}
+</style>
+<div class="fullColumn">
+	<div class="info">
+		<div class="blockHeader">
+			Natural Resource Econometrics Textbook
+		</div>
+		<div class="infoText" style="padding-top: 10px;">
+			Please fill out this form to place your order:
+		</div>
+		<div class="infoText" style="padding-top: 10px;">
+			<div style="float: left;">
+				<div>
+					<div class="leftForm">
+						Name:
+					</div>
+					<div class="rightForm">
+						<input type="text" id="Name" placeholder="Name" data-bind="value: model.Name, valueUpdate: 'afterkeydown'" />
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						Street:
+					</div>
+					<div class="rightForm">
+						<input type="text" placeholder="Street" data-bind="value: model.Street, valueUpdate: 'afterkeydown'" />
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						City:
+					</div>
+					<div class="rightForm">
+						<input type="text" placeholder="City" data-bind="value: model.City, valueUpdate: 'afterkeydown'" />
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						State:
+					</div>
+					<div class="rightForm">
+						<input type="text" placeholder="State" data-bind="value: model.State, valueUpdate: 'afterkeydown'" />
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						Zip:
+					</div>
+					<div class="rightForm">
+						<input type="text" placeholder="Zip" data-bind="value: model.Zip, valueUpdate: 'afterkeydown'" />
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						Country:
+					</div>
+					<div class="rightForm">
+						<select data-bind="selectedOptions: model.Country">
+							<option value="1">United States</option>
+							<option value="2">Canada</option>
+						</select>
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						Email:
+					</div>
+					<div class="rightForm">
+						<input type="text" id="Email" placeholder="Email" data-bind="value: model.Email, valueUpdate: 'afterkeydown'" />
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div>
+					<div class="leftForm">
+						Number of Copies:
+					</div>
+					<div class="rightForm">
+						<select data-bind="selectedOptions: model.NumberOfCopies">
+							@for (var ict = 1; ict <= 10; ict++)
+							{
+								@Html.Raw("<option value='" + ict.ToString() + "'>" + ict.ToString() + "</option>");
+							}
+						</select>
+						X $<span data-bind="text: model.UnitPrice()"></span> = $<span data-bind="text: model.UnitPrice() * model.NumberOfCopies()"></span>
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div style="font-weight: bold;">
+					Click here if you are tax exempt in Washington State: <input type="checkbox" id="TextExempt" data-bind="checked: model.IsExempt" />
+				</div>
+				<div style="padding-top: 2px;">
+					<div style="font-weight: bold;">Shipping Options:</div>
+					<div style="margin-left: 25px;" data-bind="visible: model.USShipping()">
+						<div><input type="radio" name="usShipping" value="1" data-bind="checked: model.Shipping">Express Mail $20 (next day business)</input></div>
+						<div><input type="radio" name="usShipping" value="2" data-bind="checked: model.Shipping">Priority Mail $7.50 (3 business days)</input></div>
+						<div><input type="radio" name="usShipping" value="3" data-bind="checked: model.Shipping">Standard Post $6.50 (7-10 day delivery)</input></div>
+					</div>
+					<div style="margin-left: 25px;" data-bind="visible: !model.USShipping()">
+						<div><input type="radio" name="usShipping" value="4" data-bind="checked: model.Shipping">Express Mail $40 (3-5 business days)</input></div>
+						<div><input type="radio" name="usShipping" value="5" data-bind="checked: model.Shipping">Priority Mail $25 (6-10 business days)</input></div>
+						<div><input type="radio" name="usShipping" value="6" data-bind="checked: model.Shipping">First Class Mail $10 (10+ business days)</input></div>
+					</div>
+				</div>
+				<div data-bind="visible: model.SalesTax() > 0" style="padding-top: 2px;">
+					<div class="leftForm">Sales Tax:</div>
+					<div class="rightForm">
+						$<span data-bind="text: model.SalesTax().toFixed(2)"></span>
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div style="padding-top: 2px;">
+					<div class="leftForm">Total Cost:</div>
+					<div class="rightForm">
+						$<span data-bind="text: model.TotalCost().toFixed(2)"></span>
+					</div>
+					<div class="clearForm"></div>
+				</div>
+				<div class="infoText" style="padding-top: 10px;">
+					<input type="button" value="Download Order Form" data-bind="click: model.SubmitOrder, enable: model.IsValid()" />
+				</div>
+			</div>
+			<div style="float: left;">
+				<img src="/Content/images/Natural_Resource_Econometrics.png" />
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		
+	</div>
+</div>

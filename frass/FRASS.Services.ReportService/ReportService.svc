@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="FRASS.Services.ReportService.ReportService" CodeBehind="ReportService.svc.cs" %>

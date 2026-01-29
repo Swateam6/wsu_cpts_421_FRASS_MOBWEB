@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24E6B246-7BB7-44CA-9ABA-D4EA32EE1893}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FRASS.WebUI.WWW</RootNamespace>
+    <AssemblyName>FRASS.WebUI.WWW</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Pdf, Version=19.12.0.0, Culture=neutral, PublicKeyToken=f0262d67fe233d63, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\3rdPartyDlls\Aspose.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\DataManager.cs" />
+    <Compile Include="BLL\MailMan.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportUtilities.cs" />
+    <Compile Include="Controllers\ShoppingController.cs" />
+    <Compile Include="DAL\Database.cs" />
+    <Compile Include="DAL\enums.cs" />
+    <Compile Include="DAL\Repository.cs" />
+    <Compile Include="DAL\SqlHelper.cs" />
+    <Compile Include="DAL\SqlQuery.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\colorbox.css" />
+    <Content Include="Content\images\Cover_Trees.png" />
+    <Content Include="Content\images\Finland_Forest1.png" />
+    <Content Include="Content\images\Forest_Roads1.png" />
+    <Content Include="Content\images\FRASS.ico" />
+    <Content Include="Content\images\HarvestRpt.png" />
+    <Content Include="Content\images\logdeck_Sndpt.png" />
+    <Content Include="Content\images\Natural_Resource_Econometrics.png" />
+    <Content Include="Content\images\Pine_Seedling1.png" />
+    <Content Include="Content\images\RPA_price_shocks400.png" />
+    <Content Include="Content\images\Service1.png" />
+    <Content Include="Content\images\Service2.png" />
+    <Content Include="Content\images\Portfolios5.png" />
+    <Content Include="Content\images\Access.png" />
+    <Content Include="Content\images\Portfolios2.png" />
+    <Content Include="Content\images\Portfolios.png" />
+    <Content Include="Content\images\FRASS_Overview\Slide01.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide02.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide03.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide04.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide05.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide06.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide07.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide08.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide09.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide10.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide11.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide12.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide13.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide14.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide15.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide16.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide17.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide18.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide19.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide20.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide21.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide22.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide23.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide24.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide25.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide26.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide27.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide28.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide29.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide30.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide31.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide32.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide33.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide34.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide35.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide36.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide37.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide38.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide39.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide40.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide41.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide42.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide43.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide44.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide45.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide46.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide47.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide48.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide49.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide50.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide51.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide52.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide53.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide54.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide55.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide56.PNG" />
+    <Content Include="Content\images\FRASS_Overview\Slide57.PNG" />
+    <Content Include="Content\images\Data.png" />
+    <Content Include="Content\images\home.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\PackForest_Logo.png" />
+    <Content Include="Content\images\Portfolios4.png" />
+    <Content Include="Content\images\Service3.png" />
+    <Content Include="Content\images\SFCwtr.png" />
+    <Content Include="Content\images\Stream_1.png" />
+    <Content Include="Content\images\Users.png" />
+    <Content Include="Content\images\Portfolios3.png" />
+    <Content Include="Content\images\WRC03.png" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\sunny\images\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
+    <Content Include="Content\sunny\images\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_gloss-wave_45_817865_500x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_gloss-wave_60_fece2f_500x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_gloss-wave_70_ffdd57_500x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_gloss-wave_90_fff9e5_500x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_highlight-soft_100_feeebd_1x100.png" />
+    <Content Include="Content\sunny\images\ui-bg_inset-soft_30_ffffff_1x100.png" />
+    <Content Include="Content\sunny\images\ui-icons_3d3d3d_256x240.png" />
+    <Content Include="Content\sunny\images\ui-icons_bd7b00_256x240.png" />
+    <Content Include="Content\sunny\images\ui-icons_d19405_256x240.png" />
+    <Content Include="Content\sunny\images\ui-icons_eb990f_256x240.png" />
+    <Content Include="Content\sunny\images\ui-icons_ed9f26_256x240.png" />
+    <Content Include="Content\sunny\images\ui-icons_fadc7a_256x240.png" />
+    <Content Include="Content\sunny\images\ui-icons_ffe180_256x240.png" />
+    <Content Include="Content\sunny\jquery-ui-1.8.21.custom.css" />
+    <Content Include="Global.asax" />
+    <Content Include="google3f0aa58d4ea61338.html" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.21.custom.min.js" />
+    <Content Include="Scripts\jquery.colorbox-min.js" />
+    <Content Include="Scripts\textbook.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Navigation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Access.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Users.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Portfolios.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Data.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Service.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\documents\FRASS_Flyer.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Aspose.Pdf.lic" />
+    <None Include="Properties\PublishProfiles\WWW.pubxml" />
+    <Content Include="Views\Home\Approach.cshtml" />
+    <Content Include="Views\Home\Time.cshtml" />
+    <Content Include="Views\Shopping\TextBook.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63137</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63106/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
