@@ -1,6 +1,6 @@
 ---
-name: User Story
-about: 322 user story template
+name: UserStory
+about: FRASS MOBWEB
 title: ''
 labels: ''
 assignees: ''
