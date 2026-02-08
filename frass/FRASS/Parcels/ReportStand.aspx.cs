@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -97,7 +97,7 @@ namespace FRASS.WebUI.Parcels
 				Label_MarketModel.Text = portfolio.PortfolioName;
 				Label_RPAPortfolio.Text = rpaPortfolio.PortfolioName;
 			}
-		}
+        }
 		protected void Page_Init(object sender, EventArgs e)
 		{
 			dbStumpageMarketModelDataManager = StumpageMarketModelDataManager.GetInstance();
@@ -629,15 +629,13 @@ namespace FRASS.WebUI.Parcels
 			if (overallMax == item.Total.RotationOptimum)
 			{
 				{
-					Label_Total.ForeColor = System.Drawing.Color.Red;
-					Label_Total.Font.Bold = true;
+					Label_Total.CssClass = "highlight-red";
 				}
 			}
 			else if (maxValue == item.Total.RotationOptimum)
 			{
-				Label_Total.ForeColor = System.Drawing.Color.Green;
-				Label_Total.Font.Bold = true;
-			}
+                Label_Total.CssClass = "highlight-green";
+            }
 
 			
 			Label_R1.Text = item.R1.RotationOptimum.ToString("C2");
@@ -674,5 +672,6 @@ namespace FRASS.WebUI.Parcels
 			var offset = Convert.ToInt32(DropDownList_YearOffset.SelectedValue);
 			LoadRotation2(offset);
 		}
-	}
+
+    }
 }
