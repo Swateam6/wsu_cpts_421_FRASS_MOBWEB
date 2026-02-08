@@ -3,6 +3,19 @@
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
+    	.highlight-green {
+    		background-color: #d9fdd3;
+    		color: black !important;
+    		padding: 2px 6px;
+    		display: inline-block;
+    	}
+
+		.highlight-red {
+  		background-color: #ffd6d6;
+  		color: black !important;
+  		padding: 2px 6px;
+  		display: inline-block;
+		}
         .report-scroll {
             overflow-x: auto;
             position: relative;
