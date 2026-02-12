@@ -18,7 +18,12 @@ namespace FRASS.BLL.Models
 		{
 			Specy = specy;
 			HarvestReportItems = new List<HarvestReportItem>();
-			var logMarketReportSpeciesID = specy.LogMarketReportSpeciesSpecies.First().LogMarketReportSpeciesID;
+			var logMarketReportSpecies = specy.LogMarketReportSpeciesSpecies.FirstOrDefault();
+				if (logMarketReportSpecies == null)
+				{
+					return;
+				}
+				var logMarketReportSpeciesID = logMarketReportSpecies.LogMarketReportSpeciesID;
 			var tm = from l in logMarketReportSpeciesMarket where l.LogMarketReportSpeciesID == logMarketReportSpeciesID select l.TimberMarket;
 			foreach (var t in tm)
 			{
