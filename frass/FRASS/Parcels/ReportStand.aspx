@@ -3,7 +3,7 @@
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-    	.highlight-green {
+		.highlight-green {
     		background-color: #d9fdd3;
     		color: black !important;
     		padding: 2px 6px;
@@ -418,19 +418,19 @@
 									<div style="padding-bottom: 10px;">
 										<asp:Repeater ID="Repeater_Values_Redux" OnItemDataBound="Repeater_Values_Redux_ItemDataBound" runat="server">
 											<ItemTemplate>
-												<div style="float: left; font-weight: bold; width: 120px; text-align: right;">
+												<div style="float: left; font-weight: bold; width: 120px; text-align: left;">
 													<asp:Label ID="Label_Total" runat="server" Font-Bold="true"></asp:Label>
 												</div>
-												<div style="float: left; font-weight: bold; width: 120px; text-align: right;">
+												<div style="float: left; font-weight: bold; width: 120px; text-align: left;">
 													<asp:Label ID="Label_R1" runat="server" Font-Bold="true"></asp:Label>
 												</div>
-												<div style="float: left; font-weight: bold; width: 120px; text-align: right;">
+												<div style="float: left; font-weight: bold; width: 120px; text-align: left;">
 													<asp:Label ID="Label_R2Year" runat="server" Font-Bold="true"></asp:Label>
 												</div>
-												<div style="float: left; font-weight: bold; width: 120px; text-align: right;">
+												<div style="float: left; font-weight: bold; width: 120px; text-align: left;">
 													<asp:Label ID="Label_R2" runat="server" Font-Bold="true"></asp:Label>
 												</div>
-												<div style="float: left; font-weight: bold; width: 120px; text-align: right;">
+												<div style="float: left; font-weight: bold; width: 120px; text-align: left;">
 													<asp:Label ID="Label_SEV" runat="server" Font-Bold="true"></asp:Label>
 												</div>
 												<div style="clear: both;"></div>  

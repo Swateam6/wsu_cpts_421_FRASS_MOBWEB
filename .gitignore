@@ -1,0 +1,106 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+*.dll
+*.exe
+*.pdb
+*.suo
+*.user
+*.cache
+*.ilk
+*.log
+*.sbr
+*.scc
+
+# Visual Studio files
+.vs/
+*.sln.docstates
+*.suo
+*.user
+*.sln.ide
+
+# NuGet packages
+packages/
+*.nupkg
+**/packages/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Log files
+*.log
+*.log.*
+
+# Test files
+*.testlog
+*.trx
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database files
+*.mdb
+*.accdb
+*.db
+*.sqlite
+*.sdf
+
+# Configuration files that may contain sensitive information
+*.config
+appsettings.json
+connectionstrings.config
+
+# Package manager files
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# C# specific
+*.csproj.user
+*.csproj.vspscc
+*.resharper.user
+
+# ASP.NET specific
+*.asax.cs
+*.master.cs
+*.aspx.cs
+*.asmx.cs
+*.ashx.cs
+*.ascx.cs
+
+# Web specific
+*.css.map
+*.js.map
+*.min.*
+*.bundle.*
+*.compiled.*
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Local settings
+local.settings.json
