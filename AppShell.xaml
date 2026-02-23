@@ -7,8 +7,31 @@
     Title="MOBWEB_TEST">
 
     <ShellContent
+        Title="Entry"
+        ContentTemplate="{DataTemplate local:Screens.EntryScreen}"
+        Route="EntryScreen" />
+    <ShellContent 
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        Route="HomeScreen"
+        ContentTemplate="{DataTemplate local:Screens.HomeScreen}" />
+    <ShellContent
+        Title="DataEntry"
+        Route="DataEntryScreen"
+        ContentTemplate="{DataTemplate local:Screens.DataEntryScreen}" />
+    <ShellContent
+        Title="Profile"
+        Route="ProfileScreen"
+        ContentTemplate="{DataTemplate local:Screens.ProfileScreen}" />
+    <ShellContent
+        Title="DataUpload"
+        Route="DataUploadScreen"
+        ContentTemplate="{DataTemplate local:Screens.DataUploadScreen}" />
+    <ShellContent
+        Title="MesicSubsystem"
+        Route="MesicSubsystemScreen"
+        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.MesicSubsystemScreen}" />
+    <ShellContent
+        Title="PlotEntry"
+        Route="PlotEntryScreen"
+        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.PlotEntryScreen}" />
 </Shell>

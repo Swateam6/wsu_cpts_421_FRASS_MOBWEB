@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.ProfileScreen"
+             Title="ProfileScreen">
+    <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+        <Label 
+            Text="Profile: TODO"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button
+            x:Name="BackToHome"
+            Text="Return to Home Screen"
+            SemanticProperties.Hint="Keeps You Logged In"
+            Clicked="OnBackToHomeClicked"
+            HorizontalOptions="Fill" />
+    </VerticalStackLayout>
+</ContentPage>

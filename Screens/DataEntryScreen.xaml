@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntryScreen"
+             Title="DataEntryScreen">
+    <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+        <Label 
+            Text="Data Entry Homepage"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button
+            x:Name="BackToHome"
+            Text="Return to Home Screen"
+            SemanticProperties.Hint="Keeps You Logged In"
+            Clicked="OnBackToHomeClicked"
+            HorizontalOptions="Fill" />
+        <Button
+            x:Name="MesicSubsystem"
+            Text="Mesic Subsystem"
+            SemanticProperties.Hint="Enter Data for Mesic Subsystem"
+            Clicked="OnMesicSubsystemClicked"
+            HorizontalOptions="Fill" />
+        <Button
+            x:Name="PlotEntry"
+            Text="Plot Data Entry"
+            SemanticProperties.Hint="Enter Data for Plot Data Entry"
+            Clicked="OnPlotEntryClicked"
+            HorizontalOptions="Fill" />
+    </VerticalStackLayout>
+</ContentPage>

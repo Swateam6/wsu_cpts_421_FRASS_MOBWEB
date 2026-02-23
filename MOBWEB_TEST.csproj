@@ -64,4 +64,37 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml.cs">
+	    <DependentUpon>MesicSubsystemScreen.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Screens\HomeScreen.xaml.cs">
+	    <DependentUpon>HomeScreen.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Screens\EntryScreen.xaml.cs">
+	    <DependentUpon>EntryScreen.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Screens\DataEntryScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\PlotEntryScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataUploadScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\HomeScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\ProfileScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
