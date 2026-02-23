@@ -11,7 +11,9 @@
         <Button
             x:Name="BackToHome"
             Text="Return to Home Screen"
-            SemanticProperties.Hint="Keeps You Logged In"
+            SemanticProperties.Hint="Keeps You Logged In"c:\users\grroc\source\repos\wsu_cpts_421_frass_mobweb\screens\dataentrysubsystems\plotentryscreen.xaml.cs
+c:\users\grroc\source\repos\wsu_cpts_421_frass_mobweb\screens\dataentrysubsystems\plotentryscreen.xaml
+
             Clicked="OnBackToHomeClicked"
             HorizontalOptions="Fill" />
     </VerticalStackLayout>
