@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeScreen"
+             Title="GyroscopeScreen">
+    <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+        <Label 
+            Text="Gyroscope Test"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label x:Name="CurrentAngleLabel"
+               Text="Not started"
+               HorizontalOptions="Center"
+               FontSize="Medium"/>
+        <Label x:Name="BaseAngleLabel"
+               Text="Base: ---"
+               HorizontalOptions="Center"/>
+        <Label x:Name="TopAngleLabel"
+               Text="Top: ---"
+               HorizontalOptions="Center"/>
+        <Label x:Name="DifferenceLabel"
+               Text=""
+               HorizontalOptions="Center"
+               FontAttributes="Bold"/>
+        <Label x:Name="HeightResultLabel"
+               Text="Height: -- ft"
+               HorizontalOptions="Center"
+               FontSize="Medium"
+               FontAttributes="Bold"/>
+        <Button
+            x:Name="TakeMeasurement"
+            Text="Measure Gyroscope Angle"
+            SemanticProperties.Hint="Keeps You Logged In"
+            Clicked="OnGyroMeasureClicked"
+            HorizontalOptions="Fill" />
+        <Button Text="Zero Gyroscope"
+                Clicked="OnZeroClicked"
+                BackgroundColor="Orange"
+                TextColor="White"
+                HorizontalOptions="Center"/>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Capture Base Angle"
+                    Clicked="OnCaptureBaseClicked"
+                    WidthRequest="150"/>
+            <Button Text="Capture Top Angle"
+                    Clicked="OnCaptureTopClicked"
+                    WidthRequest="150"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,0">
+            <Label Text="Distance (ft):" VerticalOptions="Center"/>
+            <Entry x:Name="DistanceEntry"
+                   Placeholder="e.g., 100"
+                   Keyboard="Numeric"
+                   WidthRequest="100"/>
+            <Button Text="Calculate Height"
+                    Clicked="OnCalculateHeightClicked"
+                    BackgroundColor="Blue"
+                    TextColor="White"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

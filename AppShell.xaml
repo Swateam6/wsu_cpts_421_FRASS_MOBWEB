@@ -34,4 +34,9 @@
         Title="PlotEntry"
         Route="PlotEntryScreen"
         ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.PlotEntryScreen}" />
+    <ShellContent
+        Title="GyroscopeSubsystem"
+        Route="GyroscopeScreen"
+        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.GyroscopeScreen}" />
+    
 </Shell>
