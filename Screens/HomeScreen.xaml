@@ -11,16 +11,16 @@
             HorizontalOptions="Center" />
 
         <Button
+             x:Name="LogOut"
+             Text="Return to Log In Screen" 
+             SemanticProperties.Hint="You will have to reenter your account information"
+             Clicked="OnLogoutClicked"
+             HorizontalOptions="Fill" />
+        <Button
             x:Name="SubmitData"
             Text="Submit Data To Server" 
             SemanticProperties.Hint="Uploads Data to Associated FRASS Account"
             Clicked="OnSubmitClicked"
-            HorizontalOptions="Fill" />
-        <Button
-            x:Name="LogOut"
-            Text="Return to Log In Screen" 
-            SemanticProperties.Hint="You will have to reenter your account information"
-            Clicked="OnLogoutClicked"
             HorizontalOptions="Fill" />
         <Button
             x:Name="DataEntry"
