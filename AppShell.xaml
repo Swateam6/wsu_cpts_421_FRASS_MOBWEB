@@ -23,6 +23,10 @@
         Route="ProfileScreen"
         ContentTemplate="{DataTemplate local:Screens.ProfileScreen}" />
     <ShellContent
+        Title="SpeechToTextEntry"
+        Route="SpeechToTextScreen"
+        ContentTemplate="{DataTemplate local:Screens.SpeechToTextScreen}" />
+    <ShellContent
         Title="DataUpload"
         Route="DataUploadScreen"
         ContentTemplate="{DataTemplate local:Screens.DataUploadScreen}" />

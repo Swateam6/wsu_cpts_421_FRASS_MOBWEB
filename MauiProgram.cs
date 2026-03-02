@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui.Sample.ViewModels.Essentials;
 
 namespace MOBWEB_TEST
 {
@@ -14,6 +15,7 @@ namespace MOBWEB_TEST
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            
 
 #if DEBUG
     		builder.Logging.AddDebug();
