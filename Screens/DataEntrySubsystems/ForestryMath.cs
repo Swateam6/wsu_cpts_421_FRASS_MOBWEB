@@ -13,19 +13,18 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems
             if (dbh <= 0) return 0;
             return Math.Round(BasalAreaConstant * Math.Pow(dbh, 2), 3);
         }
-        public static double CalculateTreeHeight(double distance, double topAngleDegrees, double baseAngleDegrees)
+        public static double CalculateTreeHeight(double topAngleDegrees, double baseAngleDegrees, double distance)
         {
-            if(distance <=0)
-            {
-                return -1.0;
-            }
-            double topRad = topAngleDegrees * (Math.PI / 180.0);
-            double baseRad = baseAngleDegrees * (Math.PI / 180.0);
+            double topRadians = topAngleDegrees * (Math.PI / 180.0);
+            double baseRadians = baseAngleDegrees * (Math.PI / 180.0);
 
-            // 2. Apply the Universal Tangent Formula
-            double height = distance * (Math.Tan(topRad) - Math.Tan(baseRad));
+            // Assuming 'distance' is slope distance to the stump.
+            // Automatically flatten it using the base angle.
+            double horizontalDistance = distance * Math.Abs(Math.Cos(baseRadians));
 
-            // 3. Return rounded to 1 decimal place (e.g., 85.4 feet)
+            // Run the height formula using the newly flattened distance
+            double height = horizontalDistance * (Math.Tan(topRadians) - Math.Tan(baseRadians));
+
             return Math.Round(height, 1);
         }
         public static double CalculateCrownRatio(double totalHeight, double baseOfLiveCrown)

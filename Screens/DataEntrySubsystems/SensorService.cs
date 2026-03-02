@@ -56,7 +56,6 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems
         {
             var data = e.Reading.Orientation;
 
-            // 3D Quaternion math to find the Horizontal Line of Sight
             double sinPitch = 2.0 * (data.W * data.Y - data.Z * data.X);
             currentPitch = Math.Asin(sinPitch) * (180.0 / Math.PI);
         }
@@ -65,7 +64,6 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems
         {
             double currentHeading = e.Reading.HeadingMagneticNorth;
 
-            // Optimized cardinal direction filter
             if (currentHeading >= 315 || currentHeading < 45)
             {
                 currentDirection = 'N';
