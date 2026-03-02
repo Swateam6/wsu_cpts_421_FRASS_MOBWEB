@@ -24,7 +24,7 @@
 		<ApplicationTitle>MOBWEB_TEST</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mobweb_test</ApplicationId>
+		<ApplicationId>com.companyname.mobwebtest</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -40,6 +40,9 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
+
+	<!-- Import local properties file for loading onto hardware -->
+	<Import Project="MOBWEB_TEST.local.props" Condition="Exists('MOBWEB_TEST.local.props')" />
 
 	<ItemGroup>
 		<!-- App Icon -->

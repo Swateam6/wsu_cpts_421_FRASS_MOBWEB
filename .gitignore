@@ -104,3 +104,6 @@ yarn.lock
 
 # Local settings
 local.settings.json
+
+# Local properties file for loading onto hardware
+MOBWEB_TEST.local.props
