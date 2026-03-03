@@ -49,7 +49,7 @@ public partial class GyroscopeScreen : ContentPage
 
         // limited to one decimal place for readability
         Vector3 relativeAngle = _totalAngle - _zeroOffset;
-        TakeMeasurement.TextColor = Colors.Green;
+        TakeMeasurement.TextColor = Colors.White;
         TakeMeasurement.Text = $"X: {relativeAngle.X:F1}°, Y: {relativeAngle.Y:F1}°, Z: {relativeAngle.Z:F1}°";
     }
 
@@ -81,7 +81,7 @@ public partial class GyroscopeScreen : ContentPage
     {
         if (Gyroscope.Default.IsMonitoring)
         {
-            _baseAngle = _totalAngle; // copy current value
+            _baseAngle = _totalAngle- _zeroOffset; // copy current value
             BaseAngleLabel.Text = $"Base: X: {_baseAngle.Value.X:F1}°, Y: {_baseAngle.Value.Y:F1}°, Z: {_baseAngle.Value.Z:F1}°";
             UpdateDifference();
         }
@@ -91,7 +91,7 @@ public partial class GyroscopeScreen : ContentPage
     {
         if (Gyroscope.Default.IsMonitoring)
         {
-            _topAngle = _totalAngle; // copy current value
+            _topAngle = _totalAngle-_zeroOffset; // copy current value
             TopAngleLabel.Text = $"Top: X: {_topAngle.Value.X:F1}°, Y: {_topAngle.Value.Y:F1}°, Z: {_topAngle.Value.Z:F1}°";
             UpdateDifference();
         }

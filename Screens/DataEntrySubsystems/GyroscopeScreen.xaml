@@ -35,8 +35,6 @@
             HorizontalOptions="Fill" />
         <Button Text="Zero Gyroscope"
                 Clicked="OnZeroClicked"
-                BackgroundColor="Orange"
-                TextColor="White"
                 HorizontalOptions="Center"/>
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Capture Base Angle"
