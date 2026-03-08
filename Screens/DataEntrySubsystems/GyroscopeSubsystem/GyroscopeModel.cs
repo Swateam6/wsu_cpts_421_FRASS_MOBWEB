@@ -18,6 +18,7 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
         // Captured angles, relative to zero offset, at the time of measurement
         public Vector3? BaseAngle { get; private set; }
         public Vector3? TopAngle { get; private set; }
+        public Vector3? LiveCrownBaseAngle { get; private set; }
 
         public void UpdateAngle(float deltaSeconds, Vector3 angularVelocityRadPerSec)
         {
@@ -34,12 +35,13 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             );
         }
 
+        //resets
         public void ZeroGyro()
         {
             ZeroOffset = TotalAngle;
-            ClearBaseTop();
+            ClearAll();
         }
-        public void ClearBaseTop()
+        public void ClearAll()
         {
             BaseAngle = null;
             TopAngle = null;
@@ -49,6 +51,8 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             TotalAngle = Vector3.Zero;
             ZeroOffset = Vector3.Zero;
         }
+
+        //capture individual data fields
         public void CaptureTop()
         {
             TopAngle = TotalAngle - ZeroOffset;
@@ -57,6 +61,12 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
         {
             BaseAngle = TotalAngle - ZeroOffset;
         }
+        public void CaptureLiveCrownBase()
+        {
+            LiveCrownBaseAngle = TotalAngle - ZeroOffset;
+        }
+
+        // calcs
         public Vector3 GetRelativeAngle()
         {
             return TotalAngle - ZeroOffset;
@@ -79,6 +89,19 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             double deltaDegrees = TopAngle.Value.X - BaseAngle.Value.X;
             double deltaRadians = deltaDegrees * Math.PI / 180.0;
             return (distanceFeet * Math.Tan(deltaRadians));
+        }
+        public (double,double) CalculateCrownRatio(double distanceFeet)
+        {
+            if (!BaseAngle.HasValue || !LiveCrownBaseAngle.HasValue|| !TopAngle.HasValue)
+                throw new InvalidOperationException("Base angle, top angle, and live crown base angle required");
+
+            double deltaDegrees = TopAngle.Value.X - LiveCrownBaseAngle.Value.X;
+            double deltaRadians = deltaDegrees * Math.PI / 180.0;
+            double liveCrownHeight = (distanceFeet * Math.Tan(deltaRadians));
+            double totalHeight = CalculateHeight(distanceFeet);
+
+            // return as percentage, and height in feet
+            return (((liveCrownHeight/totalHeight)* 100), liveCrownHeight); 
         }
     }
 }

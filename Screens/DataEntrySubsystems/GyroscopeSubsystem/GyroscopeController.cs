@@ -28,13 +28,14 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             {
                 // reset on init
                 _model.InitVectors();
-                _model.ClearBaseTop();
+                _model.ClearAll();
                 _isFirstReading = true;
 
                 // reset view
                 _view.UpdateCurrentAngle("Not started");
                 _view.UpdateBaseLabel(null);
                 _view.UpdateTopLabel(null);
+                _view.UpdateLiveCrownBase(null);
                 _view.UpdateDifference(null);
                 _view.UpdateHeightResult("Height: -- ft");
 
@@ -84,6 +85,7 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _model.ZeroGyro();
             _view.UpdateBaseLabel(null);
             _view.UpdateTopLabel(null);
+            _view.UpdateLiveCrownBase(null);
             _view.UpdateDifference(null);
             _view.UpdateHeightResult("Height: -- ft");
         }
@@ -96,6 +98,15 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _model.CaptureBase();
             _view.UpdateBaseLabel(_model.BaseAngle);
             _view.UpdateDifference(_model.GetDifference());
+        }
+        public void CaptureLiveCrownBase()
+        {
+            if (!Gyroscope.Default.IsMonitoring)
+            {
+                return;
+            }
+            _model.CaptureLiveCrownBase();
+            _view.UpdateLiveCrownBase(_model.LiveCrownBaseAngle);
         }
         public void CaptureTop()
         {
@@ -130,6 +141,32 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             catch (Exception ex)
             {
                 _view.UpdateHeightResult($"Error: {ex.Message}");
+            }
+        }
+
+        public void CalculateLiveCrownRatio(string distanceText)
+        {
+            if (!_model.BaseAngle.HasValue || !_model.LiveCrownBaseAngle.HasValue || !_model.TopAngle.HasValue)
+            {
+                _view.UpdateLiveCrownRatioResult("Please capture base, top, and live crown base angles first.");
+                return;
+            }
+            if (!double.TryParse(distanceText, out double distance) || distance <= 0)
+            {
+                _view.UpdateLiveCrownRatioResult("Enter a valid positive distance.");
+                return;
+            }
+            try
+            {
+                var liveCrownOutputs = _model.CalculateCrownRatio(distance);
+                double liveCrownRatio = liveCrownOutputs.Item1;
+                double liveCrownHeight = liveCrownOutputs.Item2;
+                _view.UpdateLiveCrownRatioResult($"Live Crown Ratio: {liveCrownRatio:F2} %");
+                _view.UpdateLiveCrownHeightResult($"Live Crown Height: {liveCrownHeight:F2} ft");
+            }
+            catch (Exception ex)
+            {
+                _view.UpdateLiveCrownRatioResult($"Error: {ex.Message}");
             }
         }
     }

@@ -2,31 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeScreen"
-             Title="GyroscopeScreen">
-    <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
-        <Label 
-            Text="Gyroscope Test"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Title="Gyroscope Subsystem">
+    <VerticalStackLayout Spacing="20" Padding="20,0" VerticalOptions="Center">
         <Label x:Name="CurrentAngleLabel"
-               Text="Not started"
-               HorizontalOptions="Center"
-               FontSize="Medium"/>
+            Text="Not started"
+            HorizontalOptions="Center"
+            FontSize="Medium"/>
         <Label x:Name="BaseAngleLabel"
-               Text="Base: ---"
-               HorizontalOptions="Center"/>
+            Text="Base: ---"
+            HorizontalOptions="Center"/>
+        <Label x:Name="LiveCrownBaseLabel"
+            Text="Live Crown Base: ---"
+            HorizontalOptions="Center"/>
         <Label x:Name="TopAngleLabel"
-               Text="Top: ---"
-               HorizontalOptions="Center"/>
+            Text="Top: ---"
+            HorizontalOptions="Center"/>
         <Label x:Name="DifferenceLabel"
-               Text=""
-               HorizontalOptions="Center"
-               FontAttributes="Bold"/>
+            Text=""
+            HorizontalOptions="Center"
+            FontAttributes="Bold"/>
         <Label x:Name="HeightResultLabel"
-               Text="Height: -- ft"
-               HorizontalOptions="Center"
-               FontSize="Medium"
-               FontAttributes="Bold"/>
+            Text="Height: -- ft"
+            HorizontalOptions="Center"
+            FontSize="Medium"
+            FontAttributes="Bold"/>
+        <Label x:Name="LiveCrownRatioLabel"
+            Text="Live Crown Ratio : --- %"
+            HorizontalOptions="Center"
+            FontSize="Medium"
+            FontAttributes="Bold"/>
+        <Label x:Name="BaseOfLiveCrownLabel"
+            Text="Base Of Live Crown: --- ft"
+            HorizontalOptions="Center"
+            FontSize="Medium"
+            FontAttributes="Bold"/>
         <Button
             x:Name="TakeMeasurement"
             Text="Measure Gyroscope Angle"
@@ -34,26 +43,26 @@
             Clicked="OnGyroMeasureClicked"
             HorizontalOptions="Fill" />
         <Button Text="Zero Gyroscope"
-                Clicked="OnZeroClicked"
-                HorizontalOptions="Center"/>
+            Clicked="OnZeroClicked"
+            HorizontalOptions="Center"/>
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Capture Base Angle"
-                    Clicked="OnCaptureBaseClicked"
-                    WidthRequest="150"/>
+                    Clicked="OnCaptureBaseClicked"/>
             <Button Text="Capture Top Angle"
-                    Clicked="OnCaptureTopClicked"
-                    WidthRequest="150"/>
+                    Clicked="OnCaptureTopClicked"/>
         </HorizontalStackLayout>
+        <Button Text="Capture Live Crown Base Angle"
+            Clicked="OnCaptureLiveCrownBaseClicked"/>
+        <Label Text="Distance (ft):" VerticalOptions="Center"/>
+        <Entry x:Name="DistanceEntry"
+        Placeholder="e.g., 100"
+        Keyboard="Numeric"
+        WidthRequest="100"/>
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,0">
-            <Label Text="Distance (ft):" VerticalOptions="Center"/>
-            <Entry x:Name="DistanceEntry"
-                   Placeholder="e.g., 100"
-                   Keyboard="Numeric"
-                   WidthRequest="100"/>
             <Button Text="Calculate Height"
-                    Clicked="OnCalculateHeightClicked"
-                    BackgroundColor="Blue"
-                    TextColor="White"/>
+                    Clicked="OnCalculateHeightClicked"/>
+            <Button Text="Calculate Live Crown Ratio"
+                    Clicked="OnCalculateLiveCrownRatioClicked"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

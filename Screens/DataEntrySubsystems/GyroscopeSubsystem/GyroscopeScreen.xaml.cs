@@ -22,6 +22,12 @@ public partial class GyroscopeScreen : ContentPage
             ? $"Base: X: {angle.Value.X:F1}°, Y: {angle.Value.Y:F1}°, Z: {angle.Value.Z:F1}°"
             : "Base: ---";
     }
+    public void UpdateLiveCrownBase(Vector3? angle)
+    {
+        LiveCrownBaseLabel.Text = angle.HasValue
+            ? $"Live Crown Base: X: {angle.Value.X:F1}°, Y: {angle.Value.Y:F1}°, Z: {angle.Value.Z:F1}°"
+            : "Live Crown Base: ---";
+    }
     public void UpdateTopLabel(Vector3? angle)
     {
         TopAngleLabel.Text = angle.HasValue
@@ -38,6 +44,15 @@ public partial class GyroscopeScreen : ContentPage
     {
         HeightResultLabel.Text = text;
     }
+    public void UpdateLiveCrownRatioResult(string text)
+    {
+        LiveCrownRatioLabel.Text = text;
+    }
+    public void UpdateLiveCrownHeightResult(string text)
+    {
+        BaseOfLiveCrownLabel.Text = text;
+    }   
+
 
 
     // Forward button presses to controller
@@ -55,7 +70,10 @@ public partial class GyroscopeScreen : ContentPage
     {
         _controller.CaptureBase();
     }
-
+    private void OnCaptureLiveCrownBaseClicked(object sender, EventArgs e)
+    {
+        _controller.CaptureLiveCrownBase();
+    }
     private void OnCaptureTopClicked(object sender, EventArgs e)
     {
         _controller.CaptureTop();
@@ -65,7 +83,10 @@ public partial class GyroscopeScreen : ContentPage
     {
         _controller.CalculateHeight(DistanceEntry.Text);
     }
-
+    private void OnCalculateLiveCrownRatioClicked(object sender, EventArgs e)
+    {
+        _controller.CalculateLiveCrownRatio(DistanceEntry.Text);
+    }
     // boilerplate to kill gyro when leaving page
     protected override void OnDisappearing()
     {
