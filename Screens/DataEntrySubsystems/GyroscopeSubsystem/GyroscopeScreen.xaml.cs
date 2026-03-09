@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Threading.Tasks;
 
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems;
 
@@ -86,6 +87,10 @@ public partial class GyroscopeScreen : ContentPage
     private void OnCalculateLiveCrownRatioClicked(object sender, EventArgs e)
     {
         _controller.CalculateLiveCrownRatio(DistanceEntry.Text);
+    }
+    private async void OnEnterDefectClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("///DefectScreen");
     }
     // boilerplate to kill gyro when leaving page
     protected override void OnDisappearing()

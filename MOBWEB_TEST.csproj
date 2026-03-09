@@ -86,6 +86,9 @@
 	  <MauiXaml Update="Screens\DataEntryScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\GyroscopeSubsystem\DefectScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

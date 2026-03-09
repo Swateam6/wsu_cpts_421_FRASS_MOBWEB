@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem.DefectScreen"
+             Title="DefectScreen">
+    <VerticalStackLayout>
+        <Label 
+            Text="Defect Reporting"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label x:Name="TreeNumber"
+            Text="Tree Num : PLACEHOLDER"
+            HorizontalOptions="Center"/>
+        <Label x:Name="CurrentAngleLabel"
+            Text="Not started"
+            HorizontalOptions="Center"
+            FontSize="Medium"/>
+        <Label x:Name="DefectBaseLabel"
+            Text="Base: ---"
+            HorizontalOptions="Center"/>
+        <Label x:Name="DefectTopLabel"
+            Text="Base: ---"
+            HorizontalOptions="Center"/>
+        <Button
+            x:Name="TakeMeasurement"
+            Text="Measure Gyroscope Angle"
+            SemanticProperties.Hint="Keeps You Logged In"
+            Clicked="OnGyroMeasureClicked"
+            HorizontalOptions="Fill" />
+        <Button Text="Zero Gyroscope"
+            Clicked="OnZeroClicked"
+            HorizontalOptions="Center"/>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Capture Base Angle"
+                Clicked="OnCaptureBaseClicked"/>
+            <Button Text="Capture Top Angle"
+                Clicked="OnCaptureTopClicked"/>
+        </HorizontalStackLayout>
+
+        <Button Text="Return To Height Entry"
+             Clicked="OnReturnClicked"
+             HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</ContentPage>
