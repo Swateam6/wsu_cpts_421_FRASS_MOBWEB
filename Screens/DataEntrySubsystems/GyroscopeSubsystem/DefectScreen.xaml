@@ -15,12 +15,23 @@
             Text="Not started"
             HorizontalOptions="Center"
             FontSize="Medium"/>
-        <Label x:Name="DefectBaseLabel"
-            Text="Base: ---"
-            HorizontalOptions="Center"/>
-        <Label x:Name="DefectTopLabel"
-            Text="Base: ---"
-            HorizontalOptions="Center"/>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Label x:Name="DefectBaseLabel"
+                Text="Defect Base: ---"
+                HorizontalOptions="Center"/>
+            <Label x:Name="DefectTopLabel"
+                Text="Defect Top: ---"
+                HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Entry x:Name="DefectDescriptionEntry"
+                Placeholder="Enter defect description here"
+                HorizontalOptions="Center"
+                Margin="10"/>
+            <Button Text="Save Defect"
+                Clicked="OnSaveDefectClicked"
+                HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
         <Button
             x:Name="TakeMeasurement"
             Text="Measure Gyroscope Angle"

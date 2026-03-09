@@ -96,5 +96,15 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _model.CaptureTop();
             _view.UpdateTopLabel(_model.TopAngle);
         }
+
+    public void SaveDefect()
+        {
+            if (!Gyroscope.Default.IsMonitoring)
+            {
+                return;
+            }
+            //PLACEHOLDER, will be added after tree data is working
+            _view.UpdateDescription();
+        }
     }
 }
