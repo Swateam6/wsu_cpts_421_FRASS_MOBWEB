@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
@@ -72,6 +72,9 @@
 	  <Compile Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml.cs">
 	    <DependentUpon>MesicSubsystemScreen.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Screens\DataEntrySubsystems\PlotEntry.xaml.cs">
+	    <DependentUpon>PlotEntry.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Screens\HomeScreen.xaml.cs">
 	    <DependentUpon>HomeScreen.xaml</DependentUpon>
 	  </Compile>
@@ -87,7 +90,13 @@
 	  <MauiXaml Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Screens\DataEntrySubsystems\PlotEntryScreen.xaml">
+	  <MauiXaml Update="Screens\DataEntrySubsystems\PlotEntry.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\StandEntryData.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\TreeEntryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataUploadScreen.xaml">

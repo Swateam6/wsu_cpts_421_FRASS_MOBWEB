@@ -27,6 +27,6 @@ public partial class PlotEntry : ContentPage
         DataService.CurrentTree = new Tree();
 
         
-        await Shell.Current.GoToAsync("TreeBaseScreen");
+        await Shell.Current.GoToAsync("TreeEntryPage");
     }
 }

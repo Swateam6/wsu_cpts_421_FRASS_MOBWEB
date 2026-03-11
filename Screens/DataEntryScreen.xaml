@@ -2,29 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MOBWEB_TEST.Screens.DataEntryScreen"
-             Title="DataEntryScreen">
+             Title="Data Entry">
+
     <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
-        <Label 
-            Text="Data Entry Homepage"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button
-            x:Name="BackToHome"
-            Text="Return to Home Screen"
-            SemanticProperties.Hint="Keeps You Logged In"
-            Clicked="OnBackToHomeClicked"
-            HorizontalOptions="Fill" />
-        <Button
-            x:Name="MesicSubsystem"
-            Text="Mesic Subsystem"
-            SemanticProperties.Hint="Enter Data for Mesic Subsystem"
-            Clicked="OnMesicSubsystemClicked"
-            HorizontalOptions="Fill" />
-        <Button
-            x:Name="PlotEntry"
-            Text="Plot Data Entry"
-            SemanticProperties.Hint="Enter Data for Plot Data Entry"
-            Clicked="OnPlotEntryClicked"
-            HorizontalOptions="Fill" />
+
+        <Label Text="Data Entry Homepage"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" 
+               FontSize="20"
+               FontAttributes="Bold"/>
+
+        <Button x:Name="BackToHome"
+                Text="Return to Home Screen"
+                SemanticProperties.Hint="Keeps You Logged In"
+                Clicked="OnBackToHomeClicked"
+                HorizontalOptions="Fill" />
+
+        <Button x:Name="MesicSubsystem"
+                Text="Mesic Subsystem"
+                SemanticProperties.Hint="Enter Data for Mesic Subsystem"
+                Clicked="OnMesicSubsystemClicked"
+                HorizontalOptions="Fill" />
+
+        <Button x:Name="StandEntry"
+                Text="Stand Data Entry"
+                SemanticProperties.Hint="Enter Top-Level Stand Metadata"
+                Clicked="OnStandEntryClicked"
+                HorizontalOptions="Fill" 
+                BackgroundColor="{StaticResource Secondary}"
+                TextColor="{StaticResource PrimaryDarkText}"/>
+
+        <Button x:Name="PlotEntry"
+                Text="Plot Data Entry"
+                SemanticProperties.Hint="Enter Data for Plot Data Entry"
+                Clicked="OnPlotEntryClicked"
+                HorizontalOptions="Fill" />
+
+        <Button x:Name="TreeEntry"
+                Text="Tree Data Entry"
+                SemanticProperties.Hint="Enter Individual Tree Measurements"
+                Clicked="OnTreeEntryClicked"
+                HorizontalOptions="Fill"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="{StaticResource White}" />
+
     </VerticalStackLayout>
 </ContentPage>

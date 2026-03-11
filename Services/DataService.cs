@@ -18,6 +18,8 @@ namespace MOBWEB_TEST.Services
 
         public static Tree CurrentTree { get; set; } = new Tree();
 
+        public static Defects CurrentDefect { get; set; } = new Defects();
+
 
         public static void SaveTreeToPlot()
         {
@@ -33,6 +35,12 @@ namespace MOBWEB_TEST.Services
             CurrentStand.PlotList.Add(CurrentPlot);
 
             CurrentPlot = new Plot();
+        }
+        public static void SaveDefectToTree()
+        {
+            CurrentTree.DefectList.Add(CurrentDefect);
+
+            CurrentDefect = new Defects();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MOBWEB_TEST.Models;
 
 public class Tree
 {
-    public string Species { get; set; }
+    public string? Species { get; set; }
     public double Dbh { get; set; }
     public double Height { get; set; }
     public double CR { get; set; }           // Crown Ratio
