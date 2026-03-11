@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.StandEntryData"
+             Title="Stand Initialization"
+             BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource MidnightBlue}}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+
+            <Label Text="FRASS - New Stand" 
+                   FontSize="24" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{StaticResource Primary}"
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,10"/>
+
+            <Label Text="Stand ID:" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+                   FontAttributes="Bold" />
+            <Entry x:Name="StandIdEntry" 
+                   Placeholder="e.g. Block A" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <Label Text="Cruiser Name:" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+                   FontAttributes="Bold" />
+            <Entry x:Name="CruiserEntry" 
+                   Placeholder="Enter your name" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <Label Text="Target Market:" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+                   FontAttributes="Bold" />
+            <Entry x:Name="MarketEntry" 
+                   Placeholder="e.g., Pacific Northwest" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <Label Text="Total Acres:" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+                   FontAttributes="Bold" />
+            <Entry x:Name="AcresEntry" 
+                   Placeholder="0.0" 
+                   Keyboard="Numeric" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <Button Text="Start Plotting" 
+                    Clicked="OnStartPlottingClicked" 
+                    Margin="0,20,0,0"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontFamily="OpenSansRegular"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="8"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
