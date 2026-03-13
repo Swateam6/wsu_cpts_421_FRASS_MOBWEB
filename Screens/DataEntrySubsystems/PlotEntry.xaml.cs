@@ -20,10 +20,6 @@ public partial class PlotEntry : ContentPage
         if (double.TryParse(AspectEntry.Text, out double aspect))
             DataService.CurrentPlot.Aspect = aspect;
 
-        // Optional:hook up the phone's GPS later, you'd save the coords here
-        // DataService.CurrentPlot.GpsLatitude = deviceLat;
-        // DataService.CurrentPlot.GpsLongitude = deviceLong;
-
         DataService.CurrentTree = new Tree();
 
         

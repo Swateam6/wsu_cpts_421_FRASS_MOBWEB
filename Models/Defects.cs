@@ -8,7 +8,7 @@ namespace MOBWEB_TEST.Models
 {
     public  class Defects
     {
-        public string DefectType { get; set; }
+        public string? DefectType { get; set; }
         public double HeightOnBole { get; set; }
     }
 }
