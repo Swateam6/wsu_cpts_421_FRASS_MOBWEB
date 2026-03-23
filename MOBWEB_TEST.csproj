@@ -101,4 +101,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="sqllite\" />
+	</ItemGroup>
+
 </Project>
