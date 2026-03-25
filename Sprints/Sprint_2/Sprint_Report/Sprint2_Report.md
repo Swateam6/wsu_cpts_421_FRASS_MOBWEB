@@ -2,7 +2,7 @@
 
 ## YouTube link of Sprint 2 Video
 
-link goes here
+<https://youtu.be/X1jUYrKJf18>
 
 ## What's New (User Facing)
 
