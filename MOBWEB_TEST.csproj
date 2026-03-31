@@ -41,8 +41,13 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<!-- Import local properties file for loading onto hardware -->
-	<Import Project="MOBWEB_TEST.local.props" Condition="Exists('MOBWEB_TEST.local.props')" />
+<Import Project="MOBWEB_TEST.local.props" Condition="Exists('MOBWEB_TEST.local.props')" />
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -85,6 +90,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Screens\DataEntryScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\GyroscopeSubsystem\DefectScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml">

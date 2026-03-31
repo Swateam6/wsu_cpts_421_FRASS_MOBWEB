@@ -46,5 +46,11 @@
                 BackgroundColor="{StaticResource Primary}"
                 TextColor="{StaticResource White}" />
 
+        <Button x:Name="Gyroscope"
+                Text="Gyroscope Data Entry"
+                SemanticProperties.Hint="Enter Data for Gyroscope Subsystem"
+                Clicked="OnGyroscopeClicked"
+                HorizontalOptions="Fill" />
+
     </VerticalStackLayout>
 </ContentPage>

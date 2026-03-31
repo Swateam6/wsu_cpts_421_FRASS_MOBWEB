@@ -32,4 +32,9 @@ public partial class DataEntryScreen : ContentPage
     {
         await Shell.Current.GoToAsync("TreeEntryScreen");
     }
+
+    private async void OnGyroscopeClicked(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("///GyroscopeScreen");
+    }
 }
