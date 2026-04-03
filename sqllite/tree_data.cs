@@ -6,9 +6,11 @@ namespace MOBWEB_TEST.sqllite
     public class tree_data
     {
         [PrimaryKey]
-        [AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
+
+        [Column("date_last_entry")]
+        public DateTime Date { get; set; }
 
         [Column("tree_height(ft)")]
         public int Height { get; set; }

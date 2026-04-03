@@ -6,20 +6,17 @@ namespace MOBWEB_TEST.sqllite
     class plot_data
     {
         [PrimaryKey]
-        [AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("stand_number")]
-        public string StandNumber { get; set; } = string.Empty;
-
-        [Column("plot_number")]
-        public string PlotNumber { get; set; } = string.Empty;
-
-        [Column("date")]
+        [Column("date_last_entry")]
         public DateTime Date { get; set; }
 
-        //TODO: implement lat/long
+        [Column("plot_latitude")]
+        public float Latitude { get; set; }
+
+        [Column("plot_longitude")]
+        public float Longitude { get; set; }
 
         [Column("plot_aspect(degrees)")]
         public int Aspect { get; set; }
@@ -32,5 +29,14 @@ namespace MOBWEB_TEST.sqllite
 
         [Column("plot_image_filepath")]
         public string ImagePath { get; set; } = string.Empty;
+
+        [Column("most_mesic_tree_species")]
+        public string MostMesicTreeSpecies { get; set; } = string.Empty;
+
+        [Column("most_mesic_bush_species")]
+        public string MostMesicBushSpecies { get; set; } = string.Empty;
+
+        [Column("tree_list")]
+        public List<int> tree_ids_in_plot { get; set; } = new List<int>();
     }
 }
