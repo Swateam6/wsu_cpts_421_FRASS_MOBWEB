@@ -132,11 +132,6 @@ namespace MOBWEB_TEST.sqllite
             return await _connection.Table<user_data>().ToListAsync();
         }
 
-        public async Task<user_data> GetUserDataByIdAsync(int id)
-        {
-            return await _connection.Table<user_data>().Where(u => u.Id == id).FirstOrDefaultAsync();
-        }
-
         public async Task AddUserDataAsync(user_data data)
         {
             await _connection.InsertAsync(data);
