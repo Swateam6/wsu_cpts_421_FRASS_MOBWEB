@@ -24,11 +24,11 @@ public partial class DatabaseTestScreen : ContentPage
         {
             OutputLabel.Text = "Populating database...";
             await PopulateSampleData();
-            OutputLabel.Text = "✓ Database populated successfully!";
+            OutputLabel.Text = "Database populated successfully!";
         }
         catch (Exception ex)
         {
-            OutputLabel.Text = $"✗ Error: {ex.Message}";
+            OutputLabel.Text = $"Error: {ex.Message}";
         }
     }
 
@@ -41,7 +41,7 @@ public partial class DatabaseTestScreen : ContentPage
         }
         catch (Exception ex)
         {
-            OutputLabel.Text = $"✗ Error: {ex.Message}";
+            OutputLabel.Text = $"Error: {ex.Message}";
         }
     }
 
@@ -53,11 +53,11 @@ public partial class DatabaseTestScreen : ContentPage
             if (!confirm) return;
 
             await ClearAllTables();
-            OutputLabel.Text = "✓ All tables cleared successfully!";
+            OutputLabel.Text = "All tables cleared successfully!";
         }
         catch (Exception ex)
         {
-            OutputLabel.Text = $"✗ Error: {ex.Message}";
+            OutputLabel.Text = $"Error: {ex.Message}";
         }
     }
 
@@ -70,7 +70,7 @@ public partial class DatabaseTestScreen : ContentPage
 
     private async Task PopulateSampleData()
     {
-        // Trees (leaf level — no foreign keys)
+        //trees
         var trees = new List<tree_data>
         {
             new tree_data
@@ -133,7 +133,7 @@ public partial class DatabaseTestScreen : ContentPage
         foreach (var t in trees)
             await _db.AddTreeDataAsync(t);
 
-        // Plots (reference trees)
+        // Plots(contain treres)
         var plots = new List<plot_data>
         {
             new plot_data
@@ -168,7 +168,7 @@ public partial class DatabaseTestScreen : ContentPage
         foreach (var p in plots)
             await _db.AddPlotDataAsync(p);
 
-        // Stands (reference plots)
+        // stand with the plots
         var stands = new List<stand_data>
         {
             new stand_data
@@ -190,7 +190,7 @@ public partial class DatabaseTestScreen : ContentPage
         foreach (var s in stands)
             await _db.AddStandDataAsync(s);
 
-        // Parcels (reference stands)
+        // parcel with the stand
         var parcels = new List<parcel_data>
         {
             new parcel_data
@@ -204,7 +204,7 @@ public partial class DatabaseTestScreen : ContentPage
         foreach (var p in parcels)
             await _db.AddParcelDataAsync(p);
 
-        // Users (reference parcels)
+        // user with the parcel
         var users = new List<user_data>
         {
             new user_data
@@ -217,7 +217,6 @@ public partial class DatabaseTestScreen : ContentPage
             await _db.AddUserDataAsync(u);
     }
 
-    // ── Print ─────────────────────────────────────────────────────────────────
 
     private async Task PrintDatabaseContents()
     {
@@ -266,11 +265,10 @@ public partial class DatabaseTestScreen : ContentPage
         OutputLabel.Text = output;
     }
 
-    // ── Clear ─────────────────────────────────────────────────────────────────
 
     private async Task ClearAllTables()
     {
-        // Delete in reverse hierarchy order to avoid dangling references
+        // delete from top down
         var allUsers = await _db.GetAllUserDataAsync();
         foreach (var u in allUsers) await _db.DeleteUserDataAsync(u);
 
