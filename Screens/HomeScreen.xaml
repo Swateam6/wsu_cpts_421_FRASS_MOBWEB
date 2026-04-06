@@ -34,5 +34,11 @@
             SemanticProperties.Hint ="View Profile Data"
             Clicked="OnProfileClicked"
             HorizontalOptions="Fill" />
+        <Button
+            x:Name="DatabaseTest"
+            Text="Database Test"
+            SemanticProperties.Hint="Test database functionality"
+            Clicked="OnDatabaseTestClicked"
+            HorizontalOptions="Fill" />
     </VerticalStackLayout>
 </ContentPage>

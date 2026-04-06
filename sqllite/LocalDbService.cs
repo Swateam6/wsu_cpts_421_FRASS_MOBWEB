@@ -9,17 +9,37 @@ namespace MOBWEB_TEST.sqllite
 {
     class LocalDbService
     {
-        private const string DB_NAME = "FRASS_MOBWEB.db3";
+        private const string DB_NAME = "mobweb.sql";
         private readonly SQLiteAsyncConnection _connection;
+
 
         public LocalDbService()
         {
-            _connection = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
+            string dbPath = GetDatabasePath();
+            _connection = new SQLiteAsyncConnection(dbPath);
             _connection.CreateTableAsync<tree_data>().Wait();
             _connection.CreateTableAsync<plot_data>().Wait();
             _connection.CreateTableAsync<stand_data>().Wait();
             _connection.CreateTableAsync<parcel_data>().Wait();
             _connection.CreateTableAsync<user_data>().Wait();
+        }
+        private static string GetDatabasePath()
+        {
+            //use local db if created
+            string projectDbPath = Path.Combine(AppContext.BaseDirectory, DB_NAME);
+
+            
+            string directory = Path.GetDirectoryName(projectDbPath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            return projectDbPath;
+        }
+        public static string GetCurrentDatabasePath()
+        {
+            return Path.Combine(AppContext.BaseDirectory, DB_NAME);
         }
 
         /// TREE FUNCTIONS -----------------------------------

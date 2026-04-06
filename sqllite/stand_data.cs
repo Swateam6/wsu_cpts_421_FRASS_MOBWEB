@@ -40,6 +40,14 @@ namespace MOBWEB_TEST.sqllite
         public float Elevation { get; set; }
 
         [Column("plot_list")]
-        public List<int> plot_ids_in_stand { get; set; } = new List<int>();
+        public string PlotListRaw { get; set; } = string.Empty;
+
+        [Ignore]
+        public List<int> plot_ids_in_parcel
+        {
+            get => PlotListRaw.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                               .Select(int.Parse).ToList();
+            set => PlotListRaw = string.Join(",", value);
+        }
     }
 }

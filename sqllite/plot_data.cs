@@ -3,7 +3,7 @@
 namespace MOBWEB_TEST.sqllite
 {
     [Table("plot_data")]
-    class plot_data
+    public class plot_data
     {
         [PrimaryKey]
         [Column("id")]
@@ -37,6 +37,14 @@ namespace MOBWEB_TEST.sqllite
         public string MostMesicBushSpecies { get; set; } = string.Empty;
 
         [Column("tree_list")]
-        public List<int> tree_ids_in_plot { get; set; } = new List<int>();
+        public string TreeListRaw { get; set; } = string.Empty;
+
+        [Ignore]
+        public List<int> tree_ids_in_parcel
+        {
+            get => TreeListRaw.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                               .Select(int.Parse).ToList();
+            set => TreeListRaw = string.Join(",", value);
+        }
     }
 }

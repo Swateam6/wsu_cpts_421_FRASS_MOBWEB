@@ -16,6 +16,14 @@ namespace MOBWEB_TEST.sqllite
         public float Acres { get; set; }
 
         [Column("stand_list")]
-        public List<int> stand_ids_in_parcel { get; set; } = new List<int>();
+        public string StandListRaw { get; set; } = string.Empty;
+
+        [Ignore]
+        public List<int> stand_ids_in_parcel
+        {
+            get => StandListRaw.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                               .Select(int.Parse).ToList();
+            set => StandListRaw = string.Join(",", value);
+        }
     }
 }
