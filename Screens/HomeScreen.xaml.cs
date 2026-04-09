@@ -27,4 +27,9 @@ public partial class HomeScreen : ContentPage
 	{
 		await Shell.Current.GoToAsync("///DataEntryScreen");
     }
+
+	private async void OnDatabaseTestClicked(object? sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync("///DatabaseTestScreen");
+	}
 }
