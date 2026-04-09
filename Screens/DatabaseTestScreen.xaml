@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DatabaseTestScreen"
+             Title="Database Test">
+    <VerticalStackLayout Spacing="15" Padding="20">
+
+        <Label Text="Database Test Suite" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center" />
+
+        <Button Text="Populate Database" 
+                Clicked="OnPopulateDatabaseClicked"
+                HorizontalOptions="Fill" />
+
+        <Button Text="Print Database Contents" 
+                Clicked="OnPrintContentsClicked"
+                HorizontalOptions="Fill" />
+
+        <Button Text="Clear Database" 
+                Clicked="OnClearDatabaseClicked"
+                HorizontalOptions="Fill" />
+
+        <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True">
+            <ScrollView>
+                <Label x:Name="OutputLabel" 
+                       Text="Output will appear here..."
+                       FontSize="12"
+                       FontFamily="Courier"
+                       LineBreakMode="WordWrap" />
+            </ScrollView>
+        </Frame>
+
+        <Button Text="Back to Home" 
+                Clicked="OnBackClicked"
+                HorizontalOptions="Fill" />
+
+    </VerticalStackLayout>
+</ContentPage>
