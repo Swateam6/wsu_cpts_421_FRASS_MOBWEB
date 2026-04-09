@@ -33,7 +33,7 @@
     <ShellContent
         Title="PlotEntry"
         Route="PlotEntryScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.PlotEntryScreen}" />
+        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.PlotEntry}" />
     <ShellContent
         Title="DatabaseTest"
         Route="DatabaseTestScreen"
