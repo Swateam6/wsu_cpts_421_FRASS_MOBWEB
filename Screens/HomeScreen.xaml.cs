@@ -18,7 +18,7 @@ public partial class HomeScreen : ContentPage
 		await Shell.Current.GoToAsync("///DataUploadScreen");
     }
 
-	private async void OnProfileClicked(object? sender, EventArgs e)
+	private async void OnProfileClicked(object? sender, EventArgs e) 
 	{
 		await Shell.Current.GoToAsync("///ProfileScreen");
     }
