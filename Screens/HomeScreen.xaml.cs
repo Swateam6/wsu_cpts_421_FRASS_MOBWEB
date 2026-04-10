@@ -32,4 +32,8 @@ public partial class HomeScreen : ContentPage
 	{
 		await Shell.Current.GoToAsync("///DatabaseTestScreen");
 	}
+	private async void OnGeolocationDemoClicked(object? sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync("///LocationDemo");
+    }
 }

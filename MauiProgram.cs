@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MOBWEB_TEST.Location;
 using MOBWEB_TEST.Screens;
 using MOBWEB_TEST.sqllite;
 
@@ -18,6 +19,7 @@ namespace MOBWEB_TEST
                 });
             builder.Services.AddSingleton<LocalDbService>();
             builder.Services.AddTransient<EntryScreen>();
+            builder.Services.AddSingleton<LocationService>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

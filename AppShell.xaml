@@ -38,4 +38,8 @@
         Title="DatabaseTest"
         Route="DatabaseTestScreen"
         ContentTemplate="{DataTemplate local:Screens.DatabaseTestScreen}" />
+    <ShellContent
+        Title="GeolocationDemo"
+        Route="LocationDemo"
+        ContentTemplate="{DataTemplate local:Screens.LocationDemo}" />
 </Shell>
