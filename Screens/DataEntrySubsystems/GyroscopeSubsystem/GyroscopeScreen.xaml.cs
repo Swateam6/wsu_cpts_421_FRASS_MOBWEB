@@ -94,7 +94,7 @@ public partial class GyroscopeScreen : ContentPage
     }
     private async void OnEnterDefectClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("///DefectScreen");
+        await Shell.Current.GoToAsync("DefectScreen");
     }
     // boilerplate to kill gyro when leaving page
     protected override void OnDisappearing()

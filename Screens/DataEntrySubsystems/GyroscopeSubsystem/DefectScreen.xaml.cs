@@ -54,6 +54,6 @@ public partial class DefectScreen : ContentPage
     }
     private async void OnReturnClicked(object? sender, EventArgs e)
 	{
-		await Shell.Current.GoToAsync("///GyroscopeScreen");
+		await Shell.Current.GoToAsync("GyroscopeScreen");
     }
 }
