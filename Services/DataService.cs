@@ -10,6 +10,7 @@ namespace MOBWEB_TEST.Services
     public static class DataService
     {
 
+
         public static Stand CurrentStand { get; set; } = new Stand();
 
 

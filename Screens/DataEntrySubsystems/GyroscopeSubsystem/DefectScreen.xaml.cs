@@ -27,9 +27,9 @@ public partial class DefectScreen : ContentPage
             ? $"Defect Top: X: {angle.Value.X:F1}°, Y: {angle.Value.Y:F1}°, Z: {angle.Value.Z:F1}°"
             : "Defect Top: ---";
     }
-    public void UpdateDescription()
+    public void UpdateDescription(string message)
     {
-        //PLACEHOLDER, will be added after tree data is working
+        StatusMessageLabel.Text = message;
     }
     private void OnGyroMeasureClicked(object sender, EventArgs e)
     {
@@ -49,7 +49,8 @@ public partial class DefectScreen : ContentPage
     }
     private void OnSaveDefectClicked(object sender, EventArgs e)
     {
-        _defectController.SaveDefect();
+        // Pass the text from the DistanceEntry box into the controller
+        _defectController.SaveDefect(DistanceEntry.Text);
     }
     private async void OnReturnClicked(object? sender, EventArgs e)
 	{

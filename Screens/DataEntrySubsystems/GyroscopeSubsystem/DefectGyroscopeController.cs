@@ -3,6 +3,7 @@ using System.Numerics;
 
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
 {
+
     public class DefectGyroscopeController
     {
         private GyroscopeModel _model;
@@ -97,14 +98,47 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _view.UpdateTopLabel(_model.TopAngle);
         }
 
-    public void SaveDefect()
+        public void SaveDefect(string distanceText)
         {
             if (!Gyroscope.Default.IsMonitoring)
             {
                 return;
             }
-            //PLACEHOLDER, will be added after tree data is working
-            _view.UpdateDescription();
+
+            // 1. Validate the distance input (matching your main GyroscopeController)
+            if (!double.TryParse(distanceText, out double distance) || distance <= 0)
+            {
+                // Assuming you have a way to show errors on the Defect screen
+                _view.UpdateDescription("Enter a valid positive distance.");
+                return;
+            }
+
+            // 2. Safely grab the angles (Default to 0 if null)
+            double baseAngleDegrees = _model.BaseAngle?.X ?? 0;
+            double topAngleDegrees = _model.TopAngle?.X ?? 0;
+
+            // 3. Convert degrees to Radians for C# Math library
+            double baseAngleRad = baseAngleDegrees * (Math.PI / 180.0);
+            double topAngleRad = topAngleDegrees * (Math.PI / 180.0);
+
+            // 4. Calculate heights using Trigonometry
+            // If baseAngle is negative (looking down), Math.Tan will be negative, 
+            // which accurately represents depth below eye level.
+            double bottomHeight = distance * Math.Tan(baseAngleRad);
+            double topHeight = distance * Math.Tan(topAngleRad);
+
+            // 5. Save to your global DataService
+            Services.DataService.CurrentDefect.bottomHeight = bottomHeight;
+            Services.DataService.CurrentDefect.topHeight = topHeight;
+            Services.DataService.CurrentDefect.DefectType = "Unspecified Defect"; // Connect to a UI picker later
+
+            Services.DataService.SaveDefectToTree();
+
+            // 6. Reset the UI and Model for the next defect
+            _view.UpdateDescription("Defect Saved successfully.");
+            _model.ClearAll();
+            _view.UpdateBaseLabel(null);
+            _view.UpdateTopLabel(null);
         }
     }
 }

@@ -8,13 +8,15 @@ namespace MOBWEB_TEST
         {
             InitializeComponent();
 
-            // Register the "address" for each screen so GoToAsync works
+            // Register routes for all "sub-pages". 
+            // Because they are registered here and NOT in the XAML, 
+            // they will remain hidden from the main menu but can still be navigated to.
             Routing.RegisterRoute("StandEntryScreen", typeof(Screens.DataEntrySubsystems.StandEntryData));
             Routing.RegisterRoute("PlotEntryScreen", typeof(Screens.DataEntrySubsystems.PlotEntry));
-            Routing.RegisterRoute("TreeEntryPage",typeof(Screens.DataEntrySubsystems.TreeEntryPage));
-
-            // If you have a general Data Entry Hub:
-            Routing.RegisterRoute("DataEntryScreen", typeof(Screens.DataEntryScreen));
+            Routing.RegisterRoute("TreeEntryPage", typeof(Screens.DataEntrySubsystems.TreeEntryPage));
+            Routing.RegisterRoute("MesicSubsystemScreen", typeof(Screens.DataEntrySubsystems.MesicSubsystemScreen));
+            Routing.RegisterRoute("GyroscopeScreen", typeof(Screens.DataEntrySubsystems.GyroscopeScreen));
+            Routing.RegisterRoute("DefectScreen", typeof(Screens.DataEntrySubsystems.GyroscopeSubsystem.DefectScreen));
         }
     }
 }

@@ -4,49 +4,36 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MOBWEB_TEST"
-    Title="MOBWEB_TEST">
-
+    Title="MOBWEB_TEST"
+    FlyoutBehavior="Flyout">
     <ShellContent
         Title="Entry"
         ContentTemplate="{DataTemplate local:Screens.EntryScreen}"
         Route="EntryScreen" />
+
     <ShellContent 
         Title="Home"
-        Route="HomeScreen"
-        ContentTemplate="{DataTemplate local:Screens.HomeScreen}" />
+        ContentTemplate="{DataTemplate local:Screens.HomeScreen}"
+        Route="HomeScreen" />
+
     <ShellContent
-        Title="DataEntry"
-        Route="DataEntryScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataEntryScreen}" />
+        Title="Data Entry"
+        ContentTemplate="{DataTemplate local:Screens.DataEntryScreen}"
+        Route="DataEntryScreen" />
+
     <ShellContent
         Title="Profile"
-        Route="ProfileScreen"
-        ContentTemplate="{DataTemplate local:Screens.ProfileScreen}" />
-    <ShellContent
-        Title="DataUpload"
-        Route="DataUploadScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataUploadScreen}" />
-    <ShellContent
-        Title="MesicSubsystem"
-        Route="MesicSubsystemScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.MesicSubsystemScreen}" />
-    <ShellContent
-        Title="PlotEntry"
-        Route="PlotEntryScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.PlotEntry}" />
-    <ShellContent
-        Title="DatabaseTest"
-        Route="DatabaseTestScreen"
-        ContentTemplate="{DataTemplate local:Screens.DatabaseTestScreen}" />
+        ContentTemplate="{DataTemplate local:Screens.ProfileScreen}"
+        Route="ProfileScreen" />
 
     <ShellContent
-        Title="GyroscopeSubsystem"
-        Route="GyroscopeScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.GyroscopeScreen}" />
+        Title="Upload"
+        ContentTemplate="{DataTemplate local:Screens.DataUploadScreen}"
+        Route="DataUploadScreen" />
 
     <ShellContent
-        Title="DefectSubsystem"
-        Route="DefectScreen"
-        ContentTemplate="{DataTemplate local:Screens.DataEntrySubsystems.GyroscopeSubsystem.DefectScreen}" />
+        Title="Database"
+        ContentTemplate="{DataTemplate local:Screens.DatabaseTestScreen}"
+        Route="DatabaseTestScreen" />
+
 </Shell>
-
