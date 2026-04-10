@@ -22,7 +22,7 @@
                 Clicked="OnClearDatabaseClicked"
                 HorizontalOptions="Fill" />
 
-        <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True">
+        <Border BackgroundColor="AliceBlue">
             <ScrollView>
                 <Label x:Name="OutputLabel" 
                        Text="Output will appear here..."
@@ -30,7 +30,7 @@
                        FontFamily="Courier"
                        LineBreakMode="WordWrap" />
             </ScrollView>
-        </Frame>
+        </Border>
 
         <Button Text="Back to Home" 
                 Clicked="OnBackClicked"
