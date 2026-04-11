@@ -10,20 +10,17 @@ public partial class StandEntryData : ContentPage
 
     private async void OnStartPlottingClicked(object sender, EventArgs e)
     {
-        // 3. Grab the text from the UI and pack it into the DataService
+        // ... your parsing logic ...
         DataService.CurrentStand.StandId = StandIdEntry.Text;
         DataService.CurrentStand.CruiserName = CruiserEntry.Text;
-        DataService.CurrentStand.Market = MarketEntry.Text;
-        DataService.CurrentStand.CruiseDate = DateTime.Now; 
+        // ...
 
-        // We use TryParse for numbers so the app doesn't crash if the box is empty!
-        if (double.TryParse(AcresEntry.Text, out double acres))
-        {
-            DataService.CurrentStand.Acres = acres;
-        }
+        // ADD THIS: Clear the UI text boxes so they are blank for the next stand
+        StandIdEntry.Text = string.Empty;
+        CruiserEntry.Text = string.Empty;
+        MarketEntry.Text = string.Empty;
+        AcresEntry.Text = string.Empty;
 
-        // 4. Move to the next screen in the Wizard
-        // (Make sure "PlotEntryScreen" matches the route name you registered in AppShell.xaml.cs)
         await Shell.Current.GoToAsync("PlotEntryScreen");
     }
 }

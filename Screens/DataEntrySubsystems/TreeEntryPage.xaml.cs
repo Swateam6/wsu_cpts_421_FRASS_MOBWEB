@@ -1,29 +1,30 @@
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems;
 using MOBWEB_TEST.Models;
 using MOBWEB_TEST.Services;
+
 public partial class TreeEntryPage : ContentPage
 {
-	public TreeEntryPage()
-	{
-		InitializeComponent();
-	}
+    public TreeEntryPage()
+    {
+        InitializeComponent();
+    }
+
     private void OnNextTreeClicked(object sender, EventArgs e)
     {
         DataService.CurrentTree.Species = SpeciesEntry.Text;
-        if (double.TryParse(DbhEntry.Text, out double dBH ))
+        if (double.TryParse(DbhEntry.Text, out double dBH))
         {
             DataService.CurrentTree.Dbh = dBH;
         }
+
+        // Saves the tree and resets the slate (DataService handles the 'new Tree()' now)
         DataService.SaveTreeToPlot();
-        DataService.CurrentTree = new Tree();
+
         SpeciesEntry.Text = string.Empty;
         DbhEntry.Text = string.Empty;
-
         SpeciesEntry.Focus();
-
     }
 
-    // XAML is looking for this too!
     private async void OnNextPlotClicked(object sender, EventArgs e)
     {
         DataService.CurrentTree.Species = SpeciesEntry.Text;
@@ -37,8 +38,10 @@ public partial class TreeEntryPage : ContentPage
         DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
 
-        await Shell.Current.GoToAsync("PlotEntryScreen");
+        // FIXED 1 (Infinite Stack): Pops this screen off the stack to reveal the existing Plot screen
+        await Shell.Current.GoToAsync("..");
     }
+
     private async void OnFinishStandClicked(object sender, EventArgs e)
     {
         DataService.CurrentTree.Species = SpeciesEntry.Text;
@@ -49,14 +52,16 @@ public partial class TreeEntryPage : ContentPage
         SpeciesEntry.Text = string.Empty;
         DbhEntry.Text = string.Empty;
 
-        
-
-        // 3. IMPORTANT: Reset the 'Current' objects so the next Stand is a clean slate
-
         DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
 
+        // FIXED 2 (Stand Wipeout): This is exactly where you will call your SQLite DB!
+       
+
+        // ONLY wipe the state AFTER the database has safely secured the data
         DataService.CurrentStand = new Stand();
+
+        // This keeps the triple slashes because DataEntryScreen is a main XAML tab!
         await Shell.Current.GoToAsync("///DataEntryScreen");
     }
 }

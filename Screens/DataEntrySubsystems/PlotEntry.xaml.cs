@@ -1,6 +1,7 @@
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems;
 using MOBWEB_TEST.Models;
 using MOBWEB_TEST.Services;
+
 public partial class PlotEntry : ContentPage
 {
     public PlotEntry()
@@ -20,9 +21,14 @@ public partial class PlotEntry : ContentPage
         if (double.TryParse(AspectEntry.Text, out double aspect))
             DataService.CurrentPlot.Aspect = aspect;
 
-        DataService.CurrentTree = new Tree();
+        // FIXED 1 (Ghost Data): Clear the UI text boxes so they are blank when the user returns via "Next Plot"
+        PlotNumEntry.Text = string.Empty;
+        SlopeEntry.Text = string.Empty;
+        AspectEntry.Text = string.Empty;
 
-        
+        // FIXED 2: Removed the redundant 'new Tree()' call. DataService handles that automatically.
+
+        // 2. Navigate to the Tree Entry Page
         await Shell.Current.GoToAsync("TreeEntryPage");
     }
 }
