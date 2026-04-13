@@ -25,7 +25,7 @@ namespace MOBWEB_TEST.Location
 
         private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
-            var deviceLocation = new DeviceLocation(e.Location.Latitude, e.Location.Longitude);
+            var deviceLocation = new DeviceLocation(e.Location.Latitude, e.Location.Longitude, e.Location.Altitude ?? -1); //return -1 if null alt otherwise in meters
             WeakReferenceMessenger.Default.Send(deviceLocation);
         }
     }
