@@ -5,6 +5,11 @@ namespace MOBWEB_TEST.sqllite
     [Table ("stand_data")]
     public class stand_data
     {
+
+        [Column("parent_parcel_id")]
+        [Indexed]
+        public int ParcelID { get; set; }
+
         [PrimaryKey,AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
@@ -39,15 +44,5 @@ namespace MOBWEB_TEST.sqllite
         [Column("stand_elevation(ft)")]
         public float Elevation { get; set; }
 
-        [Column("plot_list")]
-        public string PlotListRaw { get; set; } = string.Empty;
-
-        [Ignore]
-        public List<int> plot_ids_in_parcel
-        {
-            get => PlotListRaw.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                               .Select(int.Parse).ToList();
-            set => PlotListRaw = string.Join(",", value);
-        }
     }
 }

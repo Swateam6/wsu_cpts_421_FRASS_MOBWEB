@@ -163,5 +163,41 @@ namespace MOBWEB_TEST.sqllite
         {
             await _connection.DeleteAsync(data);
         }
+        public async Task<stand_data> GetStandByIdAsync(int standId)
+        {
+            return await _connection.Table<stand_data>()
+                                    .Where(s => s.Id == standId)
+                                    .FirstOrDefaultAsync();
+        }
+
+        // 2. Get all Plots that belong to that Stand
+        public async Task<List<plot_data>> GetPlotsForStandAsync(int standId)
+        {
+            // This looks at the child table and grabs only the rows 
+            // where the foreign key matches the parent!
+            return await _connection.Table<plot_data>()
+                                    .Where(p => p.ParentStandId == standId)
+                                    .ToListAsync();
+        }
+
+        public async Task<List<tree_data>> GetTreesInPlotsID(int plotID)
+        {
+            return await _connection.Table<tree_data>()
+                .Where(t=>t.parentPlotId==plotID)
+                .ToListAsync();
+        }
+        public async Task <List<stand_data>> GetStandsinParcels(int parcelID)
+        {
+            return await _connection.Table<stand_data>()
+                .Where(s => s.ParcelID == parcelID)
+                .ToListAsync();
+        }
+        public async Task<List<parcel_data>> GetParcelsinUser(int userID)
+        {
+            return await _connection.Table<parcel_data>()
+                .Where(p => p.parentUserId == userID)
+                .ToListAsync();
+        }
+
     }
 }

@@ -5,6 +5,11 @@ namespace MOBWEB_TEST.sqllite
     [Table("tree_data")]
     public class tree_data
     {
+        [Column("parent_plot_id")]
+        [Indexed]
+        public int parentPlotId { get; set; }
+
+
         [PrimaryKey,AutoIncrement]
         [Column("id")]
         public int Id { get; set; }

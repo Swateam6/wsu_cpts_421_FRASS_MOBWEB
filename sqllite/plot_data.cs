@@ -5,6 +5,12 @@ namespace MOBWEB_TEST.sqllite
     [Table("plot_data")]
     public class plot_data
     {
+
+        [Column("parent_stand_id")]
+        [Indexed]
+        public int ParentStandId { get; set; }
+
+
         [PrimaryKey,AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
@@ -36,15 +42,6 @@ namespace MOBWEB_TEST.sqllite
         [Column("most_mesic_bush_species")]
         public string MostMesicBushSpecies { get; set; } = string.Empty;
 
-        [Column("tree_list")]
-        public string TreeListRaw { get; set; } = string.Empty;
-
-        [Ignore]
-        public List<int> tree_ids_in_parcel
-        {
-            get => TreeListRaw.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                               .Select(int.Parse).ToList();
-            set => TreeListRaw = string.Join(",", value);
-        }
+       
     }
 }

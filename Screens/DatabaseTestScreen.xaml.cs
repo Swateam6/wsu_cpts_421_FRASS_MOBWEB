@@ -14,7 +14,6 @@ public partial class DatabaseTestScreen : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        // LocalDbService constructor creates all five tables and owns the DB path
         _db = new LocalDbService();
     }
 
@@ -22,7 +21,7 @@ public partial class DatabaseTestScreen : ContentPage
     {
         try
         {
-            await _db.InitAsync(); // <-- ADD THIS: Ensures tables exist before populating
+            await _db.InitAsync();
             OutputLabel.Text = "Populating database...";
             await PopulateSampleData();
             OutputLabel.Text = "Database populated successfully!";
@@ -37,8 +36,8 @@ public partial class DatabaseTestScreen : ContentPage
     {
         try
         {
-            await _db.InitAsync(); // <-- ADD THIS: Ensures tables exist before querying
-            OutputLabel.Text = "Retrieving database contents...";
+            await _db.InitAsync();
+            OutputLabel.Text = "Retrieving database contents...\n";
             await PrintDatabaseContents();
         }
         catch (Exception ex)
@@ -72,151 +71,110 @@ public partial class DatabaseTestScreen : ContentPage
 
     private async Task PopulateSampleData()
     {
-        //trees
-        var trees = new List<tree_data>
-        {
-            new tree_data
-            {
-                Id = 1,
-                Date = DateTime.Now.AddDays(-10),
-                Height = 60,
-                Species = "Douglas Fir",
-                DiameterBreastHeight = 12.5f,
-                StumpHeight = 1.0f,
-                BaseOfLiveCrown = 20.0f,
-                CrownRatio = 55.0f,
-                DefectDescription = "None",
-                DefectBase = 0,
-                DefectTop = 0
-            },
-            new tree_data
-            {
-                Id = 2,
-                Date = DateTime.Now.AddDays(-10),
-                Height = 45,
-                Species = "Ponderosa Pine",
-                DiameterBreastHeight = 9.0f,
-                StumpHeight = 1.0f,
-                BaseOfLiveCrown = 15.0f,
-                CrownRatio = 40.0f,
-                DefectDescription = "Basal scar",
-                DefectBase = 0,
-                DefectTop = 3
-            },
-            new tree_data
-            {
-                Id = 3,
-                Date = DateTime.Now.AddDays(-5),
-                Height = 70,
-                Species = "Western Larch",
-                DiameterBreastHeight = 18.0f,
-                StumpHeight = 1.5f,
-                BaseOfLiveCrown = 30.0f,
-                CrownRatio = 60.0f,
-                DefectDescription = "None",
-                DefectBase = 0,
-                DefectTop = 0
-            },
-            new tree_data
-            {
-                Id = 4,
-                Date = DateTime.Now,
-                Height = 35,
-                Species = "Grand Fir",
-                DiameterBreastHeight = 7.5f,
-                StumpHeight = 1.0f,
-                BaseOfLiveCrown = 10.0f,
-                CrownRatio = 45.0f,
-                DefectDescription = "Fork at 20ft",
-                DefectBase = 18,
-                DefectTop = 22
-            }
-        };
-        foreach (var t in trees)
-            await _db.AddTreeDataAsync(t);
+        // 1. Create User
+        var testUser = new user_data();
+        await _db.AddUserDataAsync(testUser); // ID is auto-generated here!
 
-        // Plots(contain treres)
-        var plots = new List<plot_data>
+        // 2. Create Parcel
+        var testParcel = new parcel_data
         {
-            new plot_data
-            {
-                Id = 1,
-                Date = DateTime.Now.AddDays(-10),
-                Latitude = 46.7312f,
-                Longitude = -117.1815f,
-                Aspect = 45,
-                Slope = 15,
-                Elevation = 2500,
-                ImagePath = "/images/plot_001.jpg",
-                MostMesicTreeSpecies = "Douglas Fir",
-                MostMesicBushSpecies = "Hazel",
-                tree_ids_in_parcel = new List<int> { 1, 2 }
-            },
-            new plot_data
-            {
-                Id = 2,
-                Date = DateTime.Now.AddDays(-5),
-                Latitude = 46.7380f,
-                Longitude = -117.1900f,
-                Aspect = 180,
-                Slope = 20,
-                Elevation = 2650,
-                ImagePath = "/images/plot_002.jpg",
-                MostMesicTreeSpecies = "Western Larch",
-                MostMesicBushSpecies = "Dogwood",
-                tree_ids_in_parcel = new List<int> { 3, 4 }
-            }
+            Date = DateTime.Now.AddDays(-10),
+            Acres = 50.0f
+            // If you added a UserID foreign key to parcel, it goes here!
         };
-        foreach (var p in plots)
-            await _db.AddPlotDataAsync(p);
+        await _db.AddParcelDataAsync(testParcel);
 
-        // stand with the plots
-        var stands = new List<stand_data>
+        // 3. Create Stand (Linked to Parcel)
+        var testStand = new stand_data
         {
-            new stand_data
-            {
-                Id = 1,
-                Date = DateTime.Now.AddDays(-10),
-                FvsVariant = "PN",
-                SiteIndex = "85",
-                HabitatType = "DF/PINE",
-                Acres = 12.5f,
-                Latitude = 46.7312f,
-                Longitude = -117.1815f,
-                Aspect = 45.0f,
-                Slope = 15.0f,
-                Elevation = 2500.0f,
-                plot_ids_in_parcel = new List<int> { 1, 2 }
-            }
+            Date = DateTime.Now.AddDays(-10),
+            FvsVariant = "PN",
+            SiteIndex = "85",
+            HabitatType = "DF/PINE",
+            Acres = 12.5f,
+            Latitude = 46.7312f,
+            Longitude = -117.1815f,
+            Aspect = 45.0f,
+            Slope = 15.0f,
+            Elevation = 2500.0f,
+            ParcelID = testParcel.Id // <--- THE FOREIGN KEY LINK
         };
-        foreach (var s in stands)
-            await _db.AddStandDataAsync(s);
+        await _db.AddStandDataAsync(testStand);
 
-        // parcel with the stand
-        var parcels = new List<parcel_data>
+        // 4. Create Plots (Linked to Stand)
+        var plot1 = new plot_data
         {
-            new parcel_data
-            {
-                Id = 1,
-                Date = DateTime.Now.AddDays(-10),
-                Acres = 50.0f,
-                stand_ids_in_parcel = new List<int> { 1 }
-            }
+            Date = DateTime.Now.AddDays(-10),
+            Latitude = 46.7312f,
+            Longitude = -117.1815f,
+            Aspect = 45,
+            Slope = 15,
+            Elevation = 2500,
+            ImagePath = "/images/plot_001.jpg",
+            MostMesicTreeSpecies = "Douglas Fir",
+            MostMesicBushSpecies = "Hazel",
+            ParentStandId = testStand.Id // <--- THE FOREIGN KEY LINK
         };
-        foreach (var p in parcels)
-            await _db.AddParcelDataAsync(p);
+        await _db.AddPlotDataAsync(plot1);
 
-        // user with the parcel
-        var users = new List<user_data>
+        var plot2 = new plot_data
         {
-            new user_data
-            {
-                Id = 1,
-                parcel_ids_in_parcel = new List<int> { 1 }
-            }
+            Date = DateTime.Now.AddDays(-5),
+            Latitude = 46.7380f,
+            Longitude = -117.1900f,
+            Aspect = 180,
+            Slope = 20,
+            Elevation = 2650,
+            ImagePath = "/images/plot_002.jpg",
+            MostMesicTreeSpecies = "Western Larch",
+            MostMesicBushSpecies = "Dogwood",
+            ParentStandId = testStand.Id // <--- THE FOREIGN KEY LINK
         };
-        foreach (var u in users)
-            await _db.AddUserDataAsync(u);
+        await _db.AddPlotDataAsync(plot2);
+
+        // 5. Create Trees (Linked to Plots)
+        var tree1 = new tree_data
+        {
+            Date = DateTime.Now.AddDays(-10),
+            Height = 60,
+            Species = "Douglas Fir",
+            DiameterBreastHeight = 12.5f,
+            StumpHeight = 1.0f,
+            BaseOfLiveCrown = 20.0f,
+            CrownRatio = 55.0f,
+            DefectDescription = "None",
+            parentPlotId = plot1.Id // <--- THE FOREIGN KEY LINK
+        };
+        await _db.AddTreeDataAsync(tree1);
+
+        var tree2 = new tree_data
+        {
+            Date = DateTime.Now.AddDays(-10),
+            Height = 45,
+            Species = "Ponderosa Pine",
+            DiameterBreastHeight = 9.0f,
+            StumpHeight = 1.0f,
+            BaseOfLiveCrown = 15.0f,
+            CrownRatio = 40.0f,
+            DefectDescription = "Basal scar",
+            DefectTop = 3,
+            parentPlotId = plot1.Id // <--- THE FOREIGN KEY LINK
+        };
+        await _db.AddTreeDataAsync(tree2);
+
+        var tree3 = new tree_data
+        {
+            Date = DateTime.Now.AddDays(-5),
+            Height = 70,
+            Species = "Western Larch",
+            DiameterBreastHeight = 18.0f,
+            StumpHeight = 1.5f,
+            BaseOfLiveCrown = 30.0f,
+            CrownRatio = 60.0f,
+            DefectDescription = "None",
+            parentPlotId = plot2.Id // <--- THE FOREIGN KEY LINK
+        };
+        await _db.AddTreeDataAsync(tree3);
     }
 
 
@@ -232,37 +190,25 @@ public partial class DatabaseTestScreen : ContentPage
         output += "DATABASE CONTENTS\n";
         output += "═══════════════════════════════════════════\n\n";
 
-        output += $"── tree_data ({trees.Count} records) ──\n";
-        if (trees.Count == 0)
-            output += "  (empty)\n";
-        foreach (var t in trees)
-            output += $"  ID:{t.Id} | {t.Species} | {t.Height}ft | DBH:{t.DiameterBreastHeight}in | Crown:{t.CrownRatio}% | {t.DefectDescription}\n";
-
-        output += $"\n── plot_data ({plots.Count} records) ──\n";
-        if (plots.Count == 0)
-            output += "  (empty)\n";
-        foreach (var p in plots)
-            output += $"  ID:{p.Id} | ({p.Latitude:F4},{p.Longitude:F4}) | Elev:{p.Elevation}ft | {p.MostMesicTreeSpecies}/{p.MostMesicBushSpecies} | Trees:[{string.Join(",", p.tree_ids_in_parcel)}]\n";
-
-        output += $"\n── stand_data ({stands.Count} records) ──\n";
-        if (stands.Count == 0)
-            output += "  (empty)\n";
-        foreach (var s in stands)
-            output += $"  ID:{s.Id} | {s.FvsVariant} | SI:{s.SiteIndex} | {s.Acres}ac | Plots:[{string.Join(",", s.plot_ids_in_parcel)}]\n";
+        output += $"── user_data ({users.Count} records) ──\n";
+        foreach (var u in users)
+            output += $"  ID:{u.Id}\n";
 
         output += $"\n── parcel_data ({parcels.Count} records) ──\n";
-        if (parcels.Count == 0)
-            output += "  (empty)\n";
         foreach (var p in parcels)
-            output += $"  ID:{p.Id} | {p.Acres}ac | Stands:[{string.Join(",", p.stand_ids_in_parcel)}]\n";
+            output += $"  ID:{p.Id} | Acres:{p.Acres}ac\n";
 
-        output += $"\n── user_data ({users.Count} records) ──\n";
-        if (users.Count == 0)
-            output += "  (empty)\n";
-        foreach (var u in users)
-            output += $"  ID:{u.Id} | Parcels:[{string.Join(",", u.parcel_ids_in_parcel)}]\n";
+        output += $"\n── stand_data ({stands.Count} records) ──\n";
+        foreach (var s in stands)
+            output += $"  ID:{s.Id} | ParcelFK:{s.ParcelID} | {s.FvsVariant} | SI:{s.SiteIndex} | {s.Acres}ac\n";
 
-        output += "\n═══════════════════════════════════════════";
+        output += $"\n── plot_data ({plots.Count} records) ──\n";
+        foreach (var p in plots)
+            output += $"  ID:{p.Id} | StandFK:{p.ParentStandId} | ({p.Latitude:F4},{p.Longitude:F4}) | Elev:{p.Elevation}ft\n";
+
+        output += $"\n── tree_data ({trees.Count} records) ──\n";
+        foreach (var t in trees)
+            output += $"  ID:{t.Id} | PlotFK:{t.parentPlotId} | {t.Species} | DBH:{t.DiameterBreastHeight}\n";
 
         OutputLabel.Text = output;
     }
@@ -270,20 +216,20 @@ public partial class DatabaseTestScreen : ContentPage
 
     private async Task ClearAllTables()
     {
-        // delete from top down
-        var allUsers = await _db.GetAllUserDataAsync();
-        foreach (var u in allUsers) await _db.DeleteUserDataAsync(u);
-
-        var allParcels = await _db.GetAllParcelDataAsync();
-        foreach (var p in allParcels) await _db.DeleteParcelDataAsync(p);
-
-        var allStands = await _db.GetAllStandDataAsync();
-        foreach (var s in allStands) await _db.DeleteStandDataAsync(s);
+        // delete from top down (Children first, then parents)
+        var allTrees = await _db.GetAllTreeDataAsync();
+        foreach (var t in allTrees) await _db.DeleteTreeDataAsync(t);
 
         var allPlots = await _db.GetAllPlotDataAsync();
         foreach (var p in allPlots) await _db.DeletePlotDataAsync(p);
 
-        var allTrees = await _db.GetAllTreeDataAsync();
-        foreach (var t in allTrees) await _db.DeleteTreeDataAsync(t);
+        var allStands = await _db.GetAllStandDataAsync();
+        foreach (var s in allStands) await _db.DeleteStandDataAsync(s);
+
+        var allParcels = await _db.GetAllParcelDataAsync();
+        foreach (var p in allParcels) await _db.DeleteParcelDataAsync(p);
+
+        var allUsers = await _db.GetAllUserDataAsync();
+        foreach (var u in allUsers) await _db.DeleteUserDataAsync(u);
     }
 }
