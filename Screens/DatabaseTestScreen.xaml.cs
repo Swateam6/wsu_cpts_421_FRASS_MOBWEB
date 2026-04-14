@@ -22,6 +22,7 @@ public partial class DatabaseTestScreen : ContentPage
     {
         try
         {
+            await _db.InitAsync(); // <-- ADD THIS: Ensures tables exist before populating
             OutputLabel.Text = "Populating database...";
             await PopulateSampleData();
             OutputLabel.Text = "Database populated successfully!";
@@ -36,6 +37,7 @@ public partial class DatabaseTestScreen : ContentPage
     {
         try
         {
+            await _db.InitAsync(); // <-- ADD THIS: Ensures tables exist before querying
             OutputLabel.Text = "Retrieving database contents...";
             await PrintDatabaseContents();
         }
