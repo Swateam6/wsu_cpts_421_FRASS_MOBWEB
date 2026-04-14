@@ -1,45 +1,37 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace MOBWEB_TEST.sqllite
 {
-    class LocalDbService
+    public class LocalDbService
     {
-        private const string DB_NAME = "mobweb.sql";
+        // Mobile-safe file extension
+        private const string DB_NAME = "mobweb.db3";
         private readonly SQLiteAsyncConnection _connection;
-
 
         public LocalDbService()
         {
-            string dbPath = GetDatabasePath();
+            // Guaranteed read/write directory for Android/iOS
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
             _connection = new SQLiteAsyncConnection(dbPath);
-            _connection.CreateTableAsync<tree_data>().Wait();
-            _connection.CreateTableAsync<plot_data>().Wait();
-            _connection.CreateTableAsync<stand_data>().Wait();
-            _connection.CreateTableAsync<parcel_data>().Wait();
-            _connection.CreateTableAsync<user_data>().Wait();
         }
-        private static string GetDatabasePath()
+
+        // Safe initialization method to call when the app starts
+        public async Task InitAsync()
         {
-            //use local db if created
-            string projectDbPath = Path.Combine(AppContext.BaseDirectory, DB_NAME);
-
-            
-            string directory = Path.GetDirectoryName(projectDbPath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            return projectDbPath;
+            await _connection.CreateTableAsync<tree_data>();
+            await _connection.CreateTableAsync<plot_data>();
+            await _connection.CreateTableAsync<stand_data>();
+            await _connection.CreateTableAsync<parcel_data>();
+            await _connection.CreateTableAsync<user_data>();
         }
-        public static string GetCurrentDatabasePath()
+
+        public string GetCurrentDatabasePath()
         {
-            return Path.Combine(AppContext.BaseDirectory, DB_NAME);
+            return Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         }
 
         /// TREE FUNCTIONS -----------------------------------
@@ -150,6 +142,11 @@ namespace MOBWEB_TEST.sqllite
         public async Task<List<user_data>> GetAllUserDataAsync()
         {
             return await _connection.Table<user_data>().ToListAsync();
+        }
+
+        public async Task<user_data> GetUserDataByIdAsync(int id)
+        {
+            return await _connection.Table<user_data>().Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task AddUserDataAsync(user_data data)

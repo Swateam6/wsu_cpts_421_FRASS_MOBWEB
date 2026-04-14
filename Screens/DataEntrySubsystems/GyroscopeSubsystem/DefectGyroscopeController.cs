@@ -98,17 +98,16 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _view.UpdateTopLabel(_model.TopAngle);
         }
 
-        public void SaveDefect(string distanceText)
+        public void SaveDefect(string distanceText, string descriptionText)
         {
             if (!Gyroscope.Default.IsMonitoring)
             {
                 return;
             }
 
-            // 1. Validate the distance input (matching your main GyroscopeController)
+            // 1. Validate the distance input 
             if (!double.TryParse(distanceText, out double distance) || distance <= 0)
             {
-                // Assuming you have a way to show errors on the Defect screen
                 _view.UpdateDescription("Enter a valid positive distance.");
                 return;
             }
@@ -130,7 +129,11 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             // 5. Save to your global DataService
             Services.DataService.CurrentDefect.bottomHeight = bottomHeight;
             Services.DataService.CurrentDefect.topHeight = topHeight;
-            Services.DataService.CurrentDefect.DefectType = "Unspecified Defect"; // Connect to a UI picker later
+
+            // Save the actual text, but use a fallback if the cruiser left it blank
+            Services.DataService.CurrentDefect.DefectType = string.IsNullOrWhiteSpace(descriptionText)
+                ? "Unspecified Defect"
+                : descriptionText;
 
             Services.DataService.SaveDefectToTree();
 

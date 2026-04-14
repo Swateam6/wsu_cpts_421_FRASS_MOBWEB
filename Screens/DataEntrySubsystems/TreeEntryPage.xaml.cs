@@ -44,6 +44,7 @@ public partial class TreeEntryPage : ContentPage
 
     private async void OnFinishStandClicked(object sender, EventArgs e)
     {
+        // 1. Save the final tree to the state manager
         DataService.CurrentTree.Species = SpeciesEntry.Text;
         if (double.TryParse(DbhEntry.Text, out double dBH))
         {
@@ -55,13 +56,48 @@ public partial class TreeEntryPage : ContentPage
         DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
 
-        // FIXED 2 (Stand Wipeout): This is exactly where you will call your SQLite DB!
-       
+        // 2. Initialize your database connection
+        var db = new sqllite.LocalDbService();
+        await db.InitAsync(); // Ensures the mobile .db3 tables exist without freezing the UI
 
-        // ONLY wipe the state AFTER the database has safely secured the data
-        DataService.CurrentStand = new Stand();
+        // 3. TRANSLATE & SAVE
+        // Create the SQL Stand
+        var sqlStand = new sqllite.stand_data
+        {
+            Date = DateTime.Now,
+            // Map any other top-level stand properties here
+        };
+        await db.AddStandDataAsync(sqlStand);
 
-        // This keeps the triple slashes because DataEntryScreen is a main XAML tab!
+        // Loop through the Plots attached to this Stand
+        foreach (var uiPlot in DataService.CurrentStand.PlotList)
+        {
+            var sqlPlot = new sqllite.plot_data
+            {
+                Date = DateTime.Now,
+                Slope = (int)uiPlot.Slope,
+                Aspect = (int)uiPlot.Aspect
+            };
+            await db.AddPlotDataAsync(sqlPlot);
+
+            // Loop through the Trees attached to this Plot
+            foreach (var uiTree in uiPlot.TreeList)
+            {
+                var sqlTree = new sqllite.tree_data
+                {
+                    Date = DateTime.Now,
+                    Species = uiTree.Species ?? "Unknown",
+                    DiameterBreastHeight = (float)uiTree.Dbh
+                    // Map your gyroscope defect heights here later!
+                };
+                await db.AddTreeDataAsync(sqlTree);
+            }
+        }
+
+        // 4. ONLY wipe the state AFTER the database has safely secured the data
+        DataService.CurrentStand = new Models.Stand();
+
+        // 5. Return to Home Menu
         await Shell.Current.GoToAsync("///DataEntryScreen");
     }
 }

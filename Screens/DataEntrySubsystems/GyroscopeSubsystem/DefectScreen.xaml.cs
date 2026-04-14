@@ -49,11 +49,11 @@ public partial class DefectScreen : ContentPage
     }
     private void OnSaveDefectClicked(object sender, EventArgs e)
     {
-        // Pass the text from the DistanceEntry box into the controller
-        _defectController.SaveDefect(DistanceEntry.Text);
+        // Pass BOTH the distance and the description to the controller
+        _defectController.SaveDefect(DistanceEntry.Text, DefectDescriptionEntry.Text);
     }
     private async void OnReturnClicked(object? sender, EventArgs e)
-	{
-		await Shell.Current.GoToAsync("GyroscopeScreen");
+    {
+        await Shell.Current.GoToAsync("..");
     }
 }
