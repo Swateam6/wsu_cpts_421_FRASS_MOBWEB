@@ -5,7 +5,7 @@ namespace MOBWEB_TEST.sqllite
     [Table("tree_data")]
     public class tree_data
     {
-        [PrimaryKey]
+        [PrimaryKey,AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
 

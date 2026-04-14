@@ -16,36 +16,6 @@
                    HorizontalOptions="Center" 
                    Margin="0,0,0,10"/>
 
-            <Label Text="Stand ID:" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
-                   FontAttributes="Bold" />
-            <Entry x:Name="StandIdEntry" 
-                   Placeholder="e.g. Block A" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
-                   ClearButtonVisibility="WhileEditing" />
-
-            <Label Text="Cruiser Name:" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
-                   FontAttributes="Bold" />
-            <Entry x:Name="CruiserEntry" 
-                   Placeholder="Enter your name" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
-                   ClearButtonVisibility="WhileEditing" />
-
-            <Label Text="Target Market:" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
-                   FontAttributes="Bold" />
-            <Entry x:Name="MarketEntry" 
-                   Placeholder="e.g., Pacific Northwest" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
-                   ClearButtonVisibility="WhileEditing" />
-
             <Label Text="Total Acres:" 
                    FontFamily="OpenSansRegular"
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"

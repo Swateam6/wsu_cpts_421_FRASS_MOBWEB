@@ -16,16 +16,6 @@
                    HorizontalOptions="Center" 
                    Margin="0,0,0,10"/>
 
-            <Label Text="Plot Number:" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
-                   FontAttributes="Bold" />
-            <Entry x:Name="PlotNumEntry" 
-                   Placeholder="e.g., 1" 
-                   Keyboard="Numeric"
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
-                   ClearButtonVisibility="WhileEditing" />
 
             <Label Text="Slope (%):" 
                    FontFamily="OpenSansRegular"

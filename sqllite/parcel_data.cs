@@ -5,8 +5,7 @@ namespace MOBWEB_TEST.sqllite
     [Table ("parcel_data")]
     public class parcel_data
     {
-        [PrimaryKey]
-        [Column("id")]
+        [Column("id"),AutoIncrement]
         public int Id { get; set; }
 
         [Column("date_last_entry")]

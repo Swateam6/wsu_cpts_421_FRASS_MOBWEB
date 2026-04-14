@@ -12,8 +12,6 @@ public partial class PlotEntry : ContentPage
     private async void OnLogFirstTreeClicked(object sender, EventArgs e)
     {
         // 1. Parse and save the Plot Data to our DataService
-        if (int.TryParse(PlotNumEntry.Text, out int plotNum))
-            DataService.CurrentPlot.PlotNumber = plotNum;
 
         if (double.TryParse(SlopeEntry.Text, out double slope))
             DataService.CurrentPlot.Slope = slope;
@@ -22,7 +20,7 @@ public partial class PlotEntry : ContentPage
             DataService.CurrentPlot.Aspect = aspect;
 
         // FIXED 1 (Ghost Data): Clear the UI text boxes so they are blank when the user returns via "Next Plot"
-        PlotNumEntry.Text = string.Empty;
+        
         SlopeEntry.Text = string.Empty;
         AspectEntry.Text = string.Empty;
 

@@ -5,7 +5,7 @@ namespace MOBWEB_TEST.sqllite
     [Table("plot_data")]
     public class plot_data
     {
-        [PrimaryKey]
+        [PrimaryKey,AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
 

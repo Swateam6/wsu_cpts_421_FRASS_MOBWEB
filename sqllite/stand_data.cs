@@ -5,7 +5,7 @@ namespace MOBWEB_TEST.sqllite
     [Table ("stand_data")]
     public class stand_data
     {
-        [PrimaryKey]
+        [PrimaryKey,AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
 

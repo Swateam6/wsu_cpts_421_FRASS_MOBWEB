@@ -10,7 +10,7 @@ namespace MOBWEB_TEST.Services
     public static class DataService
     {
 
-
+        public static Parcel CurrentParcel { get; set; }=new Parcel();
         public static Stand CurrentStand { get; set; } = new Stand();
 
 
@@ -42,6 +42,12 @@ namespace MOBWEB_TEST.Services
             CurrentTree.DefectList.Add(CurrentDefect);
 
             CurrentDefect = new Defects();
+        }
+        public static void SaveStandToParcel()
+        {
+            CurrentParcel.Stands.Add(CurrentStand);
+
+            CurrentStand= new Stand();
         }
     }
 }

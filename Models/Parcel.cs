@@ -11,6 +11,8 @@ namespace MOBWEB_TEST.Models
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Owner { get; set; } = string.Empty;
+
+        public string Market { get; set; } = string.Empty;
         public double TotalAcres { get; set; }
 
         // Township, Range, Section (The forestry "GPS" before GPS existed)

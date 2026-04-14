@@ -5,7 +5,7 @@ namespace MOBWEB_TEST.sqllite
     public class user_data
     {
         [PrimaryKey]
-        [Column("id")]
+        [Column("id"),]
         public int Id { get; set; }
 
         [Column("parcel_list")]
