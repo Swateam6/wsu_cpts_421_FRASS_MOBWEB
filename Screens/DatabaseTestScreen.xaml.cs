@@ -1,4 +1,6 @@
 ﻿using MOBWEB_TEST.sqllite;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace MOBWEB_TEST.Screens;
 
@@ -71,112 +73,48 @@ public partial class DatabaseTestScreen : ContentPage
 
     private async Task PopulateSampleData()
     {
-        // 1. Create User
-        var testUser = new user_data();
-        await _db.AddUserDataAsync(testUser); // ID is auto-generated here!
+        // 1. Users (Top of the hierarchy - no parent)
+        var users = new List<user_data>
+    {
+        new user_data { } // SQLite will assign this Id = 1
+    };
+        foreach (var u in users) await _db.AddUserDataAsync(u);
 
-        // 2. Create Parcel
-        var testParcel = new parcel_data
-        {
-            Date = DateTime.Now.AddDays(-10),
-            Acres = 50.0f
-            // If you added a UserID foreign key to parcel, it goes here!
-        };
-        await _db.AddParcelDataAsync(testParcel);
+        // 2. Parcels (Points up to User #1)
+        var parcels = new List<parcel_data>
+    {
+        new parcel_data { parentUserId = 1, Date = DateTime.Now.AddDays(-10), Acres = 50.0f } // SQLite assigns Id = 1
+    };
+        foreach (var p in parcels) await _db.AddParcelDataAsync(p);
 
-        // 3. Create Stand (Linked to Parcel)
-        var testStand = new stand_data
-        {
-            Date = DateTime.Now.AddDays(-10),
-            FvsVariant = "PN",
-            SiteIndex = "85",
-            HabitatType = "DF/PINE",
-            Acres = 12.5f,
-            Latitude = 46.7312f,
-            Longitude = -117.1815f,
-            Aspect = 45.0f,
-            Slope = 15.0f,
-            Elevation = 2500.0f,
-            ParcelID = testParcel.Id // <--- THE FOREIGN KEY LINK
-        };
-        await _db.AddStandDataAsync(testStand);
+        // 3. Stands (Points up to Parcel #1)
+        var stands = new List<stand_data>
+    {
+        new stand_data { ParcelID = 1, Date = DateTime.Now.AddDays(-10), FvsVariant = "PN", SiteIndex = "85", HabitatType = "DF/PINE", Acres = 12.5f, Latitude = 46.7312f, Longitude = -117.1815f, Aspect = 45.0f, Slope = 15.0f, Elevation = 2500.0f } // SQLite assigns Id = 1
+    };
+        foreach (var s in stands) await _db.AddStandDataAsync(s);
 
-        // 4. Create Plots (Linked to Stand)
-        var plot1 = new plot_data
-        {
-            Date = DateTime.Now.AddDays(-10),
-            Latitude = 46.7312f,
-            Longitude = -117.1815f,
-            Aspect = 45,
-            Slope = 15,
-            Elevation = 2500,
-            ImagePath = "/images/plot_001.jpg",
-            MostMesicTreeSpecies = "Douglas Fir",
-            MostMesicBushSpecies = "Hazel",
-            ParentStandId = testStand.Id // <--- THE FOREIGN KEY LINK
-        };
-        await _db.AddPlotDataAsync(plot1);
+        // 4. Plots (Both point up to Stand #1)
+        var plots = new List<plot_data>
+    {
+        new plot_data { ParentStandId = 1, Date = DateTime.Now.AddDays(-10), Latitude = 46.7312f, Longitude = -117.1815f, Aspect = 45, Slope = 15, Elevation = 2500, ImagePath = "/images/plot_001.jpg", MostMesicTreeSpecies = "Douglas Fir", MostMesicBushSpecies = "Hazel" }, // SQLite assigns Id = 1
+        new plot_data { ParentStandId= 1, Date = DateTime.Now.AddDays(-5), Latitude = 46.7380f, Longitude = -117.1900f, Aspect = 180, Slope = 20, Elevation = 2650, ImagePath = "/images/plot_002.jpg", MostMesicTreeSpecies = "Western Larch", MostMesicBushSpecies = "Dogwood" }  // SQLite assigns Id = 2
+    };
+        foreach (var p in plots) await _db.AddPlotDataAsync(p);
 
-        var plot2 = new plot_data
-        {
-            Date = DateTime.Now.AddDays(-5),
-            Latitude = 46.7380f,
-            Longitude = -117.1900f,
-            Aspect = 180,
-            Slope = 20,
-            Elevation = 2650,
-            ImagePath = "/images/plot_002.jpg",
-            MostMesicTreeSpecies = "Western Larch",
-            MostMesicBushSpecies = "Dogwood",
-            ParentStandId = testStand.Id // <--- THE FOREIGN KEY LINK
-        };
-        await _db.AddPlotDataAsync(plot2);
-
-        // 5. Create Trees (Linked to Plots)
-        var tree1 = new tree_data
-        {
-            Date = DateTime.Now.AddDays(-10),
-            Height = 60,
-            Species = "Douglas Fir",
-            DiameterBreastHeight = 12.5f,
-            StumpHeight = 1.0f,
-            BaseOfLiveCrown = 20.0f,
-            CrownRatio = 55.0f,
-            DefectDescription = "None",
-            parentPlotId = plot1.Id // <--- THE FOREIGN KEY LINK
-        };
-        await _db.AddTreeDataAsync(tree1);
-
-        var tree2 = new tree_data
-        {
-            Date = DateTime.Now.AddDays(-10),
-            Height = 45,
-            Species = "Ponderosa Pine",
-            DiameterBreastHeight = 9.0f,
-            StumpHeight = 1.0f,
-            BaseOfLiveCrown = 15.0f,
-            CrownRatio = 40.0f,
-            DefectDescription = "Basal scar",
-            DefectTop = 3,
-            parentPlotId = plot1.Id // <--- THE FOREIGN KEY LINK
-        };
-        await _db.AddTreeDataAsync(tree2);
-
-        var tree3 = new tree_data
-        {
-            Date = DateTime.Now.AddDays(-5),
-            Height = 70,
-            Species = "Western Larch",
-            DiameterBreastHeight = 18.0f,
-            StumpHeight = 1.5f,
-            BaseOfLiveCrown = 30.0f,
-            CrownRatio = 60.0f,
-            DefectDescription = "None",
-            parentPlotId = plot2.Id // <--- THE FOREIGN KEY LINK
-        };
-        await _db.AddTreeDataAsync(tree3);
+        // 5. Trees (Point up to their respective Plots)
+        var trees = new List<tree_data>
+    {
+        // These two trees point to Plot #1
+        new tree_data { parentPlotId = 1, Date = DateTime.Now.AddDays(-10), Height = 60, Species = "Douglas Fir", DiameterBreastHeight = 12.5f, StumpHeight = 1.0f, BaseOfLiveCrown = 20.0f, CrownRatio = 55.0f, DefectDescription = "None", DefectBase = 0, DefectTop = 0 },
+        new tree_data { parentPlotId = 1, Date = DateTime.Now.AddDays(-10), Height = 45, Species = "Ponderosa Pine", DiameterBreastHeight = 9.0f, StumpHeight = 1.0f, BaseOfLiveCrown = 15.0f, CrownRatio = 40.0f, DefectDescription = "Basal scar", DefectBase = 0, DefectTop = 3 },
+        
+        // These two trees point to Plot #2
+        new tree_data { parentPlotId = 2, Date = DateTime.Now.AddDays(-5), Height = 70, Species = "Western Larch", DiameterBreastHeight = 18.0f, StumpHeight = 1.5f, BaseOfLiveCrown = 30.0f, CrownRatio = 60.0f, DefectDescription = "None", DefectBase = 0, DefectTop = 0 },
+        new tree_data { parentPlotId = 2, Date = DateTime.Now, Height = 35, Species = "Grand Fir", DiameterBreastHeight = 7.5f, StumpHeight = 1.0f, BaseOfLiveCrown = 10.0f, CrownRatio = 45.0f, DefectDescription = "Fork at 20ft", DefectBase = 18, DefectTop = 22 }
+    };
+        foreach (var t in trees) await _db.AddTreeDataAsync(t);
     }
-
 
     private async Task PrintDatabaseContents()
     {

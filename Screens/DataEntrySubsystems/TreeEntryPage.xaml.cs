@@ -65,35 +65,37 @@ public partial class TreeEntryPage : ContentPage
         var sqlStand = new sqllite.stand_data
         {
             Date = DateTime.Now,
-            // Map any other top-level stand properties here
+            // Map your other stand properties here
         };
         await db.AddStandDataAsync(sqlStand);
+        // MAGIC: The moment this finishes, sqlStand.Id is automatically populated!
 
         // Loop through the Plots attached to this Stand
         foreach (var uiPlot in DataService.CurrentStand.PlotList)
         {
             var sqlPlot = new sqllite.plot_data
             {
+                ParentStandId = sqlStand.Id, // <-- THE FIX: Pointing up to the newly generated Stand ID
                 Date = DateTime.Now,
                 Slope = (int)uiPlot.Slope,
                 Aspect = (int)uiPlot.Aspect
             };
             await db.AddPlotDataAsync(sqlPlot);
+            // MAGIC: sqlPlot.Id is automatically populated!
 
             // Loop through the Trees attached to this Plot
             foreach (var uiTree in uiPlot.TreeList)
             {
                 var sqlTree = new sqllite.tree_data
                 {
+                    parentPlotId = sqlPlot.Id, // <-- THE FIX: Pointing up to the newly generated Plot ID
                     Date = DateTime.Now,
                     Species = uiTree.Species ?? "Unknown",
                     DiameterBreastHeight = (float)uiTree.Dbh
-                    // Map your gyroscope defect heights here later!
                 };
                 await db.AddTreeDataAsync(sqlTree);
             }
         }
-
         // 4. ONLY wipe the state AFTER the database has safely secured the data
         DataService.CurrentStand = new Models.Stand();
 

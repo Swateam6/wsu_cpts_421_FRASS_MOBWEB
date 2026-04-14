@@ -10,7 +10,7 @@ namespace MOBWEB_TEST.sqllite
         public int parentUserId { get; set; }
 
 
-        [Column("id"),AutoIncrement]
+        [Column("id"),PrimaryKey,AutoIncrement]
         public int Id { get; set; }
 
         [Column("date_last_entry")]

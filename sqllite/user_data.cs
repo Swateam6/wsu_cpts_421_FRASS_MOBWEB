@@ -1,22 +1,15 @@
 ﻿using SQLite;
+
 namespace MOBWEB_TEST.sqllite
 {
     [Table("user_data")]
     public class user_data
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("parcel_list")]
-        public string ParcelListRaw { get; set; } = string.Empty;
-
-        [Ignore]
-        public List<int> parcel_ids_in_parcel
-        {
-            get => ParcelListRaw.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                               .Select(int.Parse).ToList();
-            set => ParcelListRaw = string.Join(",", value);
-        }
+        // Notice how clean this is! 
+        // If you ever want to add a Cruiser Name, Email, or Password to the user profile later, you will add those columns right here.
     }
 }
