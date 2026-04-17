@@ -39,7 +39,7 @@
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,20,0,0">
 
-                <Button x:Name="Log Defect"
+                <Button x:Name="Log Defect Button"
                         Grid.Column="0"
                         Text="Log Defects" 
                         Clicked="OnDefectClicked" 

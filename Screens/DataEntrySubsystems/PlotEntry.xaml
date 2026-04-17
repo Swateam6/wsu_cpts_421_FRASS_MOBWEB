@@ -7,27 +7,6 @@
 
     <ScrollView>
         <VerticalStackLayout Spacing="15" Padding="20">
-
-            <Label Text="New Plot Waypoint" 
-                   FontSize="24" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{StaticResource Primary}"
-                   FontAttributes="Bold" 
-                   HorizontalOptions="Center" 
-                   Margin="0,0,0,10"/>
-
-
-            <Label Text="Slope (%):" 
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
-                   FontAttributes="Bold" />
-            <Entry x:Name="SlopeEntry" 
-                   Placeholder="0.0" 
-                   Keyboard="Numeric"
-                   FontFamily="OpenSansRegular"
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
-                   ClearButtonVisibility="WhileEditing" />
-
             <Label Text="Aspect (Degrees 0-360):" 
                    FontFamily="OpenSansRegular"
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
@@ -39,7 +18,7 @@
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
                    ClearButtonVisibility="WhileEditing" />
 
-            <Button Text="Log plot Slope" 
+            <Button Text="Log Plot Slope" 
                     Clicked="ToPlotSlope" 
                     Margin="0,20,0,0"
                     BackgroundColor="{StaticResource Primary}"
