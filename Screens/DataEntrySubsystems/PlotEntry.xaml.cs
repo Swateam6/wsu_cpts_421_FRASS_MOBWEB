@@ -24,9 +24,8 @@ public partial class PlotEntry : ContentPage
         SlopeEntry.Text = string.Empty;
         AspectEntry.Text = string.Empty;
 
-        // FIXED 2: Removed the redundant 'new Tree()' call. DataService handles that automatically.
 
-        // 2. Navigate to the Plot Entry Page
+        // 2. Navigate to the Plot Slope Page
         await Shell.Current.GoToAsync("PlotSlopeScreen");
 
     }

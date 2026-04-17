@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using MOBWEB_TEST.Services;
 
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem;
 
@@ -62,23 +63,22 @@ public partial class DefectScreen : ContentPage
         _defectController.SaveDefect(DistanceEntry.Text, DefectDescriptionEntry.Text);
     }
 
-    private async void OnReturnClicked(object? sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("..");
-    }
 
     private async void OnNextTreeClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("TreenEntryPage");
+        DataService.SaveTreeToPlot();
+        await Shell.Current.GoToAsync("..");
     }
 
     private async void OnFinishStandClicked(object sender, EventArgs e)
     {
+        DataService.SaveStandToParcel();
         await Shell.Current.GoToAsync("///DataEntryScreen");
     }
 
     private async void OnFinishPlotClicked(object sender, EventArgs e)
     {
+        DataService.SavePlotToStand();
         await Shell.Current.GoToAsync("StandEntryData");
     }
 }

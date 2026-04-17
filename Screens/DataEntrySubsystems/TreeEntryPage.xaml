@@ -41,7 +41,7 @@
 
                 <Button x:Name="Log Defect"
                         Grid.Column="0"
-                        Text="Next Tree" 
+                        Text="Log Defects" 
                         Clicked="OnDefectClicked" 
                         BackgroundColor="{StaticResource Primary}" 
                         TextColor="White" 
@@ -49,28 +49,7 @@
                         FontSize="16" 
                         FontAttributes="Bold" 
                         CornerRadius="8"/>
-
-                <Button x:Name="NextPlotButton"
-                        Grid.Column="1"
-                        Text="Next Plot" 
-                        Clicked="OnNextPlotClicked" 
-                        BackgroundColor="{StaticResource Primary}" 
-                        TextColor="White" 
-                        FontFamily="OpenSansRegular" 
-                        FontSize="16" 
-                        FontAttributes="Bold" 
-                        CornerRadius="8"/>
-
             </Grid>
-            <Button x:Name="FinishStandButton"
-                        Text="Finish Stand" 
-                        Clicked="OnFinishStandClicked" 
-                        BackgroundColor="{StaticResource Primary}" 
-                        TextColor="White" 
-                        FontFamily="OpenSansRegular" 
-                        FontSize="16" 
-                        FontAttributes="Bold" 
-                        CornerRadius="8"/>
 
         </VerticalStackLayout>
     </ScrollView>
