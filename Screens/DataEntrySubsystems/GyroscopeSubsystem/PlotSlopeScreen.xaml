@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.PlotSlopeScreen"
+             Title="Plot Slope Clinometer">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="20">
+
+            <Label Text="Shoot Plot Slope"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Border StrokeThickness="1"
+                    Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label x:Name="AngleLabel"
+                           Text="Gyroscope: Stopped"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+
+                    <Label x:Name="BaseLabel"
+                           Text="Captured Angle: --"
+                           HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="SlopeLabel"
+                   Text="Slope: -- %"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,10" />
+
+            <BoxView HeightRequest="1" />
+
+            <Button Text="1. Start Sensor"
+                    Clicked="OnStartClicked" />
+
+            <Button Text="2. Zero Clinometer (Hold Level)"
+                    Clicked="OnZeroClicked" />
+
+            <Button Text="3. Capture Slope Angle"
+                    Clicked="OnCaptureBaseClicked" />
+
+            <Button Text="4. Calculate &amp; Save"
+                    Clicked="OnCalculateSlopeClicked" />
+            
+
+            <Button Text="Stop Sensor"
+                    Clicked="OnStopClicked"
+                    Margin="0,10,0,0" />
+            <Button x:Name="LogTreeButton"
+               Text="Log Tree"
+               Clicked="OnLogTreeClicked"
+               Margin="0, 30, 0, 0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

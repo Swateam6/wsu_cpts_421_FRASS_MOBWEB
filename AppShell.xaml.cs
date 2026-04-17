@@ -17,6 +17,7 @@ namespace MOBWEB_TEST
             Routing.RegisterRoute("MesicSubsystemScreen", typeof(Screens.DataEntrySubsystems.MesicSubsystemScreen));
             Routing.RegisterRoute("GyroscopeScreen", typeof(Screens.DataEntrySubsystems.GyroscopeScreen));
             Routing.RegisterRoute("DefectScreen", typeof(Screens.DataEntrySubsystems.GyroscopeSubsystem.DefectScreen));
+            Routing.RegisterRoute("PlotSlopeScreen", typeof(Screens.PlotSlopeScreen));
         }
     }
 }

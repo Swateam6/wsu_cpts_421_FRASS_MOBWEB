@@ -9,7 +9,7 @@ public partial class PlotEntry : ContentPage
         InitializeComponent();
     }
 
-    private async void OnLogFirstTreeClicked(object sender, EventArgs e)
+    private async void ToPlotSlopeClicked(object sender, EventArgs e)
     {
         // 1. Parse and save the Plot Data to our DataService
 
@@ -26,7 +26,8 @@ public partial class PlotEntry : ContentPage
 
         // FIXED 2: Removed the redundant 'new Tree()' call. DataService handles that automatically.
 
-        // 2. Navigate to the Tree Entry Page
-        await Shell.Current.GoToAsync("TreeEntryPage");
+        // 2. Navigate to the Plot Entry Page
+        await Shell.Current.GoToAsync("PlotSlopeScreen");
+
     }
 }

@@ -39,10 +39,10 @@
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,20,0,0">
 
-                <Button x:Name="NextTreeButton"
+                <Button x:Name="Log Defect"
                         Grid.Column="0"
                         Text="Next Tree" 
-                        Clicked="OnNextTreeClicked" 
+                        Clicked="OnDefectClicked" 
                         BackgroundColor="{StaticResource Primary}" 
                         TextColor="White" 
                         FontFamily="OpenSansRegular" 

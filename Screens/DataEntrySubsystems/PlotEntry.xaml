@@ -39,8 +39,8 @@
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
                    ClearButtonVisibility="WhileEditing" />
 
-            <Button Text="Log First Tree" 
-                    Clicked="OnLogFirstTreeClicked" 
+            <Button Text="Log plot Slope" 
+                    Clicked="ToPlotSlope" 
                     Margin="0,20,0,0"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="White"

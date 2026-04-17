@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using Microsoft.Maui.ApplicationModel;
 using MOBWEB_TEST.Services;
 
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
@@ -7,6 +8,7 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
     public class GyroscopeController
     {
         private readonly GyroscopeModel _model;
+        // CHANGED: Now uses the Interface so any screen can connect to it
         private readonly GyroscopeScreen _view;
 
         private bool _isFirstReading = true;
@@ -96,13 +98,17 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _view.UpdateLiveCrownRatioResult("Live Crown Ratio: -- %");
             _view.UpdateLiveCrownHeightResult("Live Crown Height: -- ft");
 
-            DataService.CurrentTree.BaseAngle = 0;
-            DataService.CurrentTree.TopAngle = 0;
-            DataService.CurrentTree.LiveCrownBaseAngle = 0;
-            DataService.CurrentTree.Height = 0;
-            DataService.CurrentTree.CrownRatioPercent = 0;
-            DataService.CurrentTree.LiveCrownHeight = 0;
-            DataService.CurrentTree.BaseLiveCrown = 0;
+            // SAFETY NET: Only reset tree data if a tree actually exists
+            if (DataService.CurrentTree != null)
+            {
+                DataService.CurrentTree.BaseAngle = 0;
+                DataService.CurrentTree.TopAngle = 0;
+                DataService.CurrentTree.LiveCrownBaseAngle = 0;
+                DataService.CurrentTree.Height = 0;
+                DataService.CurrentTree.CrownRatioPercent = 0;
+                DataService.CurrentTree.LiveCrownHeight = 0;
+                DataService.CurrentTree.BaseLiveCrown = 0;
+            }
         }
 
         public void CaptureBase()
@@ -116,7 +122,8 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _view.UpdateBaseLabel(_model.BaseAngle);
             _view.UpdateDifference(_model.GetDifference());
 
-            if (_model.BaseAngle.HasValue)
+            // SAFETY NET
+            if (_model.BaseAngle.HasValue && DataService.CurrentTree != null)
             {
                 DataService.CurrentTree.BaseAngle = _model.BaseAngle.Value.X;
             }
@@ -133,7 +140,8 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _view.UpdateTopLabel(_model.TopAngle);
             _view.UpdateDifference(_model.GetDifference());
 
-            if (_model.TopAngle.HasValue)
+            // SAFETY NET
+            if (_model.TopAngle.HasValue && DataService.CurrentTree != null)
             {
                 DataService.CurrentTree.TopAngle = _model.TopAngle.Value.X;
             }
@@ -149,7 +157,8 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             _model.CaptureLiveCrownBase();
             _view.UpdateLiveCrownBase(_model.LiveCrownBaseAngle);
 
-            if (_model.LiveCrownBaseAngle.HasValue)
+            // SAFETY NET
+            if (_model.LiveCrownBaseAngle.HasValue && DataService.CurrentTree != null)
             {
                 DataService.CurrentTree.LiveCrownBaseAngle = _model.LiveCrownBaseAngle.Value.X;
             }
@@ -174,7 +183,11 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
                 double height = _model.CalculateHeight(distance);
                 _view.UpdateHeightResult($"Height: {height:F2} ft");
 
-                DataService.CurrentTree.Height = height;
+                // SAFETY NET
+                if (DataService.CurrentTree != null)
+                {
+                    DataService.CurrentTree.Height = height;
+                }
             }
             catch (Exception ex)
             {
@@ -205,15 +218,20 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
                 _view.UpdateLiveCrownRatioResult($"Live Crown Ratio: {liveCrownRatio:F2} %");
                 _view.UpdateLiveCrownHeightResult($"Live Crown Height: {liveCrownHeight:F2} ft");
 
-                DataService.CurrentTree.CrownRatioPercent = liveCrownRatio;
-                DataService.CurrentTree.LiveCrownHeight = liveCrownHeight;
-                DataService.CurrentTree.BaseLiveCrown = liveCrownHeight;
+                // SAFETY NET
+                if (DataService.CurrentTree != null)
+                {
+                    DataService.CurrentTree.CrownRatioPercent = liveCrownRatio;
+                    DataService.CurrentTree.LiveCrownHeight = liveCrownHeight;
+                    DataService.CurrentTree.BaseLiveCrown = liveCrownHeight;
+                }
             }
             catch (Exception ex)
             {
                 _view.UpdateLiveCrownRatioResult($"Error: {ex.Message}");
             }
         }
+
         public void CalculateSlope()
         {
             if (!_model.BaseAngle.HasValue)
@@ -226,8 +244,11 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             {
                 double slopePercent = _model.CalculateSlopePercent();
 
-                
-                DataService.CurrentPlot.Slope = slopePercent;
+                // SAFETY NET: Ensure Plot actually exists before saving
+                if (DataService.CurrentPlot != null)
+                {
+                    DataService.CurrentPlot.Slope = slopePercent;
+                }
 
                 _view.UpdateCurrentAngle($"Slope: {slopePercent:F2}%");
             }
