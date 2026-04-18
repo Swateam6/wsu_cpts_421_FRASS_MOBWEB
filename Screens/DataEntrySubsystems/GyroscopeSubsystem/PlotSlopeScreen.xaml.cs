@@ -145,8 +145,5 @@ public partial class PlotSlopeScreen : ContentPage
             Gyroscope.Default.ReadingChanged -= OnGyroscopeReadingChanged;
         }
     }
-    private async void OnLogTreeClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("TreeEntryPage");
-    }
+   
 }

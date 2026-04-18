@@ -32,5 +32,9 @@
         FontAttributes="Bold"
         CornerRadius="8"
         Padding="15" />
+        <Button x:Name="LogTreeButton"
+            Text="Log Tree"
+            Clicked="OnLogTreeClicked"
+            Margin="0, 30, 0, 0" />
     </VerticalStackLayout>
 </ContentPage>

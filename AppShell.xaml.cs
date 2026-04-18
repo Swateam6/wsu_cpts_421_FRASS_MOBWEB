@@ -20,6 +20,7 @@ namespace MOBWEB_TEST
             Routing.RegisterRoute("PlotSlopeScreen", typeof(Screens.PlotSlopeScreen));
             Routing.RegisterRoute("LocationDemo", typeof(Screens.LocationDemo));
             Routing.RegisterRoute("DatabaseTestScreen",typeof(Screens.DatabaseTestScreen));
+            Routing.RegisterRoute("NavigationScreen", typeof(Screens.NavigationScreen));
         }
     }
 }

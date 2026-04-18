@@ -67,15 +67,15 @@
 
             <Button Text="5. Save Defect"
                     Clicked="OnSaveDefectClicked"
-                    BackgroundColor="{StaticResource Magenta}" />
+                    BackgroundColor="{StaticResource MidnightBlue}" />
 
-            <Button Text="Next Tree"
+            <Button Text="Next Tree/Continue Nav"
                     Clicked="OnNextTreeClicked"
                     Margin="0,30,0,0" />
 
             <Button Text="Finish Stand"
                     Clicked="OnFinishStandClicked"
-                    BackgroundColor="{StaticResource Gray500}" />
+                    BackgroundColor="{StaticResource MidnightBlue}" />
 
             <Button Text="Finish Plot"
                     Clicked="OnFinishPlotClicked"

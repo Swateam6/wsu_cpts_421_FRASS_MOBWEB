@@ -108,4 +108,8 @@ public partial class NavigationScreen : ContentPage
         _isTracking = false;
         WeakReferenceMessenger.Default.Unregister<DeviceLocation>(this);
     }
+    private async void OnLogTreeClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("TreeEntryPage");
+    }
 }
