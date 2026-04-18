@@ -4,7 +4,6 @@ using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using MOBWEB_TEST.Services;
 using MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem;
-using IntentsUI;
 using System.Threading.Tasks;
 
 namespace MOBWEB_TEST.Screens;
