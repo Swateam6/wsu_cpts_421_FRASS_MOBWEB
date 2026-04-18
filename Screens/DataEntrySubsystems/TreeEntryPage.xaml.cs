@@ -1,5 +1,5 @@
+namespace MOBWEB_TEST.Screens.DataEntrySubsystems;
 
-using MOBWEB_TEST.Models;
 using MOBWEB_TEST.Services;
 
 public partial class TreeEntryPage : ContentPage
@@ -19,7 +19,7 @@ public partial class TreeEntryPage : ContentPage
             int currentBaf = DataService.CurrentStand?.BAF ?? 20;
 
             // 3. THE BOUNCER: Ask the math class if the tree makes the cut
-            bool isTreeIn = ForestryMath.IsTreeIn(dbh, distance, currentBaf);
+            bool isTreeIn = ForestyMath.IsTreeIn(dbh, distance, currentBaf);
 
             if (isTreeIn)
             {

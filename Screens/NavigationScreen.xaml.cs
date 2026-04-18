@@ -43,11 +43,16 @@ public partial class NavigationScreen : ContentPage
         }
         else
         {
+            _isTracking = false; // Explicitly kill the tracking flag
             TrackButton.Text = "Start Tracking Distance";
             TrackButton.BackgroundColor = Color.FromArgb("#2B5B84");
 
-            // Turn off your teammate's background listener
+            // Turn off the GPS hardware
             _locationService.Stop();
+
+            // Reset the UI so it doesn't look like it's still measuring
+            StatusLabel.Text = "Tracking Stopped.";
+            DistanceLabel.Text = "-- ft";
         }
     }
 
