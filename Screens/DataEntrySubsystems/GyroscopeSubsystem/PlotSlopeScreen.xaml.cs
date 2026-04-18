@@ -4,6 +4,8 @@ using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using MOBWEB_TEST.Services;
 using MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem;
+using IntentsUI;
+using System.Threading.Tasks;
 
 namespace MOBWEB_TEST.Screens;
 
@@ -133,6 +135,10 @@ public partial class PlotSlopeScreen : ContentPage
         {
             SlopeLabel.Text = $"Error: {ex.Message}";
         }
+    }
+    private async void OnStartNavClicked(object sender,EventArgs E)
+    {
+        await Shell.Current.GoToAsync("NavigationScreen");
     }
 
     protected override void OnDisappearing()
