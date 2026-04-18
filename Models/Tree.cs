@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 namespace MOBWEB_TEST.Models;
 public class Tree
 {
+    public int Id { get; set; }
+    public int plotID { get; set; }
     public string? Species { get; set; }
     public double Dbh { get; set; }
     public double Height { get; set; }

@@ -9,6 +9,7 @@ namespace MOBWEB_TEST.Models
     public class Parcel
     {
         public int Id { get; set; }
+        public int uId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Owner { get; set; } = string.Empty;
 

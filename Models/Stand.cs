@@ -7,6 +7,7 @@ namespace MOBWEB_TEST.Models;
 using System.Collections.ObjectModel;
 public class Stand
 {
+    public int prclID { get; set; }
     public int StandId { get; set; }
     public double? Acres { get; set; }
 

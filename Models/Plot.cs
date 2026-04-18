@@ -8,6 +8,7 @@ namespace MOBWEB_TEST.Models;
 using System.Collections.ObjectModel;
 public class Plot
 {
+    public int standNumber { get; set; }
     public int PlotNumber { get; set; }
 
     // --- Mesic Species Subsystem ---
