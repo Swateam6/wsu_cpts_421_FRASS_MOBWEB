@@ -17,4 +17,24 @@ public partial class StandEntryData : ContentPage
 
         await Shell.Current.GoToAsync("PlotEntryScreen");
     }
+    private void OnBafSelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex != -1) // -1 means nothing is selected yet
+        {
+            // Grab the string they clicked (e.g., "20") and turn it into math
+            string selectedString = picker.Items[selectedIndex];
+            int selectedBaf = int.Parse(selectedString);
+
+            // Lock it into your global state!
+            // (Assuming you have a CurrentStand object in your DataService)
+            if (DataService.CurrentStand != null)
+            {
+                DataService.CurrentStand.BAF = selectedBaf;
+                Console.WriteLine($"Stand BAF locked in at: {DataService.CurrentStand.BAF}");
+            }
+        }
+    }
 }

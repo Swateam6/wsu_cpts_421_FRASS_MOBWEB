@@ -40,4 +40,6 @@ public class Plot
 
     // The individual tree measurements
     public ObservableCollection<Tree> TreeList { get; set; } = new();
+
+    public double limitingDBH { get; set; }
 }

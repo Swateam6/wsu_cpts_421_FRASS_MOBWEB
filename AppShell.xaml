@@ -32,8 +32,16 @@
         Route="DataUploadScreen" />
 
     <ShellContent
+
         Title="Database"
         ContentTemplate="{DataTemplate local:Screens.DatabaseTestScreen}"
         Route="DatabaseTestScreen" />
+    <ShellContent
+         Title="GeolocationDemo"
+         Route="LocationDemo"
+         ContentTemplate="{DataTemplate local:Screens.LocationDemo}" />
 
 </Shell>
+
+       
+

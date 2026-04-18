@@ -99,4 +99,8 @@ public partial class GyroscopeScreen : ContentPage
         base.OnDisappearing();
         _controller.StopGyroscope();
     }
+    private async void OnGoToDefectScreenClicked(object sender,EventArgs E)
+    {
+        await Shell.Current.GoToAsync("DefectScreen");
+    }
 }

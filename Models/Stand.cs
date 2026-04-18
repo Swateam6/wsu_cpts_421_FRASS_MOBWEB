@@ -10,6 +10,7 @@ public class Stand
     public int StandId { get; set; }
     public double? Acres { get; set; }
 
+    public int BAF { get; set; }
     public DateTime CruiseDate { get; set; }
 
     // Holds all the plots you cruise within this stand

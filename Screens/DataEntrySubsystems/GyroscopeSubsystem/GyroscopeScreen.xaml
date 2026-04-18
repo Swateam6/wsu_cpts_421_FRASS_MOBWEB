@@ -61,6 +61,10 @@
                     Clicked="OnCalculateHeightClicked"/>
             <Button Text="Calculate Live Crown Ratio"
                     Clicked="OnCalculateLiveCrownRatioClicked"/>
+			<Button Text="Go to Defect Screen"
+                 Clicked="OnGoToDefectScreenClicked"
+                 HorizontalOptions="Center"
+                 Margin="0,20,0,0"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

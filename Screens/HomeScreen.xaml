@@ -40,5 +40,10 @@
             SemanticProperties.Hint="Test database functionality"
             Clicked="OnDatabaseTestClicked"
             HorizontalOptions="Fill" />
+        <Button 
+            x:Name="GeolocationDemo"
+            Text="Geolocation Demo"
+            Clicked="OnGeolocationDemoClicked"
+            HorizontalOptions="Fill" />
     </VerticalStackLayout>
 </ContentPage>
