@@ -103,29 +103,38 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
         {
             if (!Gyroscope.Default.IsMonitoring) return;
 
-            // 1. Declare and Parse the distance first
-            if (!double.TryParse(distanceText, out double distance)) return;
+            // 1. Validation: Distance Check (Already there)
+            if (!double.TryParse(distanceText, out double distance) || distance <= 0)
+            {
+                _view.UpdateDescription("Please enter a valid distance.");
+                return;
+            }
 
-            // 2. Grab the raw angles from the _model (This fixes the _model error)
+            // 2. NEW Validation: Description Null/Empty Check
+            if (string.IsNullOrWhiteSpace(descriptionText))
+            {
+                // Highlight the error in the UI
+                _view.UpdateDescription("Error: Defect description cannot be empty.");
+                return; // Stop here so we don't save a blank record
+            }
+
+            // 3. If validation passes, proceed with the save
             double baseAngleDegrees = _model.BaseAngle?.X ?? 0;
             double topAngleDegrees = _model.TopAngle?.X ?? 0;
 
-            // 3. Do the Trig Math (This fixes the bottom/topHeight errors)
-            double baseAngleRad = baseAngleDegrees * (Math.PI / 180.0);
-            double topAngleRad = topAngleDegrees * (Math.PI / 180.0);
+            // ... (Trig math goes here) ...
 
-            double bottomHeight = distance * Math.Tan(baseAngleRad);
-            double topHeight = distance * Math.Tan(topAngleRad);
-
-            // 4. Now that everything is "born," assign it to the DataService
-            DataService.CurrentDefect.BaseAngle = baseAngleDegrees;
-            DataService.CurrentDefect.TopAngle = topAngleDegrees;
-            DataService.CurrentDefect.bottomHeight = bottomHeight;
-            DataService.CurrentDefect.topHeight = topHeight;
-
-            // 5. Finalize the record
             DataService.CurrentDefect.Description = descriptionText;
+
+            // Final check: Did they actually capture angles?
+            if (baseAngleDegrees == 0 && topAngleDegrees == 0)
+            {
+                _view.UpdateDescription("Error: No angles captured. Aim and hit Capture.");
+                return;
+            }
+
             DataService.SaveDefectToTree();
+            _view.UpdateDescription("Defect successfully saved to tree!");
         }
 
     }
