@@ -139,12 +139,20 @@ public partial class DatabaseTestScreen : ContentPage
         await _db.AddTreeDataAsync(tree2);
 
         // Link a Defect to Tree #2
-        await _db.AddDefectDataAsync(new defect_data
+        // Seeding a defect with all fields populated
+        await _db.AddDefectDataAsync(new sqllite.defect_data
         {
             parentTreeId = tree2.Id,
             Description = "Basal scar",
+
+            // Store the raw inputs (Degrees)
             BaseAngle = 0,
-            TopAngle = 3
+            TopAngle = 3,
+
+            // Store the derived result (Height in feet)
+            // Assuming 66ft distance for standard cruising math:
+            // (Tan(3°) - Tan(0°)) * 66 = ~3.5ft
+            CalculatedHeight = 3.5f
         });
 
         // Repeat the pattern for Plot 2 and its trees...
