@@ -35,13 +35,5 @@ namespace MOBWEB_TEST.sqllite
         [Column("crown_ratio(%)")]
         public float CrownRatio { get; set; }
 
-        [Column("defect_description")]
-        public string DefectDescription { get; set; } = string.Empty;
-
-        [Column("defect_base(ft)")]
-        public float DefectBase { get; set; }
-
-        [Column("defect_top(ft)")]
-        public float DefectTop { get; set; }
     }
 }

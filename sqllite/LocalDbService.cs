@@ -22,6 +22,7 @@ namespace MOBWEB_TEST.sqllite
         // Safe initialization method to call when the app starts
         public async Task InitAsync()
         {
+            await _connection.CreateTableAsync<defect_data>();
             await _connection.CreateTableAsync<tree_data>();
             await _connection.CreateTableAsync<plot_data>();
             await _connection.CreateTableAsync<stand_data>();
@@ -198,6 +199,35 @@ namespace MOBWEB_TEST.sqllite
                 .Where(p => p.parentUserId == userID)
                 .ToListAsync();
         }
+
+
+        public async Task AddDefectDataAsync(defect_data defect)
+        {
+            await _connection.InsertAsync(defect);
+        }
+
+        public async Task<List<defect_data>> GetAllDefectDataAsync()
+        {
+            return await _connection.Table<defect_data>().ToListAsync();
+        }
+
+        public async Task<defect_data> GetDefectDataByIdAsync(int id)
+        {
+            return await _connection.Table<defect_data>().Where(s => s.Id == id).FirstOrDefaultAsync();
+        }
+
+
+
+        public async Task DefectStandDataAsync(defect_data data)
+        {
+            await _connection.UpdateAsync(data);
+        }
+
+        public async Task DeleteDefectDataAsync(defect_data data)
+        {
+            await _connection.DeleteAsync(data);
+        }
+
 
     }
 }

@@ -131,7 +131,7 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             Services.DataService.CurrentDefect.topHeight = topHeight;
 
             // Save the actual text, but use a fallback if the cruiser left it blank
-            Services.DataService.CurrentDefect.DefectType = string.IsNullOrWhiteSpace(descriptionText)
+            Services.DataService.CurrentDefect.Description = string.IsNullOrWhiteSpace(descriptionText)
                 ? "Unspecified Defect"
                 : descriptionText;
 

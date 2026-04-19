@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
-namespace MOBWEB_TEST.Models
+namespace MOBWEB_TEST.sqllite
 {
-    public  class Defects
+    [Table("defect_data")]
+    public class defect_data
     {
-        public int treeID { get; set; }
-        public int ID { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+
+        [Indexed]
+        public int parentTreeId { get; set; } // Link to the tree
         public string? Description { get; set; }
 
         // Raw gyro angles for the math
@@ -21,5 +26,6 @@ namespace MOBWEB_TEST.Models
 
         public double topHeight { get; set; }
         public double bottomHeight { get; set; }
+
     }
 }
