@@ -12,8 +12,8 @@ namespace MOBWEB_TEST.Location
         {
             Geolocation.LocationChanged += Geolocation_LocationChanged;
             Compass.Default.ReadingChanged += Compass_CompassReadingChanged;
-            Compass.Default.Start(SensorSpeed.UI);
-            var request = new GeolocationListeningRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(1));
+            Compass.Default.Start(SensorSpeed.Game);
+            var request = new GeolocationListeningRequest(GeolocationAccuracy.Best, TimeSpan.FromMilliseconds(500));
             if (request is not null)
             {
                 _isListening = await Geolocation.StartListeningForegroundAsync(request);
@@ -37,7 +37,7 @@ namespace MOBWEB_TEST.Location
                 e.Location.Longitude,
                 e.Location.Altitude ?? -1,
                 _currentHeading,
-                360 - _currentHeading); // used for compass display rotation
+                360 - _currentHeading);
             WeakReferenceMessenger.Default.Send(deviceLocation);
         }
 
