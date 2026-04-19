@@ -131,23 +131,23 @@ public partial class DefectScreen : ContentPage
                         await _database.AddTreeDataAsync(sqlTree);
 
                         // 4. Loop through Defects in each Tree
-                        if (uiTree.DefectList != null)
+                        foreach (var uiDefect in uiTree.DefectList)
                         {
-                            foreach (var uiDefect in uiTree.DefectList)
+                            var sqlDefect = new sqllite.defect_data
                             {
-                                var sqlDefect = new sqllite.defect_data
-                                {
-                                    parentTreeId = sqlTree.Id,
-                                    Description = uiDefect.Description,
-                                    BaseAngle = (float)uiDefect.BaseAngle,
-                                    TopAngle = (float)uiDefect.TopAngle,
-                                    // Distance line removed because it's no longer in the UI Model
-                                    CalculatedHeight = (float)uiDefect.CalculatedHeight
-                                };
+                                parentTreeId = sqlTree.Id,
+                                Description = uiDefect.Description,
 
-                                // Ensure this method exists in your LocalDbService!
-                                await _database.AddDefectDataAsync(sqlDefect);
-                            }
+                                // Angle to Angle (Safe and correct)
+                                BaseAngle = (float)uiDefect.BaseAngle,
+                                TopAngle = (float)uiDefect.TopAngle,
+
+                                // Height Calculation (The final result)
+                                // This calculates the total 'length' of the defect on the trunk
+                                CalculatedHeight = (float)(uiDefect.topHeight - uiDefect.bottomHeight)
+                            };
+
+                            await _database.AddDefectDataAsync(sqlDefect);
                         }
                     }
                 }

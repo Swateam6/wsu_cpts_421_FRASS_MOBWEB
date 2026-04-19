@@ -198,6 +198,11 @@ public partial class DatabaseTestScreen : ContentPage
     private async Task ClearAllTables()
     {
         // delete from top down (Children first, then parents)
+
+        var allDefects = await _db.GetAllDefectDataAsync();
+        foreach (var d in allDefects) await _db.DeleteDefectDataAsync(d);
+
+
         var allTrees = await _db.GetAllTreeDataAsync();
         foreach (var t in allTrees) await _db.DeleteTreeDataAsync(t);
 

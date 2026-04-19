@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using MOBWEB_TEST.Services;
 
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
 {
@@ -100,48 +101,32 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
 
         public void SaveDefect(string distanceText, string descriptionText)
         {
-            if (!Gyroscope.Default.IsMonitoring)
-            {
-                return;
-            }
+            if (!Gyroscope.Default.IsMonitoring) return;
 
-            // 1. Validate the distance input 
-            if (!double.TryParse(distanceText, out double distance) || distance <= 0)
-            {
-                _view.UpdateDescription("Enter a valid positive distance.");
-                return;
-            }
+            // 1. Declare and Parse the distance first
+            if (!double.TryParse(distanceText, out double distance)) return;
 
-            // 2. Safely grab the angles (Default to 0 if null)
+            // 2. Grab the raw angles from the _model (This fixes the _model error)
             double baseAngleDegrees = _model.BaseAngle?.X ?? 0;
             double topAngleDegrees = _model.TopAngle?.X ?? 0;
 
-            // 3. Convert degrees to Radians for C# Math library
+            // 3. Do the Trig Math (This fixes the bottom/topHeight errors)
             double baseAngleRad = baseAngleDegrees * (Math.PI / 180.0);
             double topAngleRad = topAngleDegrees * (Math.PI / 180.0);
 
-            // 4. Calculate heights using Trigonometry
-            // If baseAngle is negative (looking down), Math.Tan will be negative, 
-            // which accurately represents depth below eye level.
             double bottomHeight = distance * Math.Tan(baseAngleRad);
             double topHeight = distance * Math.Tan(topAngleRad);
 
-            // 5. Save to your global DataService
-            Services.DataService.CurrentDefect.bottomHeight = bottomHeight;
-            Services.DataService.CurrentDefect.topHeight = topHeight;
+            // 4. Now that everything is "born," assign it to the DataService
+            DataService.CurrentDefect.BaseAngle = baseAngleDegrees;
+            DataService.CurrentDefect.TopAngle = topAngleDegrees;
+            DataService.CurrentDefect.bottomHeight = bottomHeight;
+            DataService.CurrentDefect.topHeight = topHeight;
 
-            // Save the actual text, but use a fallback if the cruiser left it blank
-            Services.DataService.CurrentDefect.Description = string.IsNullOrWhiteSpace(descriptionText)
-                ? "Unspecified Defect"
-                : descriptionText;
-
-            Services.DataService.SaveDefectToTree();
-
-            // 6. Reset the UI and Model for the next defect
-            _view.UpdateDescription("Defect Saved successfully.");
-            _model.ClearAll();
-            _view.UpdateBaseLabel(null);
-            _view.UpdateTopLabel(null);
+            // 5. Finalize the record
+            DataService.CurrentDefect.Description = descriptionText;
+            DataService.SaveDefectToTree();
         }
+
     }
 }
