@@ -213,7 +213,7 @@ namespace MOBWEB_TEST.sqllite
 
         public async Task<defect_data> GetDefectDataByIdAsync(int id)
         {
-            return await _connection.Table<defect_data>().Where(s => s.Id == id).FirstOrDefaultAsync();
+            return await _connection.Table<defect_data>().Where(d => d.Id == id).FirstOrDefaultAsync();
         }
 
 

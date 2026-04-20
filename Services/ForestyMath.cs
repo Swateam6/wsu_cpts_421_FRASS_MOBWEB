@@ -10,11 +10,22 @@ namespace MOBWEB_TEST.Services
     {
 
         private const double EarthRadiusFeet = 20902231.0;
-        public static bool IsTreeIn(double dbh, double distanceToTree, int baf)
+        public static bool IsTreeIn(double distance, double dbh, double plotParameter, bool isFixedRadius)
         {
-            double prf = 8.696 / Math.Sqrt(baf);
-            double limitingDistance = dbh * prf;
-            return distanceToTree <= limitingDistance;
+            if (isFixedRadius)
+            {
+                // plotParameter = The constant radius (e.g., 37.2)
+                return distance <= plotParameter;
+            }
+            else
+            {
+                // plotParameter = The BAF (e.g., 20)
+                // Calculating the PRF (Plot Radius Factor)
+                double prf = 8.696 / Math.Sqrt(plotParameter);
+                double limitingDistance = dbh * prf;
+
+                return distance <= limitingDistance;
+            }
         }
         public static (double Latitude, double Longitude) CalculateTreeCoordinates(
         double plotLat, double plotLon, double distanceFeet, double bearingDegrees)

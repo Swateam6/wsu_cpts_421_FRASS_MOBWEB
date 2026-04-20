@@ -42,6 +42,9 @@ namespace MOBWEB_TEST.sqllite
         [Column("most_mesic_bush_species")]
         public string MostMesicBushSpecies { get; set; } = string.Empty;
 
-       
+
+        public double size { get; set; }
+
+
     }
 }

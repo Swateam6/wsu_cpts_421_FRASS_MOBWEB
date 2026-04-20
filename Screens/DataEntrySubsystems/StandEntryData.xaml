@@ -27,6 +27,52 @@
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
                    ClearButtonVisibility="WhileEditing" />
 
+            <Label Text="Measurement Method:" 
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+                   FontAttributes="Bold" />
+            <Picker x:Name="PlotTypePicker" 
+                    Title="Select Method..." 
+                    SelectedIndexChanged="OnPlotTypeSelectedIndexChanged"
+                    BackgroundColor="White"
+                    TextColor="Black">
+                <Picker.Items>
+                    <x:String>Variable Radius (Prism)</x:String>
+                    <x:String>Fixed Radius</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <VerticalStackLayout x:Name="VariableSection" IsVisible="False" Spacing="10">
+                <Label Text="Basal Area Factor (BAF):" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="#2B5B84" />
+                <Picker x:Name="BafPicker" 
+                        Title="Select Prism BAF..." 
+                        BackgroundColor="White"
+                        TextColor="Black">
+                    <Picker.Items>
+                        <x:String>10</x:String>
+                        <x:String>20</x:String>
+                        <x:String>30</x:String>
+                        <x:String>40</x:String>
+                        <x:String>60</x:String>
+                    </Picker.Items>
+                </Picker>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="FixedSection" IsVisible="False" Spacing="10">
+                <Label Text="Plot Radius (Feet):" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="#2B5B84" />
+                <Entry x:Name="RadiusEntry" 
+                       Placeholder="e.g. 37.2 for 1/10th acre" 
+                       Keyboard="Numeric" 
+                       BackgroundColor="White"
+                       TextColor="Black" />
+            </VerticalStackLayout>
+
             <Button Text="Start Plotting" 
                     Clicked="OnStartPlottingClicked" 
                     Margin="0,20,0,0"
@@ -36,24 +82,6 @@
                     FontSize="18"
                     FontAttributes="Bold"
                     CornerRadius="8"/>
-            <Label Text="Basal Area Factor (BAF)" 
-           FontSize="16" 
-           FontAttributes="Bold" 
-           TextColor="#2B5B84" />
-
-            <Picker x:Name="BafPicker" 
-            Title="Select Prism BAF..." 
-            SelectedIndexChanged="OnBafSelectedIndexChanged"
-            BackgroundColor="White"
-            TextColor="Black">
-                <Picker.Items>
-                    <x:String>10</x:String>
-                    <x:String>20</x:String>
-                    <x:String>30</x:String>
-                    <x:String>40</x:String>
-                    <x:String>60</x:String>
-                </Picker.Items>
-            </Picker>
 
         </VerticalStackLayout>
     </ScrollView>

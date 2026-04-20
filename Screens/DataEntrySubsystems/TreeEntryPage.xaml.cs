@@ -34,10 +34,12 @@ public partial class TreeEntryPage : ContentPage
             double.TryParse(AzimuthEntry.Text, out double azimuth))
         {
             // 2. Grab your BAF (Defaulting to 20 if the Stand hasn't been set up yet)
-            int currentBaf = DataService.CurrentStand?.BAF ?? 20;
+            bool methodIsFixed = DataService.CurrentStand.IsFixedPlot;
+
+            double currentSize = DataService.CurrentPlot?.size ?? 20.00;
 
             // 3. THE BOUNCER: Ask the math class if the tree makes the cut
-            bool isTreeIn = ForestyMath.IsTreeIn(dbh, distance, currentBaf);
+            bool isTreeIn = ForestyMath.IsTreeIn(dbh, distance, currentSize,methodIsFixed);
 
             if (isTreeIn)
             {

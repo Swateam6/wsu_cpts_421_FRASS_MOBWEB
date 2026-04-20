@@ -44,5 +44,6 @@ namespace MOBWEB_TEST.sqllite
         [Column("stand_elevation(ft)")]
         public float Elevation { get; set; }
 
+        public bool IsFixedPlot { get; set; }
     }
 }

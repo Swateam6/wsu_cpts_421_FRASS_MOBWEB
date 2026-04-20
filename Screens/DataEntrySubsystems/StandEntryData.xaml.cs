@@ -1,6 +1,8 @@
 namespace MOBWEB_TEST.Screens.DataEntrySubsystems;
+
 using MOBWEB_TEST.Models;
 using MOBWEB_TEST.Services;
+
 public partial class StandEntryData : ContentPage
 {
     public StandEntryData()
@@ -8,33 +10,63 @@ public partial class StandEntryData : ContentPage
         InitializeComponent();
     }
 
+    // NEW: Toggles the UI based on what they select
+    private void OnPlotTypeSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (PlotTypePicker.SelectedIndex == 0) // Variable Radius (Prism)
+        {
+            VariableSection.IsVisible = true;
+            FixedSection.IsVisible = false;
+        }
+        else if (PlotTypePicker.SelectedIndex == 1) // Fixed Radius
+        {
+            VariableSection.IsVisible = false;
+            FixedSection.IsVisible = true;
+        }
+    }
+
     private async void OnStartPlottingClicked(object sender, EventArgs e)
     {
-        // ... your parsing logic ...
-        // ...
-        // ADD THIS: Clear the UI text boxes so they are blank for the next stand
-        AcresEntry.Text = string.Empty;
+        if (DataService.CurrentStand == null) return;
 
-        await Shell.Current.GoToAsync("PlotEntryScreen");
-    }
-    private void OnBafSelectedIndexChanged(object sender, EventArgs e)
-    {
-        var picker = (Picker)sender;
-        int selectedIndex = picker.SelectedIndex;
-
-        if (selectedIndex != -1) // -1 means nothing is selected yet
+        // 1. Parse the Acres
+        if (double.TryParse(AcresEntry.Text, out double acres))
         {
-            // Grab the string they clicked (e.g., "20") and turn it into math
-            string selectedString = picker.Items[selectedIndex];
-            int selectedBaf = int.Parse(selectedString);
+            DataService.CurrentStand.Acres = acres;
+        }
 
-            // Lock it into your global state!
-            // (Assuming you have a CurrentStand object in your DataService)
-            if (DataService.CurrentStand != null)
+        // 2. Set the Boolean and the Value based on the UI selection
+        if (PlotTypePicker.SelectedIndex == 0) // Variable Radius (Prism)
+        {
+            // 1. Set the boolean in the Stand
+            DataService.CurrentStand.IsFixedPlot = false;
+
+            // 2. Store the BAF in DataService to pass it to the Plot class later
+            if (BafPicker.SelectedIndex != -1)
             {
-                DataService.CurrentStand.BAF = selectedBaf;
-                Console.WriteLine($"Stand BAF locked in at: {DataService.CurrentStand.BAF}");
+                double selectedBaf = double.Parse(BafPicker.SelectedItem.ToString());
+                DataService.CurrentPlot.size = selectedBaf;
             }
         }
+        else if (PlotTypePicker.SelectedIndex == 1) // Fixed Radius
+        {
+            // 1. Set the boolean in the Stand
+            DataService.CurrentStand.IsFixedPlot = true;
+
+            // 2. Store the Radius in DataService to pass it to the Plot class later
+            if (double.TryParse(RadiusEntry.Text, out double parsedRadius))
+            {
+                DataService.CurrentPlot.size = parsedRadius;
+            }
+        }
+
+        // 3. Clear the UI for the next session
+        AcresEntry.Text = string.Empty;
+        RadiusEntry.Text = string.Empty;
+        BafPicker.SelectedIndex = -1;
+        PlotTypePicker.SelectedIndex = -1;
+
+        // 4. Proceed to the plotting screen
+        await Shell.Current.GoToAsync("PlotEntryScreen");
     }
 }
