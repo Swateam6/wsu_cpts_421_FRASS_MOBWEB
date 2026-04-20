@@ -88,6 +88,9 @@
 	  <Compile Update="Screens\EntryScreen.xaml.cs">
 	    <DependentUpon>EntryScreen.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Screens\PlotCoordinateSet.xaml.cs">
+	    <DependentUpon>PlotCoordinateSet.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -124,7 +127,7 @@
 	  <MauiXaml Update="Screens\LocationDemo.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Screens\NavigationScreen.xaml">
+	  <MauiXaml Update="Screens\PlotCoordinateSet.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\ProfileScreen.xaml">

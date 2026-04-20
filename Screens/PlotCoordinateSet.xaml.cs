@@ -5,12 +5,12 @@ using MOBWEB_TEST.Services;
 
 namespace MOBWEB_TEST.Screens;
 
-public partial class NavigationScreen : ContentPage
+public partial class PlotCoordinateSet : ContentPage
 {
     private readonly LocationService _locationService;
     private bool _isAcquiring = false;
 
-    public NavigationScreen()
+    public PlotCoordinateSet()
     {
         InitializeComponent();
         _locationService = new LocationService();
