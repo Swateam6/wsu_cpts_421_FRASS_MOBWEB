@@ -16,6 +16,8 @@
             Text="{Binding ListeningButtonText}"
             Command="{Binding ChangeListeningModeCommand}"
             HorizontalOptions="Fill" />
+        
+        <!--User Location -->
         <Grid ColumnSpacing="10" RowSpacing="10" IsVisible="{Binding IsListening}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -43,6 +45,99 @@
             <Label Grid.Row="3" Grid.Column="0" Text="Altitude(m)" TextColor="Black" />
             <Label Grid.Row="3" Grid.Column="1" Text="{Binding Altitude}" TextColor="Black" />
         </Grid>
+        
+        <!--Compass-->
+        <VerticalStackLayout IsVisible="{Binding IsListening}" Spacing="10" Padding="10">
+            <Label Text="Compass"
+                   TextColor="Black"
+                   BackgroundColor="LightGray"
+                   HorizontalOptions="Fill"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   Padding="5" />
+
+            <!-- Cardinal Direction Display -->
+            <Label x:Name="CardinalDirectionLabel"
+                   Text="{Binding Reading, StringFormat='Heading: {0:F1}°'}"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   FontSize="16" />
+
+            <!-- Cardinal/Ordinal Direction Text -->
+            <Label x:Name="DirectionTextLabel"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   FontSize="24"
+                   FontAttributes="Bold" />
+
+            <!-- Rotating Compass Visual -->
+            <Frame BorderColor="Gray"
+                   CornerRadius="100"
+                   Padding="10"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HasShadow="True">
+                <Grid WidthRequest="200" HeightRequest="200">
+                    <!-- Compass Circle Background -->
+                    <BoxView BackgroundColor="White"
+                        CornerRadius="100"
+                        Grid.Row="0" />
+
+                    <!-- Cardinal Direction Labels -->
+                    <Label Text="N"
+                            TextColor="Red"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Start"
+                            Margin="0,10,0,0" />
+                    <Label Text="S"
+                            TextColor="Black"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            Margin="0,0,0,10" />
+                    <Label Text="E"
+                            TextColor="Black"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Margin="0,0,10,0" />
+                    <Label Text="W"
+                            TextColor="Black"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Margin="10,0,0,0" />
+
+                    <!-- Rotating Compass Needle -->
+                    <Grid x:Name="compassNeedle"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           WidthRequest="200"
+                           HeightRequest="200">
+                        <BoxView BackgroundColor="Red"
+                              WidthRequest="4"
+                              HeightRequest="70"
+                              CornerRadius="2"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Start"
+                              Margin="0,10,0,0" />
+                    </Grid>
+
+                    <!-- Center Circle -->
+                    <Ellipse Fill="Black"
+                            WidthRequest="10"
+                            HeightRequest="10"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+        
         <Button
             x:Name="BackToHome"
             Text="Return to Home Screen"
