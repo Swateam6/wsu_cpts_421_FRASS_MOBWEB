@@ -30,4 +30,7 @@ public class Tree
     public string DisplaySummary => $"{Species} - {Dbh}\" DBH, {Height}' Tall";
 
     public ObservableCollection<Defects> DefectList { get; set; } = new();
+
+    public double latitude { get; set; }
+    public double longitude { get; set; }
 }

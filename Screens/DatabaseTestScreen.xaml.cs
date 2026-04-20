@@ -115,7 +115,9 @@ public partial class DatabaseTestScreen : ContentPage
             parentPlotId = plot1.Id,
             Species = "Douglas Fir",
             DiameterBreastHeight = 12.5f,
-            Height = 60
+            Height = 60,
+            Latitude = 46.8621f,   // Added Coordinate
+            Longitude = -117.1645f // Added Coordinate
         };
         await _db.AddTreeDataAsync(tree1);
 
@@ -134,28 +136,21 @@ public partial class DatabaseTestScreen : ContentPage
             parentPlotId = plot1.Id,
             Species = "Ponderosa Pine",
             DiameterBreastHeight = 9.0f,
-            Height = 45
+            Height = 45,
+            Latitude = 46.8622f,   // Added Coordinate (slightly offset from Tree 1)
+            Longitude = -117.1646f // Added Coordinate
         };
         await _db.AddTreeDataAsync(tree2);
 
         // Link a Defect to Tree #2
-        // Seeding a defect with all fields populated
         await _db.AddDefectDataAsync(new sqllite.defect_data
         {
             parentTreeId = tree2.Id,
             Description = "Basal scar",
-
-            // Store the raw inputs (Degrees)
             BaseAngle = 0,
             TopAngle = 3,
-
-            // Store the derived result (Height in feet)
-            // Assuming 66ft distance for standard cruising math:
-            // (Tan(3°) - Tan(0°)) * 66 = ~3.5ft
             CalculatedHeight = 3.5f
         });
-
-        // Repeat the pattern for Plot 2 and its trees...
     }
 
     private async Task PrintDatabaseContents()
@@ -165,7 +160,7 @@ public partial class DatabaseTestScreen : ContentPage
         var stands = await _db.GetAllStandDataAsync();
         var parcels = await _db.GetAllParcelDataAsync();
         var users = await _db.GetAllUserDataAsync();
-        var defects =await _db.GetAllDefectDataAsync();
+        var defects = await _db.GetAllDefectDataAsync();
 
         var output = "═══════════════════════════════════════════\n";
         output += "DATABASE CONTENTS\n";
@@ -189,18 +184,19 @@ public partial class DatabaseTestScreen : ContentPage
 
         output += $"\n── tree_data ({trees.Count} records) ──\n";
         foreach (var t in trees)
-            output += $"  ID:{t.Id} | PlotFK:{t.parentPlotId} | {t.Species} | DBH:{t.DiameterBreastHeight}\n";
+            // Added formatting to print the new tree coordinates
+            output += $"  ID:{t.Id} | PlotFK:{t.parentPlotId} | {t.Species} | DBH:{t.DiameterBreastHeight} | ({t.Latitude:F4}, {t.Longitude:F4})\n";
 
-        // --- NEW: DEFECT SECTION ---
         output += $"\n── defect_data ({defects.Count} records) ──\n";
         foreach (var d in defects)
         {
-            // Printing the ParentTreeId helps you verify the relational link
             output += $"  ID:{d.Id} | TreeFK:{d.parentTreeId} | {d.Description} | Ht:{d.CalculatedHeight:F1}ft | (B:{d.BaseAngle}°, T:{d.TopAngle}°)\n";
         }
 
         OutputLabel.Text = output;
     }
+
+
 
 
     private async Task ClearAllTables()
