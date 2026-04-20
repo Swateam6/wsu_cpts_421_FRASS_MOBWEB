@@ -18,6 +18,12 @@ namespace MOBWEB_TEST.Location
         private double altitude;
 
         [ObservableProperty]
+        private double reading;
+
+        [ObservableProperty]
+        private double rotationAngle;
+
+        [ObservableProperty]
         private bool isListening;
 
         [ObservableProperty]
@@ -32,6 +38,9 @@ namespace MOBWEB_TEST.Location
                 Latitude = deviceLocation.Latitude;
                 Longitude = deviceLocation.Longitude;
                 Altitude = deviceLocation.Altitude;
+                Reading = deviceLocation.Reading;
+                RotationAngle = deviceLocation.RotationAngle;
+
             });
         }
 
