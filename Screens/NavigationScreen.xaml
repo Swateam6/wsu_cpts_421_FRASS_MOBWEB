@@ -2,39 +2,41 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MOBWEB_TEST.Screens.NavigationScreen"
-             Title="Plot Navigation">
+             Title="Plot Setup">
 
     <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
 
-        <Label Text="Distance to Plot" 
+        <Label Text="Current Plot Center" 
                FontSize="24" 
                HorizontalOptions="Center" />
 
-        <Label x:Name="DistanceLabel" 
-               Text="-- ft" 
-               FontSize="64" 
-               FontAttributes="Bold"
-               TextColor="DarkGreen"
-               HorizontalOptions="Center" />
+        <Label x:Name="CoordinatesLabel" 
+             Text="Not Set" 
+             FontSize="28" 
+             FontAttributes="Bold"
+             TextColor="DarkGreen"
+             HorizontalOptions="Center" />
 
         <Label x:Name="StatusLabel" 
-               Text="Waiting for Plot Center..." 
+               Text="Press button to acquire GPS lock." 
                FontSize="14" 
                TextColor="Gray"
                HorizontalOptions="Center" 
                HorizontalTextAlignment="Center" />
 
-        <Button x:Name="TrackButton"
-        Text="Start Tracking Distance" 
-        Clicked="OnToggleTrackingClicked" 
-        BackgroundColor="#2B5B84" 
-        TextColor="White"
-        FontAttributes="Bold"
-        CornerRadius="8"
-        Padding="15" />
+        <Button x:Name="LockCenterButton"
+                Text="Lock Plot Center" 
+                Clicked="OnLockCenterClicked" 
+                BackgroundColor="#2B5B84" 
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                Padding="15" />
+
         <Button x:Name="LogTreeButton"
-            Text="Log Tree"
-            Clicked="OnLogTreeClicked"
-            Margin="0, 30, 0, 0" />
+                Text="Log Tree"
+                Clicked="OnLogTreeClicked"
+                Margin="0, 30, 0, 0" />
+
     </VerticalStackLayout>
 </ContentPage>

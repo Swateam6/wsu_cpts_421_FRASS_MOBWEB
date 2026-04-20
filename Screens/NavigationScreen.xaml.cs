@@ -2,112 +2,76 @@ using Microsoft.Maui.Devices.Sensors;
 using CommunityToolkit.Mvvm.Messaging;
 using MOBWEB_TEST.Location;
 using MOBWEB_TEST.Services;
-// The alias to prevent namespace collisions
-using MauiLocation = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace MOBWEB_TEST.Screens;
 
 public partial class NavigationScreen : ContentPage
 {
-    private MauiLocation _mockPlotCenter;
     private readonly LocationService _locationService;
-    private bool _isTracking = false;
+    private bool _isAcquiring = false;
 
     public NavigationScreen()
     {
         InitializeComponent();
-
         _locationService = new LocationService();
 
+        // Listen for GPS pings from the background service
         WeakReferenceMessenger.Default.Register<DeviceLocation>(this, (sender, deviceLocation) =>
         {
-            UpdateDistance(deviceLocation);
+            OnLocationReceived(deviceLocation);
         });
     }
 
-    private void OnToggleTrackingClicked(object sender, EventArgs e)
+    private void OnLockCenterClicked(object sender, EventArgs e)
     {
-        _isTracking = !_isTracking;
+        if (_isAcquiring) return; // Prevent spam clicking while already searching
 
-        if (_isTracking)
-        {
-            // Reset the mock center every time you start tracking so it grabs a fresh location
-            _mockPlotCenter = null;
+        _isAcquiring = true;
+        LockCenterButton.Text = "Acquiring...";
+        LockCenterButton.BackgroundColor = Colors.DarkOrange;
+        StatusLabel.Text = "Waiting for GPS signal...";
 
-            TrackButton.Text = "Stop Tracking";
-            TrackButton.BackgroundColor = Colors.DarkRed;
-            StatusLabel.Text = "Acquiring Plot Center...";
-
-            // Turn on your teammate's background listener
-            _ = _locationService.Start();
-        }
-        else
-        {
-            _isTracking = false; // Explicitly kill the tracking flag
-            TrackButton.Text = "Start Tracking Distance";
-            TrackButton.BackgroundColor = Color.FromArgb("#2B5B84");
-
-            // Turn off the GPS hardware
-            _locationService.Stop();
-
-            // Reset the UI so it doesn't look like it's still measuring
-            StatusLabel.Text = "Tracking Stopped.";
-            DistanceLabel.Text = "-- ft";
-        }
+        // Turn on the background listener
+        _ = _locationService.Start();
     }
 
-    private void UpdateDistance(DeviceLocation deviceLocation)
+    private void OnLocationReceived(DeviceLocation deviceLocation)
     {
-        if (!_isTracking) return;
+        if (!_isAcquiring) return;
 
-        try
+        // 1. We got the ping! Turn off the acquiring flag.
+        _isAcquiring = false;
+
+        // 2. Shut off the GPS hardware immediately since we only need the center point
+        _locationService.Stop();
+
+        // 3. Save directly to the DataService
+        if (DataService.CurrentPlot != null)
         {
-            // Convert teammate's object to MAUI object
-            var currentLocation = new MauiLocation(deviceLocation.Latitude, deviceLocation.Longitude);
-
-            // AUTO-LOCK LOGIC: If we don't have a center yet, this first ping IS the center!
-            if (_mockPlotCenter == null)
-            {
-                _mockPlotCenter = currentLocation;
-
-                // THIS is where the saving happens, because we finally have the data!
-                if (DataService.CurrentPlot != null)
-                {
-                    DataService.CurrentPlot.Latitude = _mockPlotCenter.Latitude;
-                    DataService.CurrentPlot.Longitude = _mockPlotCenter.Longitude;
-                }
-
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    StatusLabel.Text = $"Plot Center Locked: {_mockPlotCenter.Latitude:F5}, {_mockPlotCenter.Longitude:F5}";
-                    DistanceLabel.Text = "0 ft";
-                });
-
-                return;
-            }
-
-            // If the center is already locked, calculate the distance
-            double distanceKm = MauiLocation.CalculateDistance(_mockPlotCenter, currentLocation, DistanceUnits.Kilometers);
-            double distanceFeet = distanceKm * 3280.84;
-
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                DistanceLabel.Text = $"{distanceFeet:F0} ft";
-            });
+            DataService.CurrentPlot.Latitude = deviceLocation.Latitude;
+            DataService.CurrentPlot.Longitude = deviceLocation.Longitude;
         }
-        catch (Exception ex)
+
+        // 4. Update the UI
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            Console.WriteLine($"Tracking error: {ex.Message}");
-        }
+            CoordinatesLabel.Text = $"{deviceLocation.Latitude:F5}, {deviceLocation.Longitude:F5}";
+            StatusLabel.Text = "Plot Center Locked successfully.";
+            LockCenterButton.Text = "Re-Lock Center";
+            LockCenterButton.BackgroundColor = Colors.DarkGreen;
+        });
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+
+        // Safety cleanup if the user leaves the page while it is searching
         _locationService.Stop();
-        _isTracking = false;
+        _isAcquiring = false;
         WeakReferenceMessenger.Default.Unregister<DeviceLocation>(this);
     }
+
     private async void OnLogTreeClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("TreeEntryPage");
