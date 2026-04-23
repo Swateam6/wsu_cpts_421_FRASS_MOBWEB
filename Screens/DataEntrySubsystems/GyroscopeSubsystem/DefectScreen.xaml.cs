@@ -89,11 +89,13 @@ public partial class DefectScreen : ContentPage
     private async void OnNextTreeClicked(object sender, EventArgs e)
     {
         DataService.SaveTreeToPlot();
-        await Shell.Current.GoToAsync("NavigationScreen");
+        await Shell.Current.GoToAsync("TreeEntryPage");
     }
 
     private async void OnFinishStandClicked(object sender, EventArgs e)
     {
+        DataService.SaveTreeToPlot();
+        DataService.SavePlotToStand();
         // 1. Create and save the Stand
         var sqlStand = new sqllite.stand_data
         {

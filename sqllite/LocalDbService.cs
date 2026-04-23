@@ -9,7 +9,7 @@ namespace MOBWEB_TEST.sqllite
     public class LocalDbService
     {
         // Mobile-safe file extension
-        private const string DB_NAME = "mobweb.db3";
+        private const string DB_NAME = "mobweb.sql";
         private readonly SQLiteAsyncConnection _connection;
 
         public LocalDbService()
@@ -219,9 +219,9 @@ namespace MOBWEB_TEST.sqllite
             return await _connection.Table<defect_data>().ToListAsync();
         }
 
-        public async Task<defect_data> GetDefectDataByIdAsync(int id)
+        public async Task<defect_data> GetDefectDataByIdAsync(int parentTreeID)
         {
-            return await _connection.Table<defect_data>().Where(d => d.Id == id).FirstOrDefaultAsync();
+            return await _connection.Table<defect_data>().Where(d => d.parentTreeId == parentTreeID).FirstOrDefaultAsync();
         }
 
 
