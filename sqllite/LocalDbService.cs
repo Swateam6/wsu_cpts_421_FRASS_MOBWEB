@@ -29,7 +29,15 @@ namespace MOBWEB_TEST.sqllite
             await _connection.CreateTableAsync<parcel_data>();
             await _connection.CreateTableAsync<user_data>();
         }
-
+        public async Task ResetIncrements()
+        {
+            await _connection.ExecuteAsync("DELETE FROM sqlite_sequence WHERE name='defect_data'");
+            await _connection.ExecuteAsync("DELETE FROM sqlite_sequence WHERE name='tree_data'");
+            await _connection.ExecuteAsync("DELETE FROM sqlite_sequence WHERE name='plot_data'");
+            await _connection.ExecuteAsync("DELETE FROM sqlite_sequence WHERE name='stand_data'");
+            await _connection.ExecuteAsync("DELETE FROM sqlite_sequence WHERE name='parcel_data'");
+            await _connection.ExecuteAsync("DELETE FROM sqlite_sequence WHERE name='user_data'");
+        }
         public string GetCurrentDatabasePath()
         {
             return Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
