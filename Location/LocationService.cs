@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using MOBWEB_TEST.Screens;
 
 namespace MOBWEB_TEST.Location
 {
@@ -13,7 +14,7 @@ namespace MOBWEB_TEST.Location
             Geolocation.LocationChanged += Geolocation_LocationChanged;
             Compass.Default.ReadingChanged += Compass_CompassReadingChanged;
             Compass.Default.Start(SensorSpeed.Game);
-            var request = new GeolocationListeningRequest(GeolocationAccuracy.Best, TimeSpan.FromMilliseconds(500));
+            var request = new GeolocationListeningRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(5));
             if (request is not null)
             {
                 _isListening = await Geolocation.StartListeningForegroundAsync(request);
@@ -39,6 +40,7 @@ namespace MOBWEB_TEST.Location
                 _currentHeading,
                 360 - _currentHeading);
             WeakReferenceMessenger.Default.Send(deviceLocation);
+            
         }
 
         private void Compass_CompassReadingChanged(object? sender, CompassChangedEventArgs e)

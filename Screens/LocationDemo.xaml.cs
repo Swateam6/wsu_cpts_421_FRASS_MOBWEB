@@ -23,6 +23,7 @@ public partial class LocationDemo : ContentPage
         if (e.PropertyName == nameof(LocationDisplayBackend.Reading))
         {
             UpdateCompassDisplay(_viewModel?.Reading ?? 0);
+            OnPrintContentsClicked(this, EventArgs.Empty);
         }
     }
 
