@@ -15,7 +15,8 @@ namespace MOBWEB_TEST.Services
             if (isFixedRadius)
             {
                 // plotParameter = The constant radius (e.g., 37.2)
-                return distance <= plotParameter;
+                double withinRadius = Math.Sqrt(((plotParameter * 43560) / double.Pi));
+                return distance <= withinRadius;
             }
             else
             {
