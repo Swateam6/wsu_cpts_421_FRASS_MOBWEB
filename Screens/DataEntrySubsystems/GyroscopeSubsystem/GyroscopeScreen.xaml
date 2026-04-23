@@ -43,12 +43,10 @@
         <Button Text="Zero Gyroscope"
             Clicked="OnZeroClicked"
             HorizontalOptions="Center"/>
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Button Text="Capture Base Angle"
-                    Clicked="OnCaptureBaseClicked"/>
-            <Button Text="Capture Top Angle"
-                    Clicked="OnCaptureTopClicked"/>
-        </HorizontalStackLayout>
+        <Button Text="Capture Base Angle"
+            Clicked="OnCaptureBaseClicked"/>
+        <Button Text="Capture Top Angle"
+            Clicked="OnCaptureTopClicked"/>
         <Button Text="Capture Live Crown Base Angle"
             Clicked="OnCaptureLiveCrownBaseClicked"/>
         <Label Text="Distance (ft):" VerticalOptions="Center"/>
@@ -61,10 +59,10 @@
                     Clicked="OnCalculateHeightClicked"/>
             <Button Text="Calculate Live Crown Ratio"
                     Clicked="OnCalculateLiveCrownRatioClicked"/>
-			<Button Text="Go to Defect Screen"
-                 Clicked="OnGoToDefectScreenClicked"
-                 HorizontalOptions="Center"
-                 Margin="0,20,0,0"/>
         </HorizontalStackLayout>
+        <Button Text="Go to Defect Screen"
+               Clicked="OnGoToDefectScreenClicked"
+               HorizontalOptions="Center"
+               Margin="0,20,0,0"/>
     </VerticalStackLayout>
 </ContentPage>
