@@ -136,6 +136,29 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems.GyroscopeSubsystem
             DataService.SaveDefectToTree();
             _view.UpdateDescription("Defect successfully saved to tree!");
         }
+        public void SaveNoDefect()
+        {
+            // 1. Reset the UI and Model just in case they started measuring and changed their mind
+            _model.ClearAll();
+            _view.UpdateBaseLabel(null);
+            _view.UpdateTopLabel(null);
+
+            // 2. Hardcode the "Clean" state into the DataService
+            DataService.CurrentDefect.Description = "None";
+
+            // Depending on how your DataService properties are named, set heights to 0
+            // DataService.CurrentDefect.BaseHeight = 0; 
+            // DataService.CurrentDefect.TopHeight = 0;
+
+            // 3. Save to the database
+            DataService.SaveDefectToTree();
+
+            // 4. Update the UI so the cruiser gets immediate feedback
+            _view.UpdateDescription("No defect recorded. Tree is clean!");
+
+            // Optional: Stop the gyro to save battery since they are done with this tree
+            StopGyroscope();
+        }
 
     }
 }
