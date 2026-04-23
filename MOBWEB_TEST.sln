@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36930.0 d17.14
+VisualStudioVersion = 17.14.36930.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOBWEB_TEST", "MOBWEB_TEST.csproj", "{814ABBF5-01E4-4F13-90BA-42016E0204BE}"
 EndProject
@@ -13,6 +13,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{814ABBF5-01E4-4F13-90BA-42016E0204BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{814ABBF5-01E4-4F13-90BA-42016E0204BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814ABBF5-01E4-4F13-90BA-42016E0204BE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{814ABBF5-01E4-4F13-90BA-42016E0204BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{814ABBF5-01E4-4F13-90BA-42016E0204BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

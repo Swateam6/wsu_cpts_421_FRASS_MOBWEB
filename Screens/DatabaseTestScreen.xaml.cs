@@ -103,9 +103,29 @@ public partial class DatabaseTestScreen : ContentPage
         {
             ParentStandId = stand.Id,
             Date = DateTime.Now.AddDays(-10),
+            Latitude = 46.72839242116149f,
+            Longitude = -117.16437432142496f,
             MostMesicTreeSpecies = "Douglas Fir"
         };
         await _db.AddPlotDataAsync(plot1);
+        var plot2 = new plot_data
+        {
+            ParentStandId = stand.Id,
+            Date = DateTime.Now.AddDays(-10),
+            Latitude = 46.72912857248971f,
+            Longitude = -117.166915320386f,
+            MostMesicTreeSpecies = "Ponderosa Pine"
+        };
+        await _db.AddPlotDataAsync(plot2);
+        var plot3 = new plot_data
+        {
+            ParentStandId = stand.Id,
+            Date = DateTime.Now.AddDays(-10),
+            Latitude = 46.72818426202383f,
+            Longitude = -117.16629304219533f,
+            MostMesicTreeSpecies = "Ponderosa Pine"
+        };
+        await _db.AddPlotDataAsync(plot3);
 
         // 5. Trees & Their Defects (The Relational Split)
 
@@ -221,5 +241,7 @@ public partial class DatabaseTestScreen : ContentPage
 
         var allUsers = await _db.GetAllUserDataAsync();
         foreach (var u in allUsers) await _db.DeleteUserDataAsync(u);
+
+        await _db.ResetIncrements();
     }
 }

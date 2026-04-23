@@ -76,8 +76,4 @@ CREATE TABLE `tree_data` (
     FOREIGN KEY(`parent_plot_id`) REFERENCES `plot_data`(`id`) ON DELETE CASCADE
 );
 
--- --------------------------------------------------------
--- HIGH-PERFORMANCE INDEXES
--- These match your [Indexed] attributes in C# and make queries lightning fast
--- --------------------------------------------------------
 CREATE INDEX `idx_);

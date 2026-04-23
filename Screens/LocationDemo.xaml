@@ -137,7 +137,18 @@
                 </Grid>
             </Frame>
         </VerticalStackLayout>
-        
+        <Border BackgroundColor="AliceBlue">
+            <ScrollView>
+                <Label x:Name="OutputLabel" 
+               Text="Output will appear here..."
+               FontSize="12"
+               FontFamily="Courier"
+               LineBreakMode="WordWrap" />
+            </ScrollView>
+        </Border>
+        <Button Text="Navigate To Plot Centers" 
+        Clicked="OnPrintContentsClicked"
+        HorizontalOptions="Fill" />
         <Button
             x:Name="BackToHome"
             Text="Return to Home Screen"
