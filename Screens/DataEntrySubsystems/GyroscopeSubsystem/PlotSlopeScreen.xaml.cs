@@ -137,7 +137,7 @@ public partial class PlotSlopeScreen : ContentPage
     }
     private async void OnStartNavClicked(object sender,EventArgs E)
     {
-        await Shell.Current.GoToAsync("NavigationScreen");
+        await Shell.Current.GoToAsync("PlotCoordinateSet");
     }
 
     protected override void OnDisappearing()
