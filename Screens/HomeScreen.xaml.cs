@@ -34,6 +34,6 @@ public partial class HomeScreen : ContentPage
 	}
 	private async void OnGeolocationDemoClicked(object? sender, EventArgs e)
 	{
-		await Shell.Current.GoToAsync("///LocationDemo");
+		await Shell.Current.GoToAsync("LocationDemo");
     }
 }
