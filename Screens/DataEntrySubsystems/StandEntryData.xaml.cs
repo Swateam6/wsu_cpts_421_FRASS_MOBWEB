@@ -10,6 +10,23 @@ public partial class StandEntryData : ContentPage
         InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Force a brand new, clean Stand into memory every time this screen opens
+        DataService.CurrentStand = new Stand();
+
+        // Clear out the UI just in case old text was left behind
+        AcresEntry.Text = string.Empty;
+        RadiusEntry.Text = string.Empty;
+        BafPicker.SelectedIndex = -1;
+        PlotTypePicker.SelectedIndex = -1;
+
+        VariableSection.IsVisible = false;
+        FixedSection.IsVisible = false;
+    }
+
     // NEW: Toggles the UI based on what they select
     private void OnPlotTypeSelectedIndexChanged(object sender, EventArgs e)
     {

@@ -97,76 +97,29 @@ public partial class DefectScreen : ContentPage
     {
         DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
-        // 1. Create and save the Stand
+
+        // ANTI-GHOST STAND GATE: If the stand has absolutely no plots, abort the SQLite save!
+        if (DataService.CurrentStand.PlotList == null || DataService.CurrentStand.PlotList.Count == 0)
+        {
+            UpdateDescription("No data measured. Skipping SQLite save.");
+
+            // Clean up the memory anyway so it's fresh
+            DataService.CurrentStand = new Stand();
+            DataService.CurrentPlot = new Plot();
+            DataService.CurrentTree = new Tree();
+
+            await Shell.Current.GoToAsync("///DataEntryScreen");
+            return; // <-- This stops the ghost save!
+        }
+
+        // 1. Create and save the Stand (Keep the rest of your SQL code below this exactly the same)
         var sqlStand = new sqllite.stand_data
         {
             Date = DateTime.Now
-            // Add other stand-level fields here if needed
         };
         await _database.AddStandDataAsync(sqlStand);
 
-        // 2. Loop through Plots in the Stand
-        if (DataService.CurrentStand.PlotList != null)
-        {
-            foreach (var uiPlot in DataService.CurrentStand.PlotList)
-            {
-                var sqlPlot = new sqllite.plot_data
-                {
-                    ParentStandId = sqlStand.Id, // Link to Stand
-                    Date = DateTime.Now,
-                    Slope = (int)uiPlot.Slope,
-                    Aspect = (int)uiPlot.Aspect
-                };
-                await _database.AddPlotDataAsync(sqlPlot);
-
-                // 3. Loop through Trees in each Plot
-                if (uiPlot.TreeList != null)
-                {
-                    foreach (var uiTree in uiPlot.TreeList)
-                    {
-                        var sqlTree = new sqllite.tree_data
-                        {
-                            parentPlotId = sqlPlot.Id, // Link to Plot
-                            Date = DateTime.Now,
-                            Species = uiTree.Species ?? "Unknown",
-                            DiameterBreastHeight = (float)uiTree.Dbh
-                        };
-                        await _database.AddTreeDataAsync(sqlTree);
-
-                        // 4. Loop through Defects in each Tree
-                        foreach (var uiDefect in uiTree.DefectList)
-                        {
-                            var sqlDefect = new sqllite.defect_data
-                            {
-                                parentTreeId = sqlTree.Id,
-                                Description = uiDefect.Description,
-
-                                // Angle to Angle (Safe and correct)
-                                BaseAngle = (float)uiDefect.BaseAngle,
-                                TopAngle = (float)uiDefect.TopAngle,
-
-                                // Height Calculation (The final result)
-                                // This calculates the total 'length' of the defect on the trunk
-                                CalculatedHeight = (float)(uiDefect.topHeight - uiDefect.bottomHeight)
-                            };
-
-                            await _database.AddDefectDataAsync(sqlDefect);
-                        }
-                    }
-                }
-            }
-        }
-
-        // 5. Cleanup: Wipe the DataService so the next stand is a fresh start
-        DataService.CurrentStand = new Stand();
-        DataService.CurrentPlot = new Plot();
-        DataService.CurrentTree = new Tree();
-
-        UpdateDescription("Stand data successfully synced to SQLite.");
-
-        // 6. Navigate back to the main dashboard
-        await Shell.Current.GoToAsync("///DataEntryScreen");
-    }
+        // ... (Keep the rest of your loops the same) ...
 
     private async void OnFinishPlotClicked(object sender, EventArgs e)
     {
