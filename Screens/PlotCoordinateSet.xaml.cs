@@ -24,10 +24,22 @@ public partial class PlotCoordinateSet : ContentPage
     {
         base.OnAppearing();
 
-        // 1. Fetch the 78 Kamiak plots from SQLite
+        // 1. Fetch the Kamiak stand from SQLite
         var stands = await _database.GetAllStandDataAsync();
         var kamiak = stands.FirstOrDefault(s => s.HabitatType == "Kamiak Butte");
 
+        // THE MISSING STEP: Actually grab the plots from the database!
+        if (kamiak != null)
+        {
+            _availablePlots = await _database.GetPlotsForStandAsync(kamiak.Id);
+        }
+        else
+        {
+            // Fallback in case the seeder hasn't run properly yet
+            _availablePlots = await _database.GetAllPlotDataAsync();
+        }
+
+        // 2. Now check if we have data to display
         if (_availablePlots != null && _availablePlots.Count > 0)
         {
             _plotDisplayNames = new List<string>();
