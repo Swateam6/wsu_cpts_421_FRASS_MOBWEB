@@ -40,7 +40,7 @@ public partial class DatabaseTestScreen : ContentPage
             await _db.InitAsync(); // Ensure tables exist
             OutputLabel.Text = "Seeding 78 Kamiak Plot Centers...";
 
-            await _db.SeedKamiakStand(); // Call your hardcoded coordinate list
+            await _db.SeedKamiakStand();
 
             OutputLabel.Text = "Success! 78 Plots are now in the DB.";
         }
@@ -221,7 +221,7 @@ public partial class DatabaseTestScreen : ContentPage
         output += $"\n── tree_data ({trees.Count} records) ──\n";
         foreach (var t in trees)
             // Added formatting to print the new tree coordinates
-            output += $"  ID:{t.Id} | PlotFK:{t.parentPlotId} | {t.Species} | DBH:{t.DiameterBreastHeight} | ({t.Latitude:F4}, {t.Longitude:F4})\n";
+            output += $"  ID:{t.Id} | PlotFK:{t.parentPlotId} | Species:{t.Species} | DBH:{t.DiameterBreastHeight} | Height: {t.Height}\n";
 
         output += $"\n── defect_data ({defects.Count} records) ──\n";
         foreach (var d in defects)

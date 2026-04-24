@@ -170,8 +170,9 @@ public partial class DefectScreen : ContentPage
 
     private async void OnFinishPlotClicked(object sender, EventArgs e)
     {
+        DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
-        await Shell.Current.GoToAsync("StandEntryData");
+        await Shell.Current.GoToAsync("PlotCoordinateSet");
     }
     private void OnNoDefectClicked(object sender, EventArgs e)
     {
