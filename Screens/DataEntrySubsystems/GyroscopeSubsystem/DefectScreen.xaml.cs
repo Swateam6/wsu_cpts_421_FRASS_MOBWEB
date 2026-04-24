@@ -77,6 +77,11 @@ public partial class DefectScreen : ContentPage
         DefectDescriptionEntry.Text = string.Empty;
         UpdateDescription("Defect saved to tree memory!");
 
+    }
+
+    private async void OnNextTreeClicked(object sender, EventArgs e)
+    {
+        DataService.SaveTreeToPlot();
         await Shell.Current.GoToAsync("TreeEntryPage");
     }
     private async void OnFinishStandClicked(object sender, EventArgs e)
