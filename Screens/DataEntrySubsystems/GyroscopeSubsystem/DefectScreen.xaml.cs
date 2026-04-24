@@ -125,45 +125,60 @@ public partial class DefectScreen : ContentPage
         var parcels = await _database.GetAllParcelDataAsync();
         int activeParcelId = parcels.Count == 0 ? 1 : parcels.First().Id;
 
-        // 4. STAND: We are now 100% sure we have real data, so save the Stand
-        var sqlStand = new sqllite.stand_data
+        // 4. STAND: Check if we are using an existing Stand or need a new one
+        int activeStandId = DataService.CurrentStand.StandId;
+
+        if (activeStandId == 0)
         {
-            ParcelID = activeParcelId,
-            Date = DateTime.Now
-        };
-        await _database.AddStandDataAsync(sqlStand);
+            // Only generate a new Stand if we didn't inherit one from the Kamiak database
+            var sqlStand = new sqllite.stand_data
+            {
+                ParcelID = activeParcelId,
+                Date = DateTime.Now
+            };
+            await _database.AddStandDataAsync(sqlStand);
+            activeStandId = sqlStand.Id;
+        }
 
         // 5. PLOTS: Second layer of defense
         foreach (var uiPlot in DataService.CurrentStand.PlotList)
         {
-            // SKIP GHOST PLOTS: If this specific plot has no real trees, ignore it!
+            // SKIP EMPTY PLOTS
             bool plotHasRealTrees = uiPlot.TreeList != null && uiPlot.TreeList.Any(t => t.Dbh > 0);
             if (!plotHasRealTrees) continue;
 
-            var sqlPlot = new sqllite.plot_data
-            {
-                ParentStandId = sqlStand.Id,
-                Date = DateTime.Now,
-                Slope = (int)uiPlot.Slope,
-                Aspect = (int)uiPlot.Aspect,
-                size = uiPlot.size
-            };
-            await _database.AddPlotDataAsync(sqlPlot);
+            int activePlotId = uiPlot.PlotNumber;
 
-            // 6. TREES: Third layer of defense
+            if (activePlotId == 0)
+            {
+                // Only generate a new "Ghost" Plot if this isn't a pre-existing Kamiak plot
+                var sqlPlot = new sqllite.plot_data
+                {
+                    ParentStandId = activeStandId,
+                    Date = DateTime.Now,
+                    Slope = (int)uiPlot.Slope,
+                    Aspect = (int)uiPlot.Aspect,
+                    size = uiPlot.size
+                };
+                await _database.AddPlotDataAsync(sqlPlot);
+                activePlotId = sqlPlot.Id;
+            }
+
+            // 6. TREES: Link directly to the REAL activePlotId
             foreach (var uiTree in uiPlot.TreeList)
             {
-                // SKIP GHOST TREES: Only save trees with an actual DBH
                 if (uiTree.Dbh <= 0) continue;
 
                 var sqlTree = new sqllite.tree_data
                 {
-                    parentPlotId = sqlPlot.Id,
+                    parentPlotId = activePlotId, // Links to either the Kamiak Plot or the newly created one
                     Date = DateTime.Now,
                     Species = uiTree.Species ?? "Unknown",
                     DiameterBreastHeight = (float)uiTree.Dbh
                 };
                 await _database.AddTreeDataAsync(sqlTree);
+
+                // ... (Keep your Defect loop the exact same below this) ...
 
                 // 7. DEFECTS
                 if (uiTree.DefectList != null)

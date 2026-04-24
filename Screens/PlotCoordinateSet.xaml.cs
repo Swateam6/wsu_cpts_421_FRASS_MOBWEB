@@ -66,9 +66,6 @@ public partial class PlotCoordinateSet : ContentPage
             int selectedIndex = _plotDisplayNames.IndexOf(selectedString);
             var selectedPlot = _availablePlots[selectedIndex];
 
-            DataService.CurrentPlot.Latitude = selectedPlot.Latitude;
-            DataService.CurrentPlot.Longitude = selectedPlot.Longitude;
-            DataService.CurrentPlot.PlotNumber = selectedIndex;
             // Update active memory for navigation
             if (DataService.CurrentPlot == null)
             {
@@ -76,6 +73,12 @@ public partial class PlotCoordinateSet : ContentPage
             }
             CoordinatesLabel.Text = $"Target: {selectedPlot.Latitude:F5}, {selectedPlot.Longitude:F5}";
             StatusLabel.Text = "Plot Center Locked from Database.";
+
+            DataService.CurrentPlot.PlotNumber = selectedPlot.Id;
+            DataService.CurrentStand.StandId = selectedPlot.ParentStandId;
+
+            DataService.CurrentPlot.Latitude = selectedPlot.Latitude;
+            DataService.CurrentPlot.Longitude = selectedPlot.Longitude;
 
             // 2. Enable the "Go To It DAWG" button
             GoTothePlotCenter.IsEnabled = true;
