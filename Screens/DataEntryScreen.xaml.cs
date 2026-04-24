@@ -22,7 +22,7 @@ public partial class DataEntryScreen : ContentPage
     private async void OnStandEntryClicked(object sender, EventArgs e)
     {
         // REMOVE slashes
-        await Shell.Current.GoToAsync("StandEntryScreen");
+        await Shell.Current.GoToAsync("StandEntryData");
     }
 
     private async void OnPlotEntryClicked(object sender, EventArgs e)

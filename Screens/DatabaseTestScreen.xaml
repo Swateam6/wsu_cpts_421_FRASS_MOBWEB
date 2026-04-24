@@ -22,13 +22,6 @@
            BackgroundColor="DarkGreen"
            TextColor="White"
            HorizontalOptions="Fill" />
-  
-        <Button Text="Print 78 Kamiak Plots" 
-                Clicked="OnPrintKamiakPlotsClicked"
-                HorizontalOptions="Fill" 
-                BackgroundColor="#2B5B84" 
-                TextColor="White" />
-
         <Button Text="Clear Database" 
                 Clicked="OnClearDatabaseClicked"
                 HorizontalOptions="Fill" />

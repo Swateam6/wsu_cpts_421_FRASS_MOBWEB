@@ -39,7 +39,7 @@
                HorizontalTextAlignment="Center" />
 
         <Button x:Name="GoTothePlotCenter"
-                Text="Go To It DAWG"
+                Text="Select Plot For Navigation"
                 Clicked="OntoPlotNavClicked"
                 Margin="0, 10, 0, 0" 
                 IsEnabled="False" />
