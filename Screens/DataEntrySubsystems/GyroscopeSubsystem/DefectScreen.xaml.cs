@@ -86,91 +86,105 @@ public partial class DefectScreen : ContentPage
     }
     private async void OnFinishStandClicked(object sender, EventArgs e)
     {
-        // 1. Push active memory into the lists first
+        // 1. Push active memory into the lists
         DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
 
-        // 2. ANTI-GHOST GATE: Abort if the cruiser didn't actually measure anything
-        if (DataService.CurrentStand.PlotList == null || DataService.CurrentStand.PlotList.Count == 0)
+        // ---------------------------------------------------------
+        // THE IMPENETRABLE WALL: Count the actual, physical trees
+        // ---------------------------------------------------------
+        int totalRealTrees = 0;
+        if (DataService.CurrentStand?.PlotList != null)
         {
-            UpdateDescription("No data measured. Skipping SQLite save.");
-            DataService.CurrentStand = new Stand(); // Reset for next time
+            foreach (var uiPlot in DataService.CurrentStand.PlotList)
+            {
+                if (uiPlot.TreeList != null)
+                {
+                    // A real tree MUST have a DBH greater than 0
+                    totalRealTrees += uiPlot.TreeList.Count(t => t.Dbh > 0);
+                }
+            }
+        }
+
+        // 2. ABORT GATE: If no real trees exist, kill the process immediately
+        if (totalRealTrees == 0)
+        {
+            UpdateDescription("No trees measured. Ghost Stand blocked.");
+
+            // Clean up memory
+            DataService.CurrentStand = new Stand();
+            DataService.CurrentPlot = new Plot();
+            DataService.CurrentTree = new Tree();
+            DataService.CurrentDefect = new Defects();
+
             await Shell.Current.GoToAsync("///DataEntryScreen");
-            return;
+            return; // <--- SQLITE IS NEVER TOUCHED
         }
 
-        // 3. FIX FK ERROR: Find or create a parent Parcel
+        // 3. PARCEL FK
         var parcels = await _database.GetAllParcelDataAsync();
-        int activeParcelId;
+        int activeParcelId = parcels.Count == 0 ? 1 : parcels.First().Id;
 
-        if (parcels.Count == 0)
-        {
-            // Create a default parcel for the demo if none exists
-            var newParcel = new sqllite.parcel_data { parentUserId = 1, Acres= 160 };
-            await _database.AddParcelDataAsync(newParcel);
-            activeParcelId = newParcel.Id;
-        }
-        else
-        {
-            activeParcelId = parcels.First().Id;
-        }
-
-        // 4. STAND: Save with the mandatory parent_parcel_id
+        // 4. STAND: We are now 100% sure we have real data, so save the Stand
         var sqlStand = new sqllite.stand_data
         {
-            ParcelID = activeParcelId, // Mandatory FK reference
+            ParcelID = activeParcelId,
             Date = DateTime.Now
         };
         await _database.AddStandDataAsync(sqlStand);
 
-        // 5. PLOTS: Loop through memory and link to the new Stand ID
+        // 5. PLOTS: Second layer of defense
         foreach (var uiPlot in DataService.CurrentStand.PlotList)
         {
+            // SKIP GHOST PLOTS: If this specific plot has no real trees, ignore it!
+            bool plotHasRealTrees = uiPlot.TreeList != null && uiPlot.TreeList.Any(t => t.Dbh > 0);
+            if (!plotHasRealTrees) continue;
+
             var sqlPlot = new sqllite.plot_data
             {
-                ParentStandId = sqlStand.Id, // Linking FK
+                ParentStandId = sqlStand.Id,
                 Date = DateTime.Now,
                 Slope = (int)uiPlot.Slope,
                 Aspect = (int)uiPlot.Aspect,
-                size = uiPlot.size // BAF or Radius from initialization
+                size = uiPlot.size
             };
             await _database.AddPlotDataAsync(sqlPlot);
 
-            // 6. TREES: Loop through and link to the new Plot ID
-            if (uiPlot.TreeList != null)
+            // 6. TREES: Third layer of defense
+            foreach (var uiTree in uiPlot.TreeList)
             {
-                foreach (var uiTree in uiPlot.TreeList)
-                {
-                    var sqlTree = new sqllite.tree_data
-                    {
-                        parentPlotId = sqlPlot.Id, // Linking FK
-                        Date = DateTime.Now,
-                        Species = uiTree.Species ?? "Unknown",
-                        DiameterBreastHeight = (float)uiTree.Dbh
-                    };
-                    await _database.AddTreeDataAsync(sqlTree);
+                // SKIP GHOST TREES: Only save trees with an actual DBH
+                if (uiTree.Dbh <= 0) continue;
 
-                    // 7. DEFECTS: Loop through and link to the new Tree ID
-                    if (uiTree.DefectList != null)
+                var sqlTree = new sqllite.tree_data
+                {
+                    parentPlotId = sqlPlot.Id,
+                    Date = DateTime.Now,
+                    Species = uiTree.Species ?? "Unknown",
+                    DiameterBreastHeight = (float)uiTree.Dbh
+                };
+                await _database.AddTreeDataAsync(sqlTree);
+
+                // 7. DEFECTS
+                if (uiTree.DefectList != null)
+                {
+                    foreach (var uiDefect in uiTree.DefectList)
                     {
-                        foreach (var uiDefect in uiTree.DefectList)
+                        var sqlDefect = new sqllite.defect_data
                         {
-                            var sqlDefect = new sqllite.defect_data
-                            {
-                                parentTreeId = sqlTree.Id, // Linking FK
-                                Description = uiDefect.Description,
-                                BaseAngle = (float)uiDefect.BaseAngle,
-                                TopAngle = (float)uiDefect.TopAngle,
-                                CalculatedHeight = (float)(uiDefect.topHeight - uiDefect.bottomHeight)
-                            };
-                            await _database.AddDefectDataAsync(sqlDefect);
-                        }
+                            parentTreeId = sqlTree.Id,
+                            Description = uiDefect.Description,
+                            BaseAngle = (float)uiDefect.BaseAngle,
+                            TopAngle = (float)uiDefect.TopAngle,
+                            CalculatedHeight = (float)(uiDefect.topHeight - uiDefect.bottomHeight)
+                        };
+                        await _database.AddDefectDataAsync(sqlDefect);
                     }
                 }
             }
         }
 
-        // 8. FINAL CLEANUP: Wipe all memory objects
+        // 8. FINAL CLEANUP
         DataService.CurrentStand = new Stand();
         DataService.CurrentPlot = new Plot();
         DataService.CurrentTree = new Tree();
@@ -179,7 +193,6 @@ public partial class DefectScreen : ContentPage
         UpdateDescription("Stand data successfully synced to SQLite.");
         await Shell.Current.GoToAsync("///DataEntryScreen");
     }
-    // ... (Keep the rest of your loops the same) ...
 
     private async void OnFinishPlotClicked(object sender, EventArgs e)
     {
