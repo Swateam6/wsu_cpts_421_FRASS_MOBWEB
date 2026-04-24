@@ -174,7 +174,8 @@ public partial class DefectScreen : ContentPage
                     parentPlotId = activePlotId, // Links to either the Kamiak Plot or the newly created one
                     Date = DateTime.Now,
                     Species = uiTree.Species ?? "Unknown",
-                    DiameterBreastHeight = (float)uiTree.Dbh
+                    DiameterBreastHeight = (float)uiTree.Dbh,
+                    Height = (int)uiTree.Height
                 };
                 await _database.AddTreeDataAsync(sqlTree);
 
