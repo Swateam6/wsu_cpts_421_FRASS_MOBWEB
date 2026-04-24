@@ -11,7 +11,7 @@ namespace MOBWEB_TEST.sqllite
         public int ParentStandId { get; set; }
 
 
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         [Column("id")]
         public int Id { get; set; }
 
