@@ -66,14 +66,16 @@ public partial class PlotCoordinateSet : ContentPage
             int selectedIndex = _plotDisplayNames.IndexOf(selectedString);
             var selectedPlot = _availablePlots[selectedIndex];
 
+            DataService.CurrentPlot.Latitude = selectedPlot.Latitude;
+            DataService.CurrentPlot.Longitude = selectedPlot.Longitude;
+
             // Update active memory for navigation
             if (DataService.CurrentPlot == null)
             {
                 DataService.CurrentPlot = new Models.Plot();
             }
 
-            DataService.CurrentPlot.Latitude = selectedPlot.Latitude;
-            DataService.CurrentPlot.Longitude = selectedPlot.Longitude;
+            
 
             CoordinatesLabel.Text = $"Target: {selectedPlot.Latitude:F5}, {selectedPlot.Longitude:F5}";
             StatusLabel.Text = "Plot Center Locked from Database.";
