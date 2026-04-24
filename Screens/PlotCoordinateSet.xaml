@@ -6,37 +6,33 @@
 
     <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
 
-        <Label Text="Current Plot Center" 
+        <Label Text="Select Target Plot" 
                FontSize="24" 
                HorizontalOptions="Center" />
 
+        <Picker x:Name="PlotPicker"
+                Title="Tap to select a plot..."
+                SelectedIndexChanged="OnPlotSelected"
+                HorizontalOptions="FillAndExpand" />
+
         <Label x:Name="CoordinatesLabel" 
-             Text="Not Set" 
-             FontSize="28" 
+             Text="Coordinates: Not Set" 
+             FontSize="18" 
              FontAttributes="Bold"
              TextColor="DarkGreen"
              HorizontalOptions="Center" />
 
         <Label x:Name="StatusLabel" 
-               Text="Press button to acquire GPS lock." 
+               Text="Please select a plot from the database." 
                FontSize="14" 
                TextColor="Gray"
                HorizontalOptions="Center" 
                HorizontalTextAlignment="Center" />
 
-        <Button x:Name="LockCenterButton"
-                Text="Lock Plot Center" 
-                Clicked="OnLockCenterClicked" 
-                BackgroundColor="#2B5B84" 
-                TextColor="White"
-                FontAttributes="Bold"
-                CornerRadius="8"
-                Padding="15" />
-
         <Button x:Name="LogTreeButton"
                 Text="Log Tree"
                 Clicked="OnLogTreeClicked"
-                Margin="0, 30, 0, 0" />
-
+                Margin="0, 30, 0, 0" 
+                IsEnabled="False" />
     </VerticalStackLayout>
 </ContentPage>

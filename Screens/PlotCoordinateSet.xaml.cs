@@ -1,75 +1,75 @@
-using Microsoft.Maui.Devices.Sensors;
-using CommunityToolkit.Mvvm.Messaging;
-using MOBWEB_TEST.Location;
+using Microsoft.Maui.Controls;
 using MOBWEB_TEST.Services;
+using MOBWEB_TEST.sqllite;
+using System;
+using System.Collections.Generic;
 
 namespace MOBWEB_TEST.Screens;
 
 public partial class PlotCoordinateSet : ContentPage
 {
-    private readonly LocationService _locationService;
-    private bool _isAcquiring = false;
+    private readonly LocalDbService _database;
+    private List<plot_data> _availablePlots;
 
-    public PlotCoordinateSet()
+    // Inject the DB Service into the constructor
+    public PlotCoordinateSet(LocalDbService database)
     {
         InitializeComponent();
-        _locationService = new LocationService();
-
-        // Listen for GPS pings from the background service
-        WeakReferenceMessenger.Default.Register<DeviceLocation>(this, (sender, deviceLocation) =>
-        {
-            OnLocationReceived(deviceLocation);
-        });
+        _database = database;
     }
 
-    private void OnLockCenterClicked(object sender, EventArgs e)
+    protected override async void OnAppearing()
     {
-        if (_isAcquiring) return; // Prevent spam clicking while already searching
+        base.OnAppearing();
 
-        _isAcquiring = true;
-        LockCenterButton.Text = "Acquiring...";
-        LockCenterButton.BackgroundColor = Colors.DarkOrange;
-        StatusLabel.Text = "Waiting for GPS signal...";
+        // 1. Fetch the 78 Kamiak plots from the SQLite Database
+        // Note: You can filter this by DataService.CurrentStand.Id if you want!
+        _availablePlots = await _database.GetAllPlotDataAsync();
 
-        // Turn on the background listener
-        _ = _locationService.Start();
-    }
-
-    private void OnLocationReceived(DeviceLocation deviceLocation)
-    {
-        if (!_isAcquiring) return;
-
-        // 1. We got the ping! Turn off the acquiring flag.
-        _isAcquiring = false;
-
-        // 2. Shut off the GPS hardware immediately since we only need the center point
-        _locationService.Stop();
-
-        // 3. Save directly to the DataService
-        if (DataService.CurrentPlot != null)
+        // 2. Populate the Picker UI
+        if (_availablePlots != null && _availablePlots.Count > 0)
         {
-            DataService.CurrentPlot.Latitude = deviceLocation.Latitude;
-            DataService.CurrentPlot.Longitude = deviceLocation.Longitude;
+            var plotNames = new List<string>();
+            for (int i = 0; i < _availablePlots.Count; i++)
+            {
+                // Formats it cleanly like: "Plot 1 (46.8660, -117.1695)"
+                plotNames.Add($"Plot {i + 1} ({_availablePlots[i].Latitude:F4}, {_availablePlots[i].Longitude:F4})");
+            }
+
+            PlotPicker.ItemsSource = plotNames;
+            StatusLabel.Text = $"Loaded {_availablePlots.Count} plots from database.";
         }
-
-        // 4. Update the UI
-        MainThread.BeginInvokeOnMainThread(() =>
+        else
         {
-            CoordinatesLabel.Text = $"{deviceLocation.Latitude:F5}, {deviceLocation.Longitude:F5}";
-            StatusLabel.Text = "Plot Center Locked successfully.";
-            LockCenterButton.Text = "Re-Lock Center";
-            LockCenterButton.BackgroundColor = Colors.DarkGreen;
-        });
+            StatusLabel.Text = "No plots found in database. Did you run the Kamiak Seeder?";
+        }
     }
 
-    protected override void OnDisappearing()
+    private void OnPlotSelected(object sender, EventArgs e)
     {
-        base.OnDisappearing();
+        int selectedIndex = PlotPicker.SelectedIndex;
 
-        // Safety cleanup if the user leaves the page while it is searching
-        _locationService.Stop();
-        _isAcquiring = false;
-        WeakReferenceMessenger.Default.Unregister<DeviceLocation>(this);
+        if (selectedIndex != -1 && _availablePlots != null)
+        {
+            // 1. Get the actual SQL plot object from the hidden list
+            var selectedPlot = _availablePlots[selectedIndex];
+
+            // 2. Assign the DB coordinates to your active UI DataService
+            if (DataService.CurrentPlot == null)
+            {
+                DataService.CurrentPlot = new Models.Plot();
+            }
+
+            DataService.CurrentPlot.Latitude = selectedPlot.Latitude;
+            DataService.CurrentPlot.Longitude = selectedPlot.Longitude;
+
+            // 3. Update the UI to show they are locked in
+            CoordinatesLabel.Text = $"Target: {selectedPlot.Latitude:F5}, {selectedPlot.Longitude:F5}";
+            StatusLabel.Text = "Plot Center Locked from Database.";
+
+            // 4. Enable the Log Tree button!
+            LogTreeButton.IsEnabled = true;
+        }
     }
 
     private async void OnLogTreeClicked(object sender, EventArgs e)
