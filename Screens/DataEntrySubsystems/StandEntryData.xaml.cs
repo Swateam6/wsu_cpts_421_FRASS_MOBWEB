@@ -56,7 +56,7 @@ public partial class StandEntryData : ContentPage
             // 2. Store the Radius in DataService to pass it to the Plot class later
             if (double.TryParse(RadiusEntry.Text, out double parsedRadius))
             {
-                DataService.CurrentPlot.size = parsedRadius;
+                DataService.CurrentStand.plotSize = parsedRadius;
             }
         }
 

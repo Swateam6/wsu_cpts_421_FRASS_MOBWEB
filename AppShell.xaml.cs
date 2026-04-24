@@ -11,7 +11,7 @@ namespace MOBWEB_TEST
             // Register routes for all "sub-pages". 
             // Because they are registered here and NOT in the XAML, 
             // they will remain hidden from the main menu but can still be navigated to.
-            Routing.RegisterRoute("StandEntryScreen", typeof(Screens.DataEntrySubsystems.StandEntryData));
+            Routing.RegisterRoute("StandEntryData", typeof(Screens.DataEntrySubsystems.StandEntryData));
             Routing.RegisterRoute("PlotEntryScreen", typeof(Screens.DataEntrySubsystems.PlotEntry));
             Routing.RegisterRoute("TreeEntryPage", typeof(Screens.DataEntrySubsystems.TreeEntryPage));
             Routing.RegisterRoute("MesicSubsystemScreen", typeof(Screens.DataEntrySubsystems.MesicSubsystemScreen));

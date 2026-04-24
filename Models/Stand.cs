@@ -15,6 +15,8 @@ public class Stand
 
     public DateTime CruiseDate { get; set; }
 
+    public double plotSize { get; set; }
+
     // Holds all the plots you cruise within this stand
     public ObservableCollection<Plot> PlotList { get; set; } = new();
 }

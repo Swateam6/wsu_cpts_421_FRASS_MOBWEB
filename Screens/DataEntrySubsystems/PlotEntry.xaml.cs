@@ -16,7 +16,7 @@ public partial class PlotEntry : ContentPage
             DataService.CurrentPlot.Aspect = aspect;
 
         // FIXED 1 (Ghost Data): Clear the UI text boxes so they are blank when the user returns via "Next Plot"
-        
+        DataService.CurrentPlot.size = DataService.CurrentStand.plotSize;
         AspectEntry.Text = string.Empty;
 
 
