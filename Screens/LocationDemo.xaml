@@ -2,57 +2,58 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MOBWEB_TEST.Screens.LocationDemo"
-             Title="LocationDemo">
+             Title="Location Demo">
+
     <ContentPage.BindingContext>
         <local:LocationDisplayBackend xmlns:local="clr-namespace:MOBWEB_TEST.Location" />
     </ContentPage.BindingContext>
-    <VerticalStackLayout>
-        <Label 
-            Text="Location Demo"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button
-            x:Name="GetLocation"
-            Text="{Binding ListeningButtonText}"
-            Command="{Binding ChangeListeningModeCommand}"
-            HorizontalOptions="Fill" />
 
-        <Grid ColumnSpacing="10" RowSpacing="10" IsVisible="{Binding IsListening}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   Text="User Position"
-                   TextColor="Black"
-                   BackgroundColor="LightGray"
-                   HorizontalOptions="Fill"
-                   HorizontalTextAlignment="Center"
-                   FontAttributes="Bold" />
-            <Label Grid.Row="1" Grid.Column="0" Text="Latitude" TextColor="Black" />
-            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude}" TextColor="Black" />
-            <Label Grid.Row="2" Grid.Column="0" Text="Longitude" TextColor="Black" />
-            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Longitude}" TextColor="Black" />
-            <Label Grid.Row="3" Grid.Column="0" Text="Altitude(m)" TextColor="Black" />
-            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Altitude}" TextColor="Black" />
-        </Grid>
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="15">
+            <Label Text="CRUISER NAVIGATION" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="#2B5B84"/>
 
-        <VerticalStackLayout IsVisible="{Binding IsListening}" Spacing="10" Padding="10">
-            <Label Text="Compass"
-                   TextColor="Black"
-                   BackgroundColor="LightGray"
-                   HorizontalOptions="Fill"
-                   HorizontalTextAlignment="Center"
-                   FontAttributes="Bold"
-                   Padding="5" />
+            <Button x:Name="GetLocation"
+                    Text="{Binding ListeningButtonText}"
+                    Command="{Binding ChangeListeningModeCommand}"
+                    BackgroundColor="#2B5B84"
+                    TextColor="White"
+                    FontAttributes="Bold" />
 
-            <Label x:Name="CardinalDirectionLabel"
-                   Text="{Binding Reading, StringFormat='Heading: {0:F1}°
+            <Border Stroke="#2B5B84" StrokeThickness="2" BackgroundColor="#E8F4F8" Padding="15">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="TARGET PLOT" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label x:Name="TargetCoordinatesLabel" Text="Target: Not Set" HorizontalOptions="Center" />
+                    <Label x:Name="DistanceLabel" Text="Distance: --" FontSize="20" FontAttributes="Bold" TextColor="#00008B" HorizontalOptions="Center" />
+                    <Label x:Name="OffsetLabel" Text="Offsets: --" HorizontalOptions="Center" />
+
+                    <Button x:Name="StartPlotButton"
+                            Text="Start Plot Data Entry"
+                            Clicked="OnStartPlotClicked"
+                            BackgroundColor="DarkGreen"
+                            TextColor="White"
+                            IsEnabled="False"
+                            Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid IsVisible="{Binding IsListening}" BackgroundColor="#F0F8FF" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="LIVE GPS" BackgroundColor="Gray" TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                <Label Grid.Row="1" Grid.Column="0" Text="Lat:" FontAttributes="Bold" />
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude, StringFormat='{0:F5}'}" />
+                <Label Grid.Row="2" Grid.Column="0" Text="Lon:" FontAttributes="Bold" />
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Longitude, StringFormat='{0:F5}'}" />
+            </Grid>
+
+            <Button Text="Return Home" Clicked="OnBackToHomeClicked" BackgroundColor="DarkRed" TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -67,6 +67,6 @@ public partial class StandEntryData : ContentPage
         PlotTypePicker.SelectedIndex = -1;
 
         // 4. Proceed to the plotting screen
-        await Shell.Current.GoToAsync("PlotEntryScreen");
+        await Shell.Current.GoToAsync("PlotCoordinateSet");
     }
 }
