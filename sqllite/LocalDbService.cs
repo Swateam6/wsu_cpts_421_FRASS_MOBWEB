@@ -43,80 +43,29 @@ namespace MOBWEB_TEST.sqllite
             return Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         }
 
-        /// TREE FUNCTIONS -----------------------------------
-        public async Task<List<tree_data>> GetAllTreeDataAsync()
+        /// USER FUNCTIONS -----------------------------------
+        public async Task<List<user_data>> GetAllUserDataAsync()
         {
-            return await _connection.Table<tree_data>().ToListAsync();
+            return await _connection.Table<user_data>().ToListAsync();
         }
 
-        public async Task<tree_data> GetTreeDataByIdAsync(int id)
+        public async Task<user_data> GetUserDataByIdAsync(int id)
         {
-            return await _connection.Table<tree_data>().Where(t => t.Id == id).FirstOrDefaultAsync();
+            return await _connection.Table<user_data>().Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task AddTreeDataAsync(tree_data data)
+        public async Task<int> AddUserDataAsync(user_data data)
         {
             await _connection.InsertAsync(data);
+            return data.Id;
         }
 
-        public async Task UpdateTreeDataAsync(tree_data data)
+        public async Task UpdateUserDataAsync(user_data data)
         {
             await _connection.UpdateAsync(data);
         }
 
-        public async Task DeleteTreeDataAsync(tree_data data)
-        {
-            await _connection.DeleteAsync(data);
-        }
-
-        /// PLOT FUNCTIONS -----------------------------------
-        public async Task<List<plot_data>> GetAllPlotDataAsync()
-        {
-            return await _connection.Table<plot_data>().ToListAsync();
-        }
-
-        public async Task<plot_data> GetPlotDataByIdAsync(int id)
-        {
-            return await _connection.Table<plot_data>().Where(p => p.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task AddPlotDataAsync(plot_data data)
-        {
-            await _connection.InsertAsync(data);
-        }
-
-        public async Task UpdatePlotDataAsync(plot_data data)
-        {
-            await _connection.UpdateAsync(data);
-        }
-
-        public async Task DeletePlotDataAsync(plot_data data)
-        {
-            await _connection.DeleteAsync(data);
-        }
-
-        /// STAND FUNCTIONS -----------------------------------
-        public async Task<List<stand_data>> GetAllStandDataAsync()
-        {
-            return await _connection.Table<stand_data>().ToListAsync();
-        }
-
-        public async Task<stand_data> GetStandDataByIdAsync(int id)
-        {
-            return await _connection.Table<stand_data>().Where(s => s.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task AddStandDataAsync(stand_data data)
-        {
-            await _connection.InsertAsync(data);
-        }
-
-        public async Task UpdateStandDataAsync(stand_data data)
-        {
-            await _connection.UpdateAsync(data);
-        }
-
-        public async Task DeleteStandDataAsync(stand_data data)
+        public async Task DeleteUserDataAsync(user_data data)
         {
             await _connection.DeleteAsync(data);
         }
@@ -132,9 +81,17 @@ namespace MOBWEB_TEST.sqllite
             return await _connection.Table<parcel_data>().Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task AddParcelDataAsync(parcel_data data)
+        public async Task<List<parcel_data>> GetParcelsinUser(int userID)
+        {
+            return await _connection.Table<parcel_data>()
+                .Where(p => p.parentUserId == userID)
+                .ToListAsync();
+        }
+
+        public async Task<int> AddParcelDataAsync(parcel_data data)
         {
             await _connection.InsertAsync(data);
+            return data.Id;
         }
 
         public async Task UpdateParcelDataAsync(parcel_data data)
@@ -147,73 +104,109 @@ namespace MOBWEB_TEST.sqllite
             await _connection.DeleteAsync(data);
         }
 
-        /// USER FUNCTIONS -----------------------------------
-        public async Task<List<user_data>> GetAllUserDataAsync()
+        /// STAND FUNCTIONS -----------------------------------
+        public async Task<List<stand_data>> GetAllStandDataAsync()
         {
-            return await _connection.Table<user_data>().ToListAsync();
+            return await _connection.Table<stand_data>().ToListAsync();
         }
 
-        public async Task<user_data> GetUserDataByIdAsync(int id)
+        public async Task<stand_data> GetStandDataByIdAsync(int standId) // Consolidated from GetStandByIdAsync
         {
-            return await _connection.Table<user_data>().Where(u => u.Id == id).FirstOrDefaultAsync();
+            return await _connection.Table<stand_data>().Where(s => s.Id == standId).FirstOrDefaultAsync();
         }
 
-        public async Task AddUserDataAsync(user_data data)
-        {
-            await _connection.InsertAsync(data);
-        }
-
-        public async Task UpdateUserDataAsync(user_data data)
-        {
-            await _connection.UpdateAsync(data);
-        }
-
-        public async Task DeleteUserDataAsync(user_data data)
-        {
-            await _connection.DeleteAsync(data);
-        }
-        public async Task<stand_data> GetStandByIdAsync(int standId)
-        {
-            return await _connection.Table<stand_data>()
-                                    .Where(s => s.Id == standId)
-                                    .FirstOrDefaultAsync();
-        }
-
-        // 2. Get all Plots that belong to that Stand
-        public async Task<List<plot_data>> GetPlotsForStandAsync(int standId)
-        {
-            // This looks at the child table and grabs only the rows 
-            // where the foreign key matches the parent!
-            return await _connection.Table<plot_data>()
-                                    .Where(p => p.ParentStandId == standId)
-                                    .ToListAsync();
-        }
-
-        public async Task<List<tree_data>> GetTreesInPlotsID(int plotID)
-        {
-            return await _connection.Table<tree_data>()
-                .Where(t=>t.parentPlotId==plotID)
-                .ToListAsync();
-        }
-        public async Task <List<stand_data>> GetStandsinParcels(int parcelID)
+        public async Task<List<stand_data>> GetStandsinParcels(int parcelID)
         {
             return await _connection.Table<stand_data>()
                 .Where(s => s.ParcelID == parcelID)
                 .ToListAsync();
         }
-        public async Task<List<parcel_data>> GetParcelsinUser(int userID)
+
+        public async Task<int> AddStandDataAsync(stand_data data)
         {
-            return await _connection.Table<parcel_data>()
-                .Where(p => p.parentUserId == userID)
+            await _connection.InsertAsync(data);
+            return data.Id;
+        }
+
+        public async Task UpdateStandDataAsync(stand_data data)
+        {
+            await _connection.UpdateAsync(data);
+        }
+
+        public async Task DeleteStandDataAsync(stand_data data)
+        {
+            await _connection.DeleteAsync(data);
+        }
+
+        /// PLOT FUNCTIONS -----------------------------------
+        public async Task<List<plot_data>> GetAllPlotDataAsync()
+        {
+            return await _connection.Table<plot_data>().ToListAsync();
+        }
+
+        public async Task<plot_data> GetPlotDataByIdAsync(int id)
+        {
+            return await _connection.Table<plot_data>().Where(p => p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<plot_data>> GetPlotsForStandAsync(int standId)
+        {
+            return await _connection.Table<plot_data>()
+                                    .Where(p => p.ParentStandId == standId)
+                                    .ToListAsync();
+        }
+
+        public async Task<int> AddPlotDataAsync(plot_data data)
+        {
+            await _connection.InsertAsync(data);
+            return data.Id;
+        }
+
+        public async Task UpdatePlotDataAsync(plot_data data)
+        {
+            await _connection.UpdateAsync(data);
+        }
+
+        public async Task DeletePlotDataAsync(plot_data data)
+        {
+            await _connection.DeleteAsync(data);
+        }
+
+        /// TREE FUNCTIONS -----------------------------------
+        public async Task<List<tree_data>> GetAllTreeDataAsync()
+        {
+            return await _connection.Table<tree_data>().ToListAsync();
+        }
+
+        public async Task<tree_data> GetTreeDataByIdAsync(int id)
+        {
+            return await _connection.Table<tree_data>().Where(t => t.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<tree_data>> GetTreesInPlotsID(int plotID)
+        {
+            return await _connection.Table<tree_data>()
+                .Where(t => t.parentPlotId == plotID)
                 .ToListAsync();
         }
 
-
-        public async Task AddDefectDataAsync(defect_data defect)
+        public async Task<int> AddTreeDataAsync(tree_data data)
         {
-            await _connection.InsertAsync(defect);
+            await _connection.InsertAsync(data);
+            return data.Id;
         }
 
+        public async Task UpdateTreeDataAsync(tree_data data)
+        {
+            await _connection.UpdateAsync(data);
+        }
+
+        public async Task DeleteTreeDataAsync(tree_data data)
+        {
+            await _connection.DeleteAsync(data);
+        }
+
+        /// DEFECT FUNCTIONS -----------------------------------
         public async Task<List<defect_data>> GetAllDefectDataAsync()
         {
             return await _connection.Table<defect_data>().ToListAsync();
@@ -224,9 +217,13 @@ namespace MOBWEB_TEST.sqllite
             return await _connection.Table<defect_data>().Where(d => d.parentTreeId == parentTreeID).FirstOrDefaultAsync();
         }
 
+        public async Task<int> AddDefectDataAsync(defect_data data)
+        {
+            await _connection.InsertAsync(data);
+            return data.Id;
+        }
 
-
-        public async Task DefectStandDataAsync(defect_data data)
+        public async Task UpdateDefectDataAsync(defect_data data)
         {
             await _connection.UpdateAsync(data);
         }

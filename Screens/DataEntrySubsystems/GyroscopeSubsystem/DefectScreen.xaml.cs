@@ -67,6 +67,7 @@ public partial class DefectScreen : ContentPage
 
     private async void OnSaveDefectClicked(object sender, EventArgs e)
     {
+        DataService.SaveDefectToTree();
         // 1. Controller preps the math and text (likely updating DataService.CurrentDefect)
         _defectController.SaveDefect(DistanceEntry.Text, DefectDescriptionEntry.Text);
 
