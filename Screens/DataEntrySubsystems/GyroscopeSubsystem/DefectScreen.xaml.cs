@@ -64,7 +64,21 @@ public partial class DefectScreen : ContentPage
     {
         _defectController.CaptureTop();
     }
+    private async void OnSaveDefectClicked(object sender, EventArgs e)
+    {
+        // 1. Let the controller handle the math and update DataService.CurrentDefect
+        _defectController.SaveDefect(DistanceEntry.Text, DefectDescriptionEntry.Text);
 
+        // 2. Push the completed defect into the current tree's list
+        DataService.SaveDefectToTree();
+
+        // 3. UI Cleanup
+        DistanceEntry.Text = string.Empty;
+        DefectDescriptionEntry.Text = string.Empty;
+        UpdateDescription("Defect saved to tree memory!");
+
+        await Shell.Current.GoToAsync("TreeEntryPage");
+    }
     private async void OnFinishStandClicked(object sender, EventArgs e)
     {
         // 1. Push active memory into the lists first
