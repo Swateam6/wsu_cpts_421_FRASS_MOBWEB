@@ -67,7 +67,7 @@
                        FontAttributes="Bold" 
                        TextColor="#2B5B84" />
                 <Entry x:Name="RadiusEntry" 
-                       Placeholder="e.g. 37.2 for 1/10th acre" 
+                       Placeholder="Enter size in Acres" 
                        Keyboard="Numeric" 
                        BackgroundColor="White"
                        TextColor="Black" />
