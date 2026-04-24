@@ -90,7 +90,7 @@ public partial class DefectScreen : ContentPage
     private async void OnNextTreeClicked(object sender, EventArgs e)
     {
         DataService.SaveTreeToPlot();
-        await Shell.Current.GoToAsync("TreeEntryPage");
+        await Shell.Current.GoToAsync("..");
     }
 
     private async void OnFinishStandClicked(object sender, EventArgs e)
