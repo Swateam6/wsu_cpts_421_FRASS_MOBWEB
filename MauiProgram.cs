@@ -18,10 +18,14 @@ namespace MOBWEB_TEST
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
             builder.Services.AddSingleton<LocalDbService>();
-            builder.Services.AddTransient<EntryScreen>();
             builder.Services.AddSingleton<LocationService>();
+
+            // Register Screens (CRITICAL FOR NAVIGATION)
+            builder.Services.AddTransient<EntryScreen>();
+            builder.Services.AddTransient<LocationDemo>(); // Add this!
+            builder.Services.AddTransient<PlotCoordinateSet>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

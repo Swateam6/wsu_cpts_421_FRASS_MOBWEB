@@ -33,6 +33,22 @@ public partial class DatabaseTestScreen : ContentPage
             OutputLabel.Text = $"Error: {ex.Message}";
         }
     }
+    private async void OnSeedKamiakPlotsClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await _db.InitAsync(); // Ensure tables exist
+            OutputLabel.Text = "Seeding 78 Kamiak Plot Centers...";
+
+            await _db.SeedKamiakStand(); // Call your hardcoded coordinate list
+
+            OutputLabel.Text = "Success! 78 Plots are now in the DB.";
+        }
+        catch (Exception ex)
+        {
+            OutputLabel.Text = $"Seeding Error: {ex.Message}";
+        }
+    }
 
     private async void OnPrintContentsClicked(object sender, EventArgs e)
     {
@@ -216,7 +232,45 @@ public partial class DatabaseTestScreen : ContentPage
         OutputLabel.Text = output;
     }
 
+    private async void OnPrintKamiakPlotsClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await _db.InitAsync();
+            OutputLabel.Text = "Retrieving Kamiak plots...\n";
 
+            // 1. Find the Kamiak Stand in the database
+            var stands = await _db.GetAllStandDataAsync();
+            var kamiakStand = stands.FirstOrDefault(s => s.HabitatType == "Kamiak Butte");
+
+            if (kamiakStand == null)
+            {
+                OutputLabel.Text = "Kamiak Butte stand not found. Make sure SeedKamiakStand() ran successfully on startup.";
+                return;
+            }
+
+            // 2. Get only the plots tied to that specific Stand ID
+            var plots = await _db.GetPlotsForStandAsync(kamiakStand.Id);
+
+            // 3. Format the output to read cleanly
+            var output = "═══════════════════════════════════════════\n";
+            output += $"KAMIAK BUTTE PLOTS ({plots.Count} records)\n";
+            output += "═══════════════════════════════════════════\n\n";
+
+            for (int i = 0; i < plots.Count; i++)
+            {
+                var p = plots[i];
+                // Formatting to 6 decimal places to match your GeoJSON precision
+                output += $"  [Plot {i + 1}] ID:{p.Id} | Lat: {p.Latitude:F6} | Lon: {p.Longitude:F6}\n";
+            }
+
+            OutputLabel.Text = output;
+        }
+        catch (Exception ex)
+        {
+            OutputLabel.Text = $"Error: {ex.Message}";
+        }
+    }
 
 
     private async Task ClearAllTables()

@@ -1,7 +1,9 @@
 ﻿using MOBWEB_TEST.Location;
 using MOBWEB_TEST.sqllite;
 using System.ComponentModel;
+using MOBWEB_TEST.Services;
 namespace MOBWEB_TEST.Screens;
+
 
 public partial class LocationDemo : ContentPage
 {
@@ -85,25 +87,43 @@ public partial class LocationDemo : ContentPage
     }
     private async Task RetriveParcelData()
     {
-        var plots = await _db.GetAllPlotDataAsync();
-        var output = "═══════════════════════════════════════════\n";
-        output += $"\n── plot_data ({plots.Count} records) ──\n";
+        // 1. Grab the plot you selected on the previous screen
+        var targetPlot = DataService.CurrentPlot;
 
-        double userLatitude = _viewModel?.Latitude ?? 0;
-        double userLongitude = _viewModel?.Longitude ?? 0;
-        foreach (var p in plots)
+        if (targetPlot == null)
         {
-            var offset = CalculateLocationDifference(userLatitude, userLongitude, p.Latitude, p.Longitude);
-            string northSouthDistance = offset.NorthSouthMeters >= 0
-               ? $"{offset.NorthSouthMeters:F1}m N"
-               : $"{Math.Abs(offset.NorthSouthMeters):F1}m S";
-            string eastWestDistance = offset.EastWestMeters >= 0
-                ? $"{offset.EastWestMeters:F1}m E"
-                : $"{Math.Abs(offset.EastWestMeters):F1}m W";
-            output += $"  ID:{p.Id} | StandFK:{p.ParentStandId} | ({p.Latitude:F4},{p.Longitude:F4}) | Elev:{p.Elevation}ft\n";
-            output += $"       Offset: {northSouthDistance} | {eastWestDistance}\n";
-
+            OutputLabel.Text = "No plot selected! Go back and pick a plot first.";
+            return;
         }
+
+        // 2. Get current user position from the ViewModel
+        double userLat = _viewModel?.Latitude ?? 0;
+        double userLon = _viewModel?.Longitude ?? 0;
+
+        // 3. Calculate the offsets
+        var offset = CalculateLocationDifference(userLat, userLon, targetPlot.Latitude, targetPlot.Longitude);
+
+        // 4. Calculate Total Euclidean Distance (Straight Line)
+        // Formula: sqrt(NS^2 + EW^2)
+        double totalDistance = Math.Sqrt(Math.Pow(offset.NorthSouthMeters, 2) + Math.Pow(offset.EastWestMeters, 2));
+
+        // 5. Format the Output for the Demo
+        var output = "═══════════════════════════════════════════\n";
+        output += "           TARGET NAVIGATION               \n";
+        output += "═══════════════════════════════════════════\n\n";
+        output += $" TARGET PLOT: ({targetPlot.Latitude:F5}, {targetPlot.Longitude:F5})\n\n";
+
+        output += $" DIRECT DISTANCE: {totalDistance:F1} meters\n";
+        output += "───────────────────────────────────────────\n";
+
+        output += offset.NorthSouthMeters >= 0
+            ? $" WALK NORTH: {offset.NorthSouthMeters:F1}m\n"
+            : $" WALK SOUTH: {Math.Abs(offset.NorthSouthMeters):F1}m\n";
+
+        output += offset.EastWestMeters >= 0
+            ? $" WALK EAST:  {offset.EastWestMeters:F1}m\n"
+            : $" WALK WEST:  {Math.Abs(offset.EastWestMeters):F1}m\n";
+
         OutputLabel.Text = output;
     }
     private double DegreesToRadians(double degrees)

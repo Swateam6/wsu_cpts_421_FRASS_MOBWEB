@@ -17,12 +17,23 @@
         <Button Text="Print Database Contents" 
                 Clicked="OnPrintContentsClicked"
                 HorizontalOptions="Fill" />
+        <Button Text="Seed 78 Kamiak Plots" 
+           Clicked="OnSeedKamiakPlotsClicked"
+           BackgroundColor="DarkGreen"
+           TextColor="White"
+           HorizontalOptions="Fill" />
+  
+        <Button Text="Print 78 Kamiak Plots" 
+                Clicked="OnPrintKamiakPlotsClicked"
+                HorizontalOptions="Fill" 
+                BackgroundColor="#2B5B84" 
+                TextColor="White" />
 
         <Button Text="Clear Database" 
                 Clicked="OnClearDatabaseClicked"
                 HorizontalOptions="Fill" />
 
-        <Border BackgroundColor="AliceBlue">
+        <Border BackgroundColor="AliceBlue" HeightRequest="350">
             <ScrollView>
                 <Label x:Name="OutputLabel" 
                        Text="Output will appear here..."
