@@ -11,6 +11,7 @@ Data to SQLite: Implemented local database persistence, ensuring all user data i
 
 Navigation Extra:Showing current distance to plot using geolocation
 
+GyroScope into data field integration
 ## Work Summary (Developer Facing)
 This sprint, we focused on moving past our SQLite mock data and finally getting the real data entry integration hooked up. It was a big step to shift from static test cases to a dynamic system where user inputs actually drive the database. We also implemented GeoLocation that showed current location and added a feature that shows both direction and distance to the current plot center. We also spent time ensuring the plot coordinate selection was fully validated before saving anything to the local DB to avoid corrupting our new tables with empty data.
 
@@ -60,6 +61,10 @@ Please review the following code files, which were actively developed during thi
   [LocationService.cs] https://github.com/Swateam6/FRASS-MOBWEB/blob/feature/plot-navigation-with-geoLoc/Location/LocationService.cs
 
   [DeviceLocationMessage.cs ]https://github.com/Swateam6/FRASS-MOBWEB/blob/feature/plot-navigation-with-geoLoc/Location/DeviceLocationMessage.cs
+
+  [DefectGyroScopeController.cs] https://github.com/Swateam6/FRASS-MOBWEB/blob/feature/plot-navigation-with-geoLoc/Screens/DataEntrySubsystems/GyroscopeSubsystem/DefectGyroscopeController.cs
+
+  [GyroscopeController.cs] https://github.com/Swateam6/FRASS-MOBWEB/blob/feature/plot-navigation-with-geoLoc/Screens/DataEntrySubsystems/GyroscopeSubsystem/GyroscopeController.cs
  
 ## Retrospective Summary
 Here's what went well:
