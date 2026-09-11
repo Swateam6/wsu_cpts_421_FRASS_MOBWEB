@@ -15,7 +15,7 @@ public partial class TreeEntryPage : ContentPage
     {
         // 1. Validate inputs (Now checking Azimuth too!)
         if (double.TryParse(DbhEntry.Text, out double dbh) &&
-            double.TryParse(DistanceEntry.Text, out double distance) &&
+            double.TryParse(DistanceEntry.Text, out double distance))
         {
             // 2. Grab your BAF (Defaulting to 20 if the Stand hasn't been set up yet)
             bool methodIsFixed = DataService.CurrentStand.IsFixedPlot;
@@ -35,7 +35,6 @@ public partial class TreeEntryPage : ContentPage
                 SpeciesEntry.Text = string.Empty;
                 DbhEntry.Text = string.Empty;
                 DistanceEntry.Text = string.Empty;
-                AzimuthEntry.Text = string.Empty; // Clear the new field
                 SpeciesEntry.Focus();
 
                 // Move to the next step
@@ -50,7 +49,6 @@ public partial class TreeEntryPage : ContentPage
                 SpeciesEntry.Text = string.Empty;
                 DbhEntry.Text = string.Empty;
                 DistanceEntry.Text = string.Empty;
-                AzimuthEntry.Text = string.Empty;
                 SpeciesEntry.Focus();
             }
         }
