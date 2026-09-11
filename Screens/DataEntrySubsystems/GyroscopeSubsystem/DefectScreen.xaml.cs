@@ -225,9 +225,7 @@ public partial class DefectScreen : ContentPage
         DistanceEntry.Text = string.Empty;
         DefectDescriptionEntry.Text = string.Empty;
 
-        // 3. (Optional "Swag" Move) Automatically route them to the next tree
-        // If you uncomment the lines below, the app will instantly save the tree
-        // and jump back to navigation, saving the cruiser another click!
+        
 
         // DataService.SaveTreeToPlot();
         // Shell.Current.GoToAsync("NavigationScreen");
