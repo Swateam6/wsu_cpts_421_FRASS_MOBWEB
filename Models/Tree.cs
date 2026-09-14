@@ -31,6 +31,4 @@ public class Tree
 
     public ObservableCollection<Defects> DefectList { get; set; } = new();
 
-    public double latitude { get; set; }
-    public double longitude { get; set; }
 }

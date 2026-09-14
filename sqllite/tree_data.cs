@@ -36,11 +36,7 @@ namespace MOBWEB_TEST.sqllite
         public float CrownRatio { get; set; }
 
 
-        [Column("latitude")]
-        public float Latitude { get; set; }
-
-        [Column("longitude")]
-        public float Longitude { get; set; }
+  
 
     }
 }

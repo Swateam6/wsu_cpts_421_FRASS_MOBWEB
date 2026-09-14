@@ -81,7 +81,17 @@ public partial class DefectScreen : ContentPage
 
     private async void OnNextTreeClicked(object sender, EventArgs e)
     {
+        // 1. Commit active defect into the current tree
+        DataService.SaveDefectToTree();
+
+        // 2. Commit the completed tree into the current plot
         DataService.SaveTreeToPlot();
+
+        // 3. Reset active tree and defect memory for the next measurement
+        DataService.CurrentTree = new Tree();
+        DataService.CurrentDefect = new Defects();
+
+        // 4. Navigate back to start the next tree
         await Shell.Current.GoToAsync("TreeEntryPage");
     }
     private async void OnFinishStandClicked(object sender, EventArgs e)
@@ -89,6 +99,7 @@ public partial class DefectScreen : ContentPage
         // 1. Push active memory into the lists
         DataService.SaveTreeToPlot();
         DataService.SavePlotToStand();
+        DataService.SaveStandToParcel();
 
         // ---------------------------------------------------------
         // THE IMPENETRABLE WALL: Count the actual, physical trees
@@ -212,24 +223,92 @@ public partial class DefectScreen : ContentPage
 
     private async void OnFinishPlotClicked(object sender, EventArgs e)
     {
+        DataService.SaveDefectToTree();
         DataService.SaveTreeToPlot();
-        DataService.SavePlotToStand();
+
+        var currentPlot = DataService.CurrentPlot;
+        var currentStand = DataService.CurrentStand;
+
+        // 1. Count trees only in the CURRENT plot
+        int realTreesInPlot = 0;
+        if (currentPlot?.TreeList != null)
+        {
+            realTreesInPlot = currentPlot.TreeList.Count(t => t.Dbh > 0);
+        }
+
+        if (realTreesInPlot == 0)
+        {
+            UpdateDescription("No valid trees measured. Ghost plot blocked.");
+
+            // Clean up plot-level memory
+            DataService.CurrentPlot = new Plot();
+            DataService.CurrentTree = new Tree();
+            DataService.CurrentDefect = new Defects();
+
+            await Shell.Current.GoToAsync("PlotCoordinateSet");
+            return;
+        }
+
+        // 2. Ensure parent Stand exists in SQLite
+        int activeStandId = currentStand.StandId;
+        if (activeStandId == 0)
+        {
+            var parcels = await _database.GetAllParcelDataAsync();
+            int activeParcelId = parcels.Count == 0 ? 1 : parcels.First().Id;
+
+            var sqlStand = new sqllite.stand_data
+            {
+                ParcelID = activeParcelId,
+                Date = DateTime.Now
+            };
+            await _database.AddStandDataAsync(sqlStand);
+            activeStandId = sqlStand.Id;
+            currentStand.StandId = activeStandId;
+        }
+
+        // 3. Handle Plot ID (use existing Kamiak ID or create new row)
+        int activePlotId = currentPlot.PlotNumber;
+        if(activePlotId==0)
+        {
+            var sqlPlot = new sqllite.plot_data
+            {
+                ParentStandId = activeStandId,
+                Date= DateTime.Now,
+                Slope = (int)currentPlot.Slope,
+                Aspect=(int)currentPlot.Aspect,
+
+            };
+            await _database.AddPlotDataAsync(sqlPlot);
+            activePlotId = sqlPlot.Id;
+            currentPlot.PlotNumber = activePlotId;
+        }
+        if(currentPlot.TreeList!=null)
+        {
+            foreach(var uiTree in currentPlot.TreeList)
+            {
+                if(uiTree.DefectList !=null)
+                {
+                    foreach(var uiDefect in uiTree.DefectList)
+                    {
+                        var sqlDefect = new sqllite.defect_data
+                        {
+                            parentTreeId = uiTree.Id,
+                            Description = uiDefect.Description,
+                            BaseAngle = uiDefect.BaseAngle,
+                            TopAngle = uiDefect.TopAngle,
+                            CalculatedHeight = (float)(uiDefect.topHeight - uiDefect.bottomHeight)
+                        };
+                        await _database.AddDefectDataAsync(sqlDefect);
+                    }
+                }
+            }
+        }
+
+        // 5. Clean up plot-level state and navigate back
+        DataService.CurrentPlot = new Plot();
+        DataService.CurrentTree = new Tree();
+        DataService.CurrentDefect = new Defects();
+
         await Shell.Current.GoToAsync("PlotCoordinateSet");
-    }
-    private void OnNoDefectClicked(object sender, EventArgs e)
-    {
-        // 1. Call the bypass method we added to the controller
-        _defectController.SaveNoDefect();
-
-        // 2. Clear out the text boxes so the screen is reset for the next tree
-        DistanceEntry.Text = string.Empty;
-        DefectDescriptionEntry.Text = string.Empty;
-
-        // 3. (Optional "Swag" Move) Automatically route them to the next tree
-        // If you uncomment the lines below, the app will instantly save the tree
-        // and jump back to navigation, saving the cruiser another click!
-
-        // DataService.SaveTreeToPlot();
-        // Shell.Current.GoToAsync("NavigationScreen");
     }
 }

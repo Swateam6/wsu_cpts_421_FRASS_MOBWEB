@@ -152,8 +152,7 @@ public partial class DatabaseTestScreen : ContentPage
             Species = "Douglas Fir",
             DiameterBreastHeight = 12.5f,
             Height = 60,
-            Latitude = 46.8621f,   // Added Coordinate
-            Longitude = -117.1645f // Added Coordinate
+          
         };
         await _db.AddTreeDataAsync(tree1);
 
@@ -173,8 +172,7 @@ public partial class DatabaseTestScreen : ContentPage
             Species = "Ponderosa Pine",
             DiameterBreastHeight = 9.0f,
             Height = 45,
-            Latitude = 46.8622f,   // Added Coordinate (slightly offset from Tree 1)
-            Longitude = -117.1646f // Added Coordinate
+           
         };
         await _db.AddTreeDataAsync(tree2);
 
