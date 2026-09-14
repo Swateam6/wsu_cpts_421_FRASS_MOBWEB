@@ -9,6 +9,12 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Button
+            x:Name="UploadData"
+            Text="Upload Data"
+            SemanticProperties.Hint="Uploads Data to Server"
+            Clicked="OnUploadDataClicked"
+            HorizontalOptions="Fill" />
+        <Button
             x:Name="BackToHome"
             Text="Return to Home Screen"
             SemanticProperties.Hint="Keeps You Logged In"
