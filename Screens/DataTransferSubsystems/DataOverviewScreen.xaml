@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataTransferSubsystems.DataOverviewScreen"
+             Title="DataOverviewScreen">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="24,40"
+            Spacing="12"
+            MaximumWidthRequest="480"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                StrokeShape="RoundRectangle 10"
+                StrokeThickness="0"
+                Padding="16,12"
+                HorizontalOptions="Fill"
+                Margin="0,0,0,4">
+                <Label 
+                    Text="Data Transfer Homepage"
+                    Style="{StaticResource Headline}"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    SemanticProperties.HeadingLevel="Level1" />
+            </Border>
+
+            <Label 
+                Text="This is the Data Transfer Subsystem for uploading or downloading cruise data from a FRASS Account"
+                Style="{StaticResource SubHeadline}"
+                FontSize="16"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="0,0,0,24" />
+
+            <Button
+                x:Name="UploadData"
+                Text="Upload Data"
+                SemanticProperties.Hint="Press to Upload Data"
+                Clicked="OnUploadDataClicked"
+                HorizontalOptions="Fill"
+                HeightRequest="52"
+                CornerRadius="10"
+                FontSize="16"
+                FontAttributes="Bold" />
+
+            <Button
+                x:Name="DownloadData"
+                Text="Download Data"
+                SemanticProperties.Hint="Press to Download Data"
+                Clicked="OnDownloadDataClicked"
+                HorizontalOptions="Fill"
+                HeightRequest="52"
+                CornerRadius="10"
+                FontSize="16"
+                FontAttributes="Bold" />
+
+            <Button
+                x:Name="BackToHome"
+                Text="Return to Home Screen"
+                SemanticProperties.Hint="Keeps You Logged In"
+                Clicked="OnBackToHomeClicked"
+                HorizontalOptions="Fill"
+                HeightRequest="52"
+                CornerRadius="10"
+                FontSize="16"
+                Margin="0,20,0,0"
+                BackgroundColor="Transparent"
+                BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                BorderWidth="1.5"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

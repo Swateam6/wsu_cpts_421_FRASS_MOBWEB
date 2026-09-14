@@ -3,11 +3,10 @@ using System.Net.Http.Headers;
 
 namespace MOBWEB_TEST.Screens.DataTransferSubsystems;
 
-public partial class DataUploadScreen : ContentPage
+public partial class DataDownloadScreen : ContentPage
 {
     private readonly LocalDbService _dbService = new LocalDbService();
-
-    public DataUploadScreen()
+    public DataDownloadScreen()
 	{
 		InitializeComponent();
 	}
@@ -20,35 +19,28 @@ public partial class DataUploadScreen : ContentPage
     {
         await Shell.Current.GoToAsync("DataOverviewScreen");
     }
-    private async void OnUploadDataClicked(object? sender, EventArgs e)
-	{
+    private async void OnDownloadDataClicked(object? sender, EventArgs e)
+    {
         string dbPath = _dbService.GetCurrentDatabasePath();
         using var stream = File.OpenRead(dbPath);
-        bool success = await UploadDatabaseFileAsync(stream,Path.GetFileName(dbPath), "https://yourserver.com/upload"); // placeholder
+        bool success = await DownloadDatabaseFileAsync(stream,Path.GetFileName(dbPath), "https://yourserver.com/download"); // placeholder x2
         if (success)
         {
             await DisplayAlert("Success", "Database uploaded successfully.", "OK");
+            await PrintDatabaseContents();
         }
         else
         {
             await DisplayAlert("Error", "Failed to upload database.", "OK");
+            await PrintDatabaseContents();
         }
     }
-    public async Task<bool> UploadDatabaseFileAsync(Stream fileStream, string fileName, string uploadUrl)
+    public async Task<bool> DownloadDatabaseFileAsync(Stream fileStream, string fileName, string downloadUrl)
     {
-        using var client = new HttpClient();
-        client.Timeout = TimeSpan.FromMinutes(5); // db files can be large
-
-        using var content = new MultipartFormDataContent();
-        using var streamContent = new StreamContent(fileStream);
-
-        streamContent.Headers.ContentType =
-            new MediaTypeHeaderValue("application/octet-stream");
-
-        content.Add(streamContent, "file", fileName);
-
-        var response = await client.PostAsync(uploadUrl, content);
-        return response.IsSuccessStatusCode;
+        //placeholder for backend
+        //temporarily just clear db and reprint contents
+        await ClearAllTables();
+        return false;
     }
 
 
@@ -100,5 +92,31 @@ public partial class DataUploadScreen : ContentPage
             OutputLabel.Text = $"Failed to load database contents:\n{ex.Message}";
         }
 
+    }
+
+    private async Task ClearAllTables()
+    {
+        // delete from top down (Children first, then parents)
+
+        var allDefects = await _dbService.GetAllDefectDataAsync();
+        foreach (var d in allDefects) await _dbService.DeleteDefectDataAsync(d);
+
+
+        var allTrees = await _dbService.GetAllTreeDataAsync();
+        foreach (var t in allTrees) await _dbService.DeleteTreeDataAsync(t);
+
+        var allPlots = await _dbService.GetAllPlotDataAsync();
+        foreach (var p in allPlots) await _dbService.DeletePlotDataAsync(p);
+
+        var allStands = await _dbService.GetAllStandDataAsync();
+        foreach (var s in allStands) await _dbService.DeleteStandDataAsync(s);
+
+        var allParcels = await _dbService.GetAllParcelDataAsync();
+        foreach (var p in allParcels) await _dbService.DeleteParcelDataAsync(p);
+
+        var allUsers = await _dbService.GetAllUserDataAsync();
+        foreach (var u in allUsers) await _dbService.DeleteUserDataAsync(u);
+
+        await _dbService.ResetIncrements();
     }
 }

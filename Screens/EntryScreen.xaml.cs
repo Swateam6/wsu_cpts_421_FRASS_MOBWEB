@@ -16,8 +16,8 @@
             //TODO: IMPLEMENT PROPER AUTHENTICATION
             if (username.ToLower() == "admin" && password.ToLower() == "admin")
             {
-                // go to homescreen using shell nav
-                await Shell.Current.GoToAsync("DataUploadScreen");
+                //go to data upload/download 
+                await Shell.Current.GoToAsync("DataOverviewScreen");
             }
             else
             {

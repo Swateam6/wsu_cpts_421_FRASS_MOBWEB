@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataTransferSubsystems.DataDownloadScreen"
+             Title="DataDownloadScreen">
+    <ScrollView>
+        <VerticalStackLayout
+         Padding="24,32"
+         Spacing="16"
+         MaximumWidthRequest="600"
+         HorizontalOptions="Center">
+
+            <Label 
+             Text="Data Download Center"
+             Style="{StaticResource Headline}"
+             HorizontalOptions="Center"
+             HorizontalTextAlignment="Center"
+             SemanticProperties.HeadingLevel="Level1" />
+
+            <Button
+             x:Name="DownloadData"
+             Text="Download Data"
+             SemanticProperties.Hint="Downloads Data from Server"
+             Clicked="OnDownloadDataClicked"
+             HorizontalOptions="Fill"
+             HeightRequest="52"
+             CornerRadius="10"
+             FontSize="16"
+             FontAttributes="Bold" />
+
+            <Label
+             Text="Local Database Contents"
+             FontSize="13"
+             FontAttributes="Bold"
+             TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+             Margin="4,8,0,0" />
+
+            <Border
+             StrokeShape="RoundRectangle 10"
+             Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}"
+             StrokeThickness="1"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+             Padding="12"
+             HeightRequest="360">
+                <ScrollView>
+                    <Label x:Name="OutputLabel"
+                        Text="Loading database contents…"
+                        FontSize="12"
+                        FontFamily="Courier"
+                        LineBreakMode="WordWrap" />
+                </ScrollView>
+            </Border>
+
+            <Button
+             x:Name="BackToOverview"
+             Text="Return to Data Transfer Hub"
+             Clicked="OnBackToHubClicked"
+             HorizontalOptions="Fill"
+             HeightRequest="52"
+             CornerRadius="10"
+             FontSize="16"
+             Margin="0,8,0,0"
+             BackgroundColor="Transparent"
+             BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+             BorderWidth="1.5"
+             TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

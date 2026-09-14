@@ -11,18 +11,21 @@
                 Source="frass_logo.jpg"
                 HeightRequest="185"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+                SemanticProperties.Description="FRASS Logo" />
 
             <Label
                 Text="Log In To FRASS Forest Cruiser"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
-
             <Label
                 Text="Enter FRASS System Username and Password Below"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome To Forest Cruiser" />
+            <Label
+                Text="FRASS Log In Is Required For Data Transfer"
+                SemanticProperties.HeadingLevel="Level2" 
+                HorizontalOptions="Center"/>
 
             <Label Text="Username" />
             <Entry 
