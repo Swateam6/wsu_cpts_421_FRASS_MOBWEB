@@ -1,7 +1,7 @@
 using MOBWEB_TEST.sqllite;
 using System.Net.Http.Headers;
 
-namespace MOBWEB_TEST.Screens;
+namespace MOBWEB_TEST.Screens.DataTransferSubsystems;
 
 public partial class DataUploadScreen : ContentPage
 {

@@ -155,7 +155,7 @@
 	  <MauiXaml Update="Screens\DataEntrySubsystems\TreeEntryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Screens\DataUploadScreen.xaml">
+	  <MauiXaml Update="Screens\DataTransferSubsystems\DataUploadScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\HomeScreen.xaml">

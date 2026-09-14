@@ -8,7 +8,7 @@ public partial class HomeScreen : ContentPage
 	{
 		InitializeComponent();
 	}
-	private async void OnLogoutClicked(object? sender, EventArgs e)
+	private async void OnEntryClicked(object? sender, EventArgs e)
 	{
 		await Shell.Current.GoToAsync("///EntryScreen");
 	}

@@ -17,7 +17,7 @@
             if (username.ToLower() == "admin" && password.ToLower() == "admin")
             {
                 // go to homescreen using shell nav
-                await Shell.Current.GoToAsync("///HomeScreen");
+                await Shell.Current.GoToAsync("DataUploadScreen");
             }
             else
             {

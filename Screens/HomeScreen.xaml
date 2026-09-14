@@ -7,28 +7,27 @@
         <VerticalStackLayout Spacing="25"
                 Padding="30,0"
                 VerticalOptions="Center">
+            <Image
+                 Source="frass_logo.jpg"
+                 HeightRequest="185"
+                 Aspect="AspectFit"
+                 SemanticProperties.Description="Frass Logo" />
+
             <Label
                 Text="Forest Cruiser Homepage"
                 VerticalOptions="Center"
                 FontSize="50"
                 HorizontalOptions="Center"/>
-
-            <Button
-                x:Name="LogOut"
-                Text="Return to Log In Screen"
-                SemanticProperties.Hint="You will have to reenter your account information"
-                Clicked="OnLogoutClicked"
-                HorizontalOptions="Fill"/>
             <Button
                 x:Name="SubmitData"
-                Text="Submit Data To Server"
-                SemanticProperties.Hint="Uploads Data to Associated FRASS Account"
-                Clicked="OnSubmitClicked"
+                Text="Data Upload/Download"
+                SemanticProperties.Hint="Requires Log-In To Existing FRASS Account"
+                Clicked="OnEntryClicked"
                 HorizontalOptions="Fill"/>
             <Button
                 x:Name="DataEntry"
                 Text="Begin Cruise"
-                SemanticProperties.Hint="Add new data to your account"
+                SemanticProperties.Hint="Record new cruise data to your device"
                 Clicked="OnDataEntryClicked"
                 HorizontalOptions="Fill"/>
             <Button

@@ -1,5 +1,5 @@
 ﻿using MOBWEB_TEST.Screens.DataEntrySubsystems;
-
+using MOBWEB_TEST.Screens.DataTransferSubsystems;
 namespace MOBWEB_TEST
 {
     public partial class AppShell : Shell
@@ -17,6 +17,7 @@ namespace MOBWEB_TEST
             Routing.RegisterRoute("MesicSubsystemScreen", typeof(Screens.DataEntrySubsystems.MesicSubsystemScreen));
             Routing.RegisterRoute("GyroscopeScreen", typeof(Screens.DataEntrySubsystems.GyroscopeScreen));
             Routing.RegisterRoute("DefectScreen", typeof(Screens.DataEntrySubsystems.GyroscopeSubsystem.DefectScreen));
+            Routing.RegisterRoute("DataUploadScreen", typeof(Screens.DataTransferSubsystems.DataUploadScreen));
             Routing.RegisterRoute("PlotSlopeScreen", typeof(Screens.PlotSlopeScreen));
             Routing.RegisterRoute("LocationDemo", typeof(Screens.LocationDemo));
             Routing.RegisterRoute("DatabaseTestScreen",typeof(Screens.DatabaseTestScreen));

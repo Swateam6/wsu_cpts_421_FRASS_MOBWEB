@@ -6,15 +6,16 @@
     xmlns:local="clr-namespace:MOBWEB_TEST"
     Title="MOBWEB_TEST"
     FlyoutBehavior="Flyout">
-    <ShellContent
-        Title="Entry"
-        ContentTemplate="{DataTemplate local:Screens.EntryScreen}"
-        Route="EntryScreen" />
 
     <ShellContent 
         Title="Home"
         ContentTemplate="{DataTemplate local:Screens.HomeScreen}"
         Route="HomeScreen" />
+    
+    <ShellContent
+     Title="Entry"
+     ContentTemplate="{DataTemplate local:Screens.EntryScreen}"
+     Route="EntryScreen" />
 
     <ShellContent
         Title="Data Entry"
@@ -27,17 +28,9 @@
         Route="ProfileScreen" />
 
     <ShellContent
-        Title="Upload"
-        ContentTemplate="{DataTemplate local:Screens.DataUploadScreen}"
-        Route="DataUploadScreen" />
-
-    <ShellContent
-
         Title="Database"
         ContentTemplate="{DataTemplate local:Screens.DatabaseTestScreen}"
         Route="DatabaseTestScreen" />
-
-
 </Shell>
 
        
