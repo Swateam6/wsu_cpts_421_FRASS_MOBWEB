@@ -24,6 +24,7 @@ namespace MOBWEB_TEST
             Routing.RegisterRoute("LocationDemo", typeof(Screens.LocationDemo));
             Routing.RegisterRoute("DatabaseTestScreen",typeof(Screens.DatabaseTestScreen));
             Routing.RegisterRoute("PlotCoordinateSet", typeof(Screens.PlotCoordinateSet));
+            Routing.RegisterRoute("TreeHeightEntryPage",typeof(Screens.DataEntrySubsystems.TreeHeightEntryPage));
         }
     }
 }

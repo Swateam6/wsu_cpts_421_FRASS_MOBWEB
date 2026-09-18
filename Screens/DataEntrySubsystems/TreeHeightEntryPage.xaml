@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.TreeHeightEntryPage"
+             Title="TreeHeightEntryPage"
+             BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource MidnightBlue}}">
+    
+    <ScrollView>
+        <VerticalStackLayout  Spacing="20" Padding="20">
+            <Label Text="FRASS - Log Tree Height" 
+                   FontSize="24" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{StaticResource Primary}" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,10"/>
+            <Entry x:Name="HeightEntry" 
+                Placeholder="Enter Tree" 
+                FontFamily="OpenSansRegular" 
+                TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+                ClearButtonVisibility="WhileEditing" />
+            <Label Text="Select Tree Number" 
+           FontAttributes="Bold" />
+            
+            <Picker x:Name="TreeNumberPicker"
+            Title="Select a tree"
+            SelectedIndexChanged="OnTreeNumberSelected">
+            </Picker>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

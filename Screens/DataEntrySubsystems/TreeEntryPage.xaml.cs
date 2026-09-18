@@ -58,4 +58,21 @@ public partial class TreeEntryPage : ContentPage
             await DisplayAlert("Invalid Input", "Please enter valid numbers for DBH, Distance, and Bearing.", "OK");
         }
     }
+    private async void onAddNewTreeOnNewTreeClicked (object sender, EventArgs e)
+    {
+        if (!double.TryParse(DbhEntry.Text, out double dbh) || dbh <= 0)
+        {
+            await DisplayAlert("Invalid Input", "Please enter a valid DBH before adding a tree.", "OK");
+            DbhEntry.Focus();
+            return;
+        }
+        DataService.SaveTreeToPlot();
+
+        SpeciesEntry.Text = string.Empty;
+        DbhEntry.Text = string.Empty;
+        DistanceEntry.Text = string.Empty;
+        SpeciesEntry.Focus();
+
+        
+    }
 }
