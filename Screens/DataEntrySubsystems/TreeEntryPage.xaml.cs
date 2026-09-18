@@ -11,7 +11,7 @@ public partial class TreeEntryPage : ContentPage
     }
 
     
-    private async void OnHeightClicked(object sender, EventArgs e)
+    private async void OnSaveTreeClicked(object sender, EventArgs e)
     {
         // 1. Validate inputs (Now checking Azimuth too!)
         if (double.TryParse(DbhEntry.Text, out double dbh) &&
@@ -36,9 +36,6 @@ public partial class TreeEntryPage : ContentPage
                 DbhEntry.Text = string.Empty;
                 DistanceEntry.Text = string.Empty;
                 SpeciesEntry.Focus();
-
-                // Move to the next step
-                await Shell.Current.GoToAsync("GyroscopeScreen");
             }
             else
             {
@@ -67,12 +64,54 @@ public partial class TreeEntryPage : ContentPage
             return;
         }
         DataService.SaveTreeToPlot();
-
         SpeciesEntry.Text = string.Empty;
         DbhEntry.Text = string.Empty;
         DistanceEntry.Text = string.Empty;
         SpeciesEntry.Focus();
+    }
+    private async void OnHeightClicked(object sender, EventArgs e)
+    {
+        if (double.TryParse(DbhEntry.Text, out double dbh) &&
+            double.TryParse(DistanceEntry.Text, out double distance))
+        {
+            // 2. Grab your BAF (Defaulting to 20 if the Stand hasn't been set up yet)
+            bool methodIsFixed = DataService.CurrentStand.IsFixedPlot;
 
-        
+            double currentSize = DataService.CurrentPlot?.size ?? 20.00;
+
+            // 3. THE BOUNCER: Ask the math class if the tree makes the cut
+            bool isTreeIn = ForestyMath.IsTreeIn(dbh, distance, currentSize, methodIsFixed);
+
+            if (isTreeIn)
+            {
+                // Tree is IN! Save the basic data
+                DataService.CurrentTree.Species = SpeciesEntry.Text;
+                DataService.CurrentTree.Dbh = dbh;
+
+                // Reset the slate for the next potential tree
+                SpeciesEntry.Text = string.Empty;
+                DbhEntry.Text = string.Empty;
+                DistanceEntry.Text = string.Empty;
+                SpeciesEntry.Focus();
+
+                await Shell.Current.GoToAsync("TreeHeightEntryPage");
+            }
+            else
+            {
+                // Tree is OUT. Stop them from going to the Gyro screen!
+                await DisplayAlert("Tree OUT", $"At {distance}ft away, a {dbh}\" tree is out of the plot. Move to the next tree.", "OK");
+
+                // Clear the slate so they can measure the next tree, but don't navigate.
+                SpeciesEntry.Text = string.Empty;
+                DbhEntry.Text = string.Empty;
+                DistanceEntry.Text = string.Empty;
+                SpeciesEntry.Focus();
+            }
+        }
+        else
+        {
+            // Catch typos or missing fields
+            await DisplayAlert("Invalid Input", "Please enter valid numbers for DBH, Distance, and Bearing.", "OK");
+        }
     }
 }

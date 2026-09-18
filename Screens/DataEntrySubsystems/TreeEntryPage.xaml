@@ -65,6 +65,17 @@
                    FontSize="16" 
                    FontAttributes="Bold" 
                    CornerRadius="8"/>
+                <Button x:Name="SaveTreeData"
+              Grid.Column="1"
+              Text="Save Data" 
+              Clicked="OnSaveTreeData" 
+              BackgroundColor="{StaticResource Primary}" 
+              TextColor="White" 
+              FontFamily="OpenSansRegular" 
+              FontSize="16" 
+              FontAttributes="Bold" 
+              CornerRadius="8"/>
+
 
 
             </Grid>
