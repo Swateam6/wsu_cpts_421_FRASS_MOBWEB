@@ -80,10 +80,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FF0000" />
+		<MauiIcon Include="Resources\AppIcon\frass_logo_new.png" Color="#FF0000" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="FFFFFF" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\frass_logo_splash.png" Color="FFFFFF" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
