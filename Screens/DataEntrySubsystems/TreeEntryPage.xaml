@@ -37,6 +37,11 @@
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
                    ClearButtonVisibility="WhileEditing" />
 
+            <Label Text="Entry Distance(Feet):" 
+       FontFamily="OpenSansRegular" 
+       TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}" 
+       FontAttributes="Bold" />
+
             <Entry x:Name="DistanceEntry" 
                    Placeholder="0.0" 
                    Keyboard="Numeric" 

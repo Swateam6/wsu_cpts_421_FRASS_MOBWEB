@@ -27,7 +27,20 @@ public partial class TreeHeightEntryPage : ContentPage
 	private async void OnSaveHeightClicked(object sender, EventArgs e)
 	{
         int index = TreeNumberPicker.SelectedIndex;
+        if (index < 0 || index >= DataService.CurrentPlot.TreeList.Count)
+            return;
         var selectedTree = DataService.CurrentPlot.TreeList[index];
-		DataService.CurrentTree.Height = selectedTree.Height;
+        if (double.TryParse(HeightEntry.Text, out double height))
+        {
+            if(height <0)
+            {
+                await DisplayAlert("Invalid Input","Please Enter a valid height value","OK");
+                HeightEntry.Text = string.Empty;
+                selectedTree.Height = height;
+            }
+            selectedTree.Height = height;
+            DataService.CurrentTree = selectedTree;
+
+        }
     }
 }
