@@ -24,7 +24,7 @@ public partial class DataUploadScreen : ContentPage
 	{
         string dbPath = _dbService.GetCurrentDatabasePath();
         using var stream = File.OpenRead(dbPath);
-        bool success = await UploadDatabaseFileAsync(stream,Path.GetFileName(dbPath), "https://yourserver.com/upload"); // placeholder
+        bool success = await UploadDatabaseFileAsync(stream,Path.GetFileName(dbPath), "https://frass.forest-econometrics.com/App_Data/MobileUploads"); 
         if (success)
         {
             await DisplayAlert("Success", "Database uploaded successfully.", "OK");
