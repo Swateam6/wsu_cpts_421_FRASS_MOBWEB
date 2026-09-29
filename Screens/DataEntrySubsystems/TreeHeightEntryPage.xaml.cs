@@ -14,7 +14,7 @@ public partial class TreeHeightEntryPage : ContentPage
 		TreeNumberPicker.Items.Clear();
 		for(int i=0;i<DataService.CurrentPlot.TreeList.Count;i++)
 		{
-			TreeNumberPicker.Items.Add($"Tree {i + 1} - {DataService.CurrentPlot.TreeList[i].Species} ({DataService.CurrentPlot.TreeList[i].Dbh}\")");
+			TreeNumberPicker.Items.Add($"Tree {i + 1} - {DataService.CurrentPlot.TreeList[i].Species} ({DataService.CurrentPlot.PlotNumber}) ({DataService.CurrentPlot.TreeList[i].Dbh}\")");
         }
     }
 	private async void OnTreeNumberSelected(object sender, EventArgs e)

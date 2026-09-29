@@ -37,17 +37,19 @@
                    TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
                    ClearButtonVisibility="WhileEditing" />
 
-            <Label Text="Entry Distance(Feet):" 
-       FontFamily="OpenSansRegular" 
-       TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}" 
-       FontAttributes="Bold" />
+            <VerticalStackLayout x:Name="DistanceLayout">
+                <Label Text="Entry Distance(Feet):" 
+           FontFamily="OpenSansRegular" 
+           TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}" 
+           FontAttributes="Bold" />
 
-            <Entry x:Name="DistanceEntry" 
-                   Placeholder="0.0" 
-                   Keyboard="Numeric" 
-                   FontFamily="OpenSansRegular" 
-                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
-                   ClearButtonVisibility="WhileEditing" />
+                <Entry x:Name="DistanceEntry" 
+           Placeholder="0.0" 
+           Keyboard="Numeric" 
+           FontFamily="OpenSansRegular" 
+           TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+           ClearButtonVisibility="WhileEditing" />
+            </VerticalStackLayout>
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,20,0,0">
                 <Button x:Name="LogHeightButton"

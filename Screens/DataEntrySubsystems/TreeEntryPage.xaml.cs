@@ -17,6 +17,9 @@ public partial class TreeEntryPage : ContentPage
         if (DataService.CurrentTree == null)
         {
             await DisplayAlert("No Tree Selected", "Please add a new tree or select an existing tree first.", "OK");
+            SpeciesEntry.Text = string.Empty;
+            DbhEntry.Text = string.Empty;
+            DistanceEntry.Text = string.Empty;
             return;
         }
 
@@ -25,6 +28,9 @@ public partial class TreeEntryPage : ContentPage
         if (string.IsNullOrWhiteSpace(species))
         {
             await DisplayAlert("Missing Species", "Please enter a valid species code.", "OK");
+            SpeciesEntry.Text = string.Empty;
+            DbhEntry.Text = string.Empty;
+            DistanceEntry.Text = string.Empty;
             SpeciesEntry.Focus();
             return;
         }
@@ -33,6 +39,9 @@ public partial class TreeEntryPage : ContentPage
         if (!double.TryParse(DbhEntry.Text?.Trim(), out double dbh) || dbh <= 0)
         {
             await DisplayAlert("Invalid DBH", "Please enter a valid DBH greater than 0.", "OK");
+            SpeciesEntry.Text = string.Empty;
+            DbhEntry.Text = string.Empty;
+            DistanceEntry.Text = string.Empty;
             DbhEntry.Focus();
             return;
         }
@@ -51,9 +60,15 @@ public partial class TreeEntryPage : ContentPage
             if (!isTreeIn)
             {
                 await DisplayAlert("Tree OUT", $"At {distance} ft away, a {dbh}\" tree is out of the plot.", "OK");
+                SpeciesEntry.Text = string.Empty;
+                DbhEntry.Text = string.Empty;
+                DistanceEntry.Text = string.Empty;
                 return;
             }
         }
+        SpeciesEntry.Text = string.Empty;
+        DbhEntry.Text = string.Empty;
+        DistanceEntry.Text = string.Empty;
 
         // 6. Update the current tree's properties
         DataService.CurrentTree.Species = species;
@@ -72,6 +87,9 @@ public partial class TreeEntryPage : ContentPage
         {
             await DisplayAlert("Missing Species", "Please enter a species code before adding a tree.", "OK");
             SpeciesEntry.Focus();
+            SpeciesEntry.Text = string.Empty;
+            DbhEntry.Text = string.Empty;
+            DistanceEntry.Text = string.Empty;
             return;
         }
 
@@ -80,6 +98,9 @@ public partial class TreeEntryPage : ContentPage
         {
             await DisplayAlert("Invalid DBH", "Please enter a valid DBH greater than 0.", "OK");
             DbhEntry.Focus();
+            SpeciesEntry.Text = string.Empty;
+            DbhEntry.Text = string.Empty;
+            DistanceEntry.Text = string.Empty;
             return;
         }
 
@@ -152,6 +173,17 @@ public partial class TreeEntryPage : ContentPage
         {
             // Catch typos or missing fields
             await DisplayAlert("Invalid Input", "Please enter valid numbers for DBH, Distance, and Bearing.", "OK");
+        }
+    }
+    private void UpdateSamplingVisibility(bool isPps)
+    {
+        // Toggling the container hides or shows both the Label AND Entry together
+        DistanceLayout.IsVisible = !isPps;
+
+        // Clear stale text if hidden
+        if (isPps)
+        {
+            DistanceEntry.Text = string.Empty;
         }
     }
 }
