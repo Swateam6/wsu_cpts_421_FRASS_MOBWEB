@@ -18,7 +18,7 @@ namespace MOBWEB_TEST.sqllite
         public DateTime Date { get; set; }
 
         [Column("tree_height(ft)")]
-        public int Height { get; set; }
+        public double Height { get; set; }
 
         [Column("tree_species")]
         public string Species { get; set; } = string.Empty;

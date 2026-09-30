@@ -2,32 +2,73 @@ namespace MOBWEB_TEST.Screens.DataEntrySubsystems;
 
 using MOBWEB_TEST.Models;
 using MOBWEB_TEST.Services;
+using MOBWEB_TEST.sqllite;
+using System.Collections.ObjectModel;
 
 public partial class StandEntryData : ContentPage
 {
-    public StandEntryData()
+    private readonly LocalDbService _database;
+    private List<stand_data> _availableStands = new();
+
+    public StandEntryData(LocalDbService database)
     {
         InitializeComponent();
+        _database = database;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        // Force a brand new, clean Stand into memory every time this screen opens
-        DataService.CurrentStand = new Stand();
+        // 1. Fetch stands from SQLite
+        var dbStands = await _database.GetAllStandDataAsync();
 
-        // Clear out the UI just in case old text was left behind
-        AcresEntry.Text = string.Empty;
-        RadiusEntry.Text = string.Empty;
-        BafPicker.SelectedIndex = -1;
-        PlotTypePicker.SelectedIndex = -1;
+        if (dbStands != null && dbStands.Count > 0)
+        {
+            _availableStands = dbStands;
+            StandPicker.ItemsSource = _availableStands
+                .Select(s => $"Stand #{s.Id} - {s.HabitatType}")
+                .ToList();
 
-        VariableSection.IsVisible = false;
-        FixedSection.IsVisible = false;
+            // Default to the first stand or match CurrentStand if already chosen
+            if (DataService.CurrentStand != null && DataService.CurrentStand.StandId > 0)
+            {
+                int matchIndex = _availableStands.FindIndex(s => s.Id == DataService.CurrentStand.StandId);
+                StandPicker.SelectedIndex = matchIndex != -1 ? matchIndex : 0;
+            }
+            else
+            {
+                StandPicker.SelectedIndex = 0;
+            }
+        }
+        else
+        {
+            await DisplayAlert("Notice", "No stands found in database. Please run the seeder.", "OK");
+        }
     }
 
-    // NEW: Toggles the UI based on what they select
+    private void OnStandPickerSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (StandPicker.SelectedIndex < 0 || StandPicker.SelectedIndex >= _availableStands.Count)
+            return;
+
+        var selectedDbStand = _availableStands[StandPicker.SelectedIndex];
+
+        // Ensure CurrentStand points to this existing database stand
+        if (DataService.CurrentStand == null)
+        {
+            DataService.CurrentStand = new Stand();
+        }
+
+        DataService.CurrentStand.StandId = selectedDbStand.Id;
+
+        // Ensure PlotList is initialized and ready
+        if (DataService.CurrentStand.PlotList == null)
+        {
+            DataService.CurrentStand.PlotList = new ObservableCollection<Plot>();
+        }
+    }
+
     private void OnPlotTypeSelectedIndexChanged(object sender, EventArgs e)
     {
         if (PlotTypePicker.SelectedIndex == 0) // Variable Radius (Prism)
@@ -44,46 +85,43 @@ public partial class StandEntryData : ContentPage
 
     private async void OnStartPlottingClicked(object sender, EventArgs e)
     {
-        if (DataService.CurrentStand == null) return;
+        if (DataService.CurrentStand == null)
+        {
+            await DisplayAlert("Error", "Please select a stand before continuing.", "OK");
+            return;
+        }
 
-        // 1. Parse the Acres
+        // 1. Parse Acres
         if (double.TryParse(AcresEntry.Text, out double acres))
         {
             DataService.CurrentStand.Acres = acres;
         }
 
-        // 2. Set the Boolean and the Value based on the UI selection
+        // 2. Set cruising method
         if (PlotTypePicker.SelectedIndex == 0) // Variable Radius (Prism)
         {
-            // 1. Set the boolean in the Stand
             DataService.CurrentStand.IsFixedPlot = false;
 
-            // 2. Store the BAF in DataService to pass it to the Plot class later
-            if (BafPicker.SelectedIndex != -1)
+            if (BafPicker.SelectedIndex != -1 && double.TryParse(BafPicker.SelectedItem.ToString(), out double selectedBaf))
             {
-                double selectedBaf = double.Parse(BafPicker.SelectedItem.ToString());
+                if (DataService.CurrentPlot == null)
+                {
+                    DataService.CurrentPlot = new Plot();
+                }
                 DataService.CurrentPlot.size = selectedBaf;
             }
         }
         else if (PlotTypePicker.SelectedIndex == 1) // Fixed Radius
         {
-            // 1. Set the boolean in the Stand
             DataService.CurrentStand.IsFixedPlot = true;
 
-            // 2. Store the Radius in DataService to pass it to the Plot class later
             if (double.TryParse(RadiusEntry.Text, out double parsedRadius))
             {
                 DataService.CurrentStand.plotSize = parsedRadius;
             }
         }
 
-        // 3. Clear the UI for the next session
-        AcresEntry.Text = string.Empty;
-        RadiusEntry.Text = string.Empty;
-        BafPicker.SelectedIndex = -1;
-        PlotTypePicker.SelectedIndex = -1;
-
-        // 4. Proceed to the plotting screen
+        // 3. Navigate to plot setup
         await Shell.Current.GoToAsync("PlotCoordinateSet");
     }
 }

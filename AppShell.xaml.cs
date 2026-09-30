@@ -15,8 +15,6 @@ namespace MOBWEB_TEST
             Routing.RegisterRoute("PlotEntryScreen", typeof(Screens.DataEntrySubsystems.PlotEntry));
             Routing.RegisterRoute("TreeEntryPage", typeof(Screens.DataEntrySubsystems.TreeEntryPage));
             Routing.RegisterRoute("MesicSubsystemScreen", typeof(Screens.DataEntrySubsystems.MesicSubsystemScreen));
-            Routing.RegisterRoute("GyroscopeScreen", typeof(Screens.DataEntrySubsystems.GyroscopeScreen));
-            Routing.RegisterRoute("DefectScreen", typeof(Screens.DataEntrySubsystems.GyroscopeSubsystem.DefectScreen));
             Routing.RegisterRoute("DataUploadScreen", typeof(Screens.DataTransferSubsystems.DataUploadScreen));
             Routing.RegisterRoute("DataDownloadScreen", typeof(Screens.DataTransferSubsystems.DataDownloadScreen));
             Routing.RegisterRoute("DataOverviewScreen", typeof(Screens.DataTransferSubsystems.DataOverviewScreen));
@@ -24,6 +22,10 @@ namespace MOBWEB_TEST
             Routing.RegisterRoute("LocationDemo", typeof(Screens.LocationDemo));
             Routing.RegisterRoute("DatabaseTestScreen",typeof(Screens.DatabaseTestScreen));
             Routing.RegisterRoute("PlotCoordinateSet", typeof(Screens.PlotCoordinateSet));
+            Routing.RegisterRoute("TreeHeightEntryPage",typeof(Screens.DataEntrySubsystems.TreeHeightEntryPage));
+            Routing.RegisterRoute("DefectScreen", typeof(Screens.DataEntrySubsystems.DefectScreen));
+            Routing.RegisterRoute("SummaryScreen", typeof(Screens.DataEntrySubsystems.SummaryScreen));
+            Routing.RegisterRoute("DataEntryScreen", typeof(Screens.DataEntryScreen));
         }
     }
 }

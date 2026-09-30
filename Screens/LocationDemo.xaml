@@ -33,6 +33,13 @@
                             TextColor="White"
                             IsEnabled="False"
                             Margin="0,10,0,0" />
+                    <Button x:Name="OverridePlotButton"
+         Text="Override Data Entry"
+         Clicked="OnOverridePlotClicked"
+         BackgroundColor="YellowGreen"
+         TextColor="Black"
+         IsEnabled="False"
+         Margin="0,10,0,0" />
                 </VerticalStackLayout>
             </Border>
 
