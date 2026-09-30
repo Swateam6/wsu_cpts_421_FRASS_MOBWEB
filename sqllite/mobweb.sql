@@ -70,8 +70,6 @@ CREATE TABLE `tree_data` (
     `stump_height(in)` REAL NOT NULL,
     `base_of_live_crown(ft)` REAL NOT NULL,
     `crown_ratio(%)` REAL NOT NULL,
-    `latitude` REAL NOT NULL,
-    `longitude` REAL NOT NULL,
     
     FOREIGN KEY(`parent_plot_id`) REFERENCES `plot_data`(`id`) ON DELETE CASCADE
 );

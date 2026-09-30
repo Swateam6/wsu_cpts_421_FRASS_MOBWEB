@@ -25,13 +25,13 @@ namespace MOBWEB_TEST.sqllite
         public float Longitude { get; set; }
 
         [Column("plot_aspect(degrees)")]
-        public int Aspect { get; set; }
+        public double Aspect { get; set; }
 
         [Column("plot_slope(degrees)")]
-        public int Slope { get; set; }
+        public double Slope { get; set; }
 
         [Column("plot_elevation(ft)")]
-        public int Elevation { get; set; }
+        public double Elevation { get; set; }
 
         [Column("plot_image_filepath")]
         public string ImagePath { get; set; } = string.Empty;

@@ -39,12 +39,14 @@ public partial class LocationDemo : ContentPage
             TargetCoordinatesLabel.Text = $"Target: {targetPlot.Latitude:F5}, {targetPlot.Longitude:F5}";
             // This enables the button you added in XAML
             StartPlotButton.IsEnabled = true;
+            OverridePlotButton.IsEnabled = true;
         }
         else
         {
             TargetCoordinatesLabel.Text = "Target: None Selected";
             DistanceLabel.Text = "No Plot Selected";
             StartPlotButton.IsEnabled = false;
+            OverridePlotButton.IsEnabled = false;
         }
     }
 
@@ -128,7 +130,17 @@ public partial class LocationDemo : ContentPage
         // Navigate to the data entry screen once the cruiser arrives
         await Shell.Current.GoToAsync("PlotEntryScreen");
     }
+    private async void OnOverridePlotClicked(object sender, EventArgs e)
+    {
+        if (_viewModel != null && DataService.CurrentPlot != null)
+        {
+            // 1. Remove the rogue minus sign so coordinates remain accurate
+            DataService.CurrentPlot.Latitude = _viewModel.Latitude;
+            DataService.CurrentPlot.Longitude = _viewModel.Longitude;
+        }
 
+        await Shell.Current.GoToAsync("PlotEntryScreen");
+    }
     private double DegreesToRadians(double degrees)
     {
         return degrees * (Math.PI / 180);

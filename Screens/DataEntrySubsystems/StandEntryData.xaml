@@ -41,6 +41,16 @@
                     <x:String>Fixed Radius</x:String>
                 </Picker.Items>
             </Picker>
+            <Label Text="Select Existing Stand:" 
+       FontFamily="OpenSansRegular"
+       TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+       FontAttributes="Bold" />
+
+            <Picker x:Name="StandPicker" 
+        Title="Choose Stand from Database..." 
+        SelectedIndexChanged="OnStandPickerSelectedIndexChanged"
+        BackgroundColor="White"
+        TextColor="Black" />
 
             <VerticalStackLayout x:Name="VariableSection" IsVisible="False" Spacing="10">
                 <Label Text="Basal Area Factor (BAF):" 

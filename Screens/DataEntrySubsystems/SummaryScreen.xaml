@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.SummaryScreen"
+             Title="Stand Summary &amp; Review"
+             BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource MidnightBlue}}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="20">
+
+            <Label Text="FRASS - Stand Complete"
+                   FontSize="24"
+                   FontFamily="OpenSansRegular"
+                   TextColor="{StaticResource Primary}"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,5" />
+
+            <!-- Stand Totals Card -->
+            <Border StrokeThickness="1"
+                    Stroke="{StaticResource Primary}"
+                    Padding="14">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="StandNameLabel"
+                           Text="Stand: --"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <Label x:Name="StandTotalsLabel"
+                           Text="Totals: 0 Plots | 0 Trees | 0 Defects"
+                           FontSize="15" />
+
+                    <Label x:Name="DataQualityWarningLabel"
+                           Text="⚠️ Warning: Some trees have incomplete/null values!"
+                           TextColor="OrangeRed"
+                           FontAttributes="Bold"
+                           IsVisible="False" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- All Stand Trees Review List -->
+            <Label Text="All Recorded Trees (Stand Audit):"
+                   FontAttributes="Bold"
+                   FontSize="16"
+                   Margin="0,8,0,0" />
+
+            <Border StrokeThickness="1"
+                    Stroke="{StaticResource Primary}"
+                    Padding="8">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <CollectionView x:Name="TreesCollectionView" HeightRequest="280">
+                    <CollectionView.EmptyView>
+                        <Label Text="No trees recorded in this stand."
+                               TextColor="Gray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border StrokeThickness="0.5"
+                                    Stroke="LightGray"
+                                    Padding="10"
+                                    Margin="0,4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6" />
+                                </Border.StrokeShape>
+
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <!-- Tree Info & Plot reference -->
+                                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                        <Label Text="{Binding DisplayTitle}"
+                                               FontAttributes="Bold"
+                                               FontSize="15" />
+                                        <Label Text="{Binding DetailsText}"
+                                               FontSize="13"
+                                               TextColor="Gray" />
+                                    </VerticalStackLayout>
+
+                                    <!-- Validation Status -->
+                                    <Label Grid.Column="2"
+                                           Text="{Binding StatusText}"
+                                           TextColor="{Binding StatusColor}"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <!-- Final SQLite Upload Button -->
+            <Button x:Name="SaveStandSqlButton"
+                    Text="Save Stand &amp; Upload to Database"
+                    Clicked="OnSaveStandSqlClicked"
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    Margin="0,15,0,10" />
+            <Button x:Name="SavePlotButton"
+        Text="Done With Plot"
+        Clicked="OnFinishedPlotClicked"
+        BackgroundColor="LightGreen"
+        TextColor="Black"
+        FontFamily="OpenSansRegular"
+        FontSize="16"
+        FontAttributes="Bold"
+        CornerRadius="8"
+        Margin="0,15,0,10" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

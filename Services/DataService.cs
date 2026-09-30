@@ -1,9 +1,8 @@
-﻿using System;
+﻿using MOBWEB_TEST.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MOBWEB_TEST.Models;
 
 namespace MOBWEB_TEST.Services
 {
@@ -15,32 +14,107 @@ namespace MOBWEB_TEST.Services
         public static Tree CurrentTree { get; set; } = new Tree();
         public static Defects CurrentDefect { get; set; } = new Defects();
 
+        /// <summary>
+        /// Saves or updates CurrentTree in CurrentPlot.TreeList without resetting it to a new object.
+        /// </summary>
+        /// 
+
+
+        public static void SetActivePlot(int plotNumber)
+        {
+            // Find the pre-planned plot among your 174 centers
+            var existingPlot = CurrentStand.PlotList.FirstOrDefault(p => p.PlotNumber == plotNumber);
+
+            if (existingPlot != null)
+            {
+                CurrentPlot = existingPlot;
+
+                // Ensure TreeList is instantiated so trees can be added
+                if (CurrentPlot.TreeList == null)
+                {
+                    CurrentPlot.TreeList = new ObservableCollection<Tree>();
+                }
+            }
+
+            StartNewTree();
+        }
         public static void SaveTreeToPlot()
         {
-            // ANTI-GHOST GATE: Only save if the cruiser actually measured DBH or logged a species/defect
             if (CurrentTree.Dbh > 0 || !string.IsNullOrEmpty(CurrentTree.Species) || CurrentTree.DefectList.Count > 0)
             {
-                CurrentPlot.TreeList.Add(CurrentTree);
+                // If it is not already in the plot list, add it
+                if (!CurrentPlot.TreeList.Contains(CurrentTree))
+                {
+                    CurrentPlot.TreeList.Add(CurrentTree);
+                }
+                // If it IS already in CurrentPlot.TreeList, changes made to CurrentTree
+                // are already updated by reference!
             }
-            CurrentTree = new Tree();
+            // DO NOT call CurrentTree = new Tree() here so you can keep editing it!
+        }
+
+        /// <summary>
+        /// Points CurrentTree directly to an existing tree in the list for editing.
+        /// </summary>
+        public static void SelectTreeForEditing(Tree tree)
+        {
+            if (tree != null)
+            {
+                CurrentTree = tree;
+            }
+        }
+
+        /// <summary>
+        /// Selects an existing tree by its 0-based index in CurrentPlot.TreeList.
+        /// </summary>
+        public static void SelectTreeByIndex(int index)
+        {
+            if (CurrentPlot.TreeList != null && index >= 0 && index < CurrentPlot.TreeList.Count)
+            {
+                CurrentTree = CurrentPlot.TreeList[index];
+            }
+        }
+
+        /// <summary>
+        /// Explicitly resets CurrentTree only when the cruiser decides to start a brand new tree.
+        /// </summary>
+        public static void StartNewTree()
+        {
+            CurrentTree = new Tree
+            {
+                Id = (CurrentPlot.TreeList?.Count ?? 0) + 1
+            };
         }
 
         public static void SavePlotToStand()
         {
-            // ANTI-GHOST GATE: Only save if the plot actually has trees in it (or environmental data)
             if (CurrentPlot.TreeList.Count > 0 || CurrentPlot.Slope > 0 || CurrentPlot.Aspect > 0)
             {
-                CurrentStand.PlotList.Add(CurrentPlot);
+                if (!CurrentStand.PlotList.Contains(CurrentPlot))
+                {
+                    CurrentStand.PlotList.Add(CurrentPlot);
+                }
             }
-            CurrentPlot = new Plot();
+            // DO NOT reset CurrentPlot until moving to a brand new plot
+        }
+
+        public static void StartNewPlot()
+        {
+            CurrentPlot = new Plot
+            {
+                PlotNumber = (CurrentStand.PlotList?.Count ?? 0) + 1
+            };
+            StartNewTree();
         }
 
         public static void SaveDefectToTree()
         {
-            // ANTI-GHOST GATE: Only save if the defect actually has angles or a description
             if (!string.IsNullOrEmpty(CurrentDefect.Description) || CurrentDefect.BaseAngle != 0 || CurrentDefect.TopAngle != 0)
             {
-                CurrentTree.DefectList.Add(CurrentDefect);
+                if (!CurrentTree.DefectList.Contains(CurrentDefect))
+                {
+                    CurrentTree.DefectList.Add(CurrentDefect);
+                }
             }
             CurrentDefect = new Defects();
         }
@@ -49,9 +123,11 @@ namespace MOBWEB_TEST.Services
         {
             if (CurrentStand.PlotList.Count > 0)
             {
-                CurrentParcel.Stands.Add(CurrentStand);
+                if (!CurrentParcel.Stands.Contains(CurrentStand))
+                {
+                    CurrentParcel.Stands.Add(CurrentStand);
+                }
             }
-            CurrentStand = new Stand();
         }
     }
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.PlotSlopeScreen"
+             Title="Plot Slope"
+             BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource MidnightBlue}}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="20">
+
+            <Label Text="Plot Slope"
+                   FontSize="24"
+                   FontFamily="OpenSansRegular"
+                   TextColor="{StaticResource Primary}"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
+
+            <!-- Slope Angle Entry -->
+            <Label Text="Slope Angle (Degrees):"
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource Secondary}}"
+                   FontAttributes="Bold" />
+
+            <Entry x:Name="SlopeAngleEntry"
+                   Placeholder="e.g. 12.5"
+                   Keyboard="Numeric"
+                   FontFamily="OpenSansRegular"
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
+                   ClearButtonVisibility="WhileEditing"
+                   TextChanged="OnAngleTextChanged" />
+
+            <!-- Calculated Output Card -->
+            <Border StrokeThickness="1"
+                    Stroke="{StaticResource Primary}"
+                    Padding="15"
+                    Margin="0,10,0,10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Calculated Slope"
+                           FontSize="14"
+                           TextColor="Gray"
+                           HorizontalOptions="Center" />
+                    <Label x:Name="SlopeLabel"
+                           Text="0.0 %"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Save and Proceed Button -->
+            <Button Text="Save Slope &amp; Start Trees"
+                    Clicked="OnSaveAndProceedClicked"
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

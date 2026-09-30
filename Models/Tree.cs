@@ -26,7 +26,7 @@ public class Tree
     public double BaseAngle { get; set; }
     public double TopAngle { get; set; }
     public double LiveCrownBaseAngle { get; set; }
-
+    public double stumpHeight;
     public string DisplaySummary => $"{Species} - {Dbh}\" DBH, {Height}' Tall";
 
     public ObservableCollection<Defects> DefectList { get; set; } = new();

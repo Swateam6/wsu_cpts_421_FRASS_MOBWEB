@@ -116,6 +116,9 @@
 	  <Compile Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml.cs">
 	    <DependentUpon>MesicSubsystemScreen.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Screens\DataEntrySubsystems\PlotSlopeScreen.xaml.cs">
+	    <DependentUpon>PlotSlopeScreen.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Screens\DataEntrySubsystems\PlotEntry.xaml.cs">
 	    <DependentUpon>PlotEntry.xaml</DependentUpon>
 	  </Compile>
@@ -137,13 +140,13 @@
 	  <MauiXaml Update="Screens\DataEntryScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Screens\DataEntrySubsystems\GyroscopeSubsystem\DefectScreen.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Screens\DataEntrySubsystems\GyroscopeSubsystem\PlotSlopeScreen.xaml">
+	  <MauiXaml Update="Screens\DataEntrySubsystems\DefectScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataEntrySubsystems\MesicSubsystemScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\PlotSlopeScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataEntrySubsystems\PlotEntry.xaml">
@@ -152,7 +155,13 @@
 	  <MauiXaml Update="Screens\DataEntrySubsystems\StandEntryData.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\SummaryScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataEntrySubsystems\TreeEntryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Screens\DataEntrySubsystems\TreeHeightEntryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Screens\DataTransferSubsystems\DataDownloadScreen.xaml">
