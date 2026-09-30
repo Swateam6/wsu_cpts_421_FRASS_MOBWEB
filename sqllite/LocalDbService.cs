@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using MOBWEB_TEST.Models;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -341,5 +342,123 @@ namespace MOBWEB_TEST.sqllite
         }
 
 
+
+
+
+        public async Task<bool> SaveStandBatchAsync(Stand stand)
+        {
+            if (stand == null) return false;
+
+            try
+            {
+                await _connection.RunInTransactionAsync(tran =>
+                {
+                    int standId = stand.StandId;
+
+                    // 1. Locate existing Stand in SQLite or insert if new
+                    if (standId > 0)
+                    {
+                        var existingStand = tran.Find<stand_data>(standId);
+                        if (existingStand != null)
+                        {
+                            existingStand.Acres = (float)stand.Acres;
+                            existingStand.Date = DateTime.Now;
+                            tran.Update(existingStand);
+                        }
+                    }
+                    else
+                    {
+                        var standRow = new stand_data
+                        {
+                            Date = DateTime.Now,
+                            Acres = (float)stand.Acres,
+                        };
+                        tran.Insert(standRow);
+                        standId = standRow.Id;
+                    }
+
+                    // 2. Iterate directly over the stand's ObservableCollection<Plot>
+                    if (stand.PlotList != null)
+                    {
+                        foreach (var plot in stand.PlotList)
+                        {
+                            int plotId = plot.PlotNumber;
+
+                            // Locate the seeded/existing plot row in SQLite
+                            var existingPlot = tran.Find<plot_data>(plotId);
+                            if (existingPlot != null)
+                            {
+                                existingPlot.Slope = plot.Slope;
+                                existingPlot.Aspect = plot.Aspect;
+                                existingPlot.Date = DateTime.Now;
+                                tran.Update(existingPlot);
+                            }
+                            else
+                            {
+                                var plotRow = new plot_data
+                                {
+                                    ParentStandId = standId,
+                                    Slope = plot.Slope,
+                                    Aspect = plot.Aspect,
+                                    Date = DateTime.Now
+                                };
+                                tran.Insert(plotRow);
+                                plotId = plotRow.Id;
+                            }
+
+                            // 3. Save trees to THIS specific plot ID
+                            if (plot.TreeList != null)
+                            {
+                                foreach (var tree in plot.TreeList)
+                                {
+                                    var treeRow = new tree_data
+                                    {
+                                        parentPlotId = plotId,
+                                        Species = tree.Species,
+                                        DiameterBreastHeight = (float)tree.Dbh,
+                                        Height = tree.Height
+                                    };
+                                    tran.Insert(treeRow);
+
+                                    // 4. Save defects to THIS tree
+                                    if (tree.DefectList != null)
+                                    {
+                                        foreach (var defect in tree.DefectList)
+                                        {
+                                            var defectRow = new defect_data
+                                            {
+                                                parentTreeId = treeRow.Id,
+                                                Description = defect.Description,
+                                                bottomHeight = (float)defect.BaseAngle,
+                                                TopAngle = (float)defect.TopAngle
+                                            };
+                                            tran.Insert(defectRow);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
+
+
+
+
+
     }
 }
+
+
+        
+          
+            

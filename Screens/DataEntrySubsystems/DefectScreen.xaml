@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.DefectScreen"
+             Title="Tree Defects"
+             BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource MidnightBlue}}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="14" Padding="20">
+
+            <Label Text="FRASS - Tree Defects" 
+                   FontSize="24" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{StaticResource Primary}" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,5"/>
+
+            <!-- Tree Picker -->
+            <Label Text="Select Tree:" FontAttributes="Bold" />
+            <Picker x:Name="TreeNumberPicker"
+                    Title="Select a tree"
+                    SelectedIndexChanged="OnTreeSelected" />
+
+            <!-- Defect Type -->
+            <Label Text="Defect Type (e.g. Conk, Sweep, Rot, Fork):" FontAttributes="Bold" />
+            <Entry x:Name="DefectTypeEntry"
+                   Placeholder="Enter defect code/type"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Distance to Defect / Tree -->
+            <Label Text="Distance (Feet):" FontAttributes="Bold" />
+            <Entry x:Name="DistanceEntry"
+                   Placeholder="e.g. 66.0"
+                   Keyboard="Numeric"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Angle Inputs (Top & Bottom of defect for height calculation) -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                    <Label Text="Top Angle (°):" FontAttributes="Bold" />
+                    <Entry x:Name="TopAngleEntry"
+                           Placeholder="e.g. 24.5"
+                           Keyboard="Numeric"
+                           ClearButtonVisibility="WhileEditing" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                    <Label Text="Bottom Angle (°):" FontAttributes="Bold" />
+                    <Entry x:Name="BottomAngleEntry"
+                           Placeholder="e.g. 18.0"
+                           Keyboard="Numeric"
+                           ClearButtonVisibility="WhileEditing" />
+                </VerticalStackLayout>
+            </Grid>
+
+
+            <!-- Add Defect Button -->
+            <Button Text="+ Add Defect to Tree"
+                    Clicked="OnAddDefectClicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    Margin="0,5,0,0" />
+
+            <!-- Logged Defects for Selected Tree -->
+            <Label Text="Current Tree Defects:" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+
+            <Border StrokeThickness="1" Stroke="{StaticResource Primary}" Padding="10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <CollectionView x:Name="DefectsCollectionView" HeightRequest="140">
+                    <CollectionView.EmptyView>
+                        <Label Text="No defects added for this tree yet." 
+                               TextColor="Gray" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*, Auto, Auto" Padding="0,4">
+                                <Label Grid.Column="0" 
+                                       Text="{Binding DisplayText}" 
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="1" 
+                                       Text="{Binding LengthText}" 
+                                       TextColor="Gray" 
+                                       Margin="8,0" 
+                                       VerticalOptions="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <!-- Done Button -->
+            <Button Text="Done Recording Defects"
+                    Clicked="OnDoneRecordingClicked"
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CornerRadius="8"
+                    Margin="0,15,0,10" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

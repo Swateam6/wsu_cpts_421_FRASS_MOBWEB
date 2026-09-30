@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MOBWEB_TEST.Screens.DataEntrySubsystems.TreeHeightEntryPage"
-             Title="TreeHeightEntryPage"
+             Title="Tree Height &amp; Crown"
              BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource MidnightBlue}}">
-    
+
     <ScrollView>
-        <VerticalStackLayout  Spacing="20" Padding="20">
+        <VerticalStackLayout Spacing="16" Padding="20">
             <Label Text="FRASS - Log Tree Height" 
                    FontSize="24" 
                    FontFamily="OpenSansRegular" 
@@ -14,29 +14,117 @@
                    FontAttributes="Bold" 
                    HorizontalOptions="Center" 
                    Margin="0,0,0,10"/>
-            <Entry x:Name="HeightEntry" 
-                Placeholder="Enter Tree Height" 
-                FontFamily="OpenSansRegular" 
-                TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
-                ClearButtonVisibility="WhileEditing" />
+
+            <!-- Tree Selector -->
             <Label Text="Select Tree Number" 
-           FontAttributes="Bold" />
+                   FontAttributes="Bold" />
+            <Picker x:Name="TreeNumberPicker"
+                    Title="Select a tree"
+                    SelectedIndexChanged="OnTreeNumberSelected" />
+
+            <!-- Distance Input -->
+            <Label Text="Distance to Tree (Feet):" 
+                   FontAttributes="Bold" />
+            <Entry x:Name="DistanceEntry" 
+                   Placeholder="e.g. 66.0" 
+                   Keyboard="Numeric" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Tree Top Angle -->
+            <Label Text="Top Angle (Degrees):" 
+                   FontAttributes="Bold" />
+            <Entry x:Name="TopAngleEntry" 
+                   Placeholder="e.g. 35.0" 
+                   Keyboard="Numeric" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Crown Base Angle -->
+            <Label Text="Crown Base Angle (Degrees):" 
+                   FontAttributes="Bold" />
+            <Entry x:Name="CrownAngleEntry" 
+                   Placeholder="e.g. 15.0" 
+                   Keyboard="Numeric" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Bottom / Ground Angle -->
+            <Label Text="Bottom Angle (Degrees):" 
+                   FontAttributes="Bold" />
+            <Entry x:Name="BottomAngleEntry" 
+                   Placeholder="e.g. -4.0 (negative below eye level)" 
+                   Keyboard="Numeric" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Stump Height -->
+            <Label Text="Stump Height (Feet):" 
+                   FontAttributes="Bold" />
+            <Entry x:Name="StumpHeightEntry" 
+                   Placeholder="e.g. 1.0" 
+                   Keyboard="Numeric" 
+                   FontFamily="OpenSansRegular" 
+                   TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}" 
+                   ClearButtonVisibility="WhileEditing" />
+
+            <!-- Display Results -->
+            <Border StrokeThickness="1"
+                    Stroke="{StaticResource Primary}"
+                    Padding="12"
+                    Margin="0,5,0,5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="CalculatedHeightLabel"
+                           Text="Total Height: -- ft"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center" />
+
+                    <Label x:Name="CalculatedCrownLabel"
+                           Text="Live Crown: -- ft (-- %)"
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark=White}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Action Buttons -->
+            <Button x:Name="CalculateHeightButton"
+                    Text="Calculate" 
+                    Clicked="OnCalculateHeightClicked" 
+                    BackgroundColor="DarkSlateGray" 
+                    TextColor="White" 
+                    FontFamily="OpenSansRegular" 
+                    FontSize="16" 
+                    FontAttributes="Bold" 
+                    CornerRadius="8"/>
 
             <Button x:Name="SaveHeightButton"
-         Grid.Column="0"
-         Text="Log Height" 
-         Clicked="OnSaveHeightClicked" 
+                    Text="Log Height &amp; Crown" 
+                    Clicked="OnSaveHeightClicked" 
+                    BackgroundColor="{StaticResource Primary}" 
+                    TextColor="White" 
+                    FontFamily="OpenSansRegular" 
+                    FontSize="16" 
+                    FontAttributes="Bold" 
+                    CornerRadius="8"/>
+            <Button x:Name="DefectButton"
+         Text="Log some Defects chuvak" 
+         Clicked="OnDefectClickClicked" 
          BackgroundColor="{StaticResource Primary}" 
          TextColor="White" 
          FontFamily="OpenSansRegular" 
          FontSize="16" 
          FontAttributes="Bold" 
          CornerRadius="8"/>
-
-            <Picker x:Name="TreeNumberPicker"
-            Title="Select a tree"
-            SelectedIndexChanged="OnTreeNumberSelected">
-            </Picker>
 
         </VerticalStackLayout>
     </ScrollView>
