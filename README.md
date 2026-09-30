@@ -1,5 +1,4 @@
-**Flex Forest Cruiser
-**
+**Flex Forest Cruiser**
 The project is an app for recording forestry data and transferring it to the wider FRASS system.
 
 **Installation**
