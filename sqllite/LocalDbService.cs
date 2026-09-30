@@ -391,6 +391,11 @@ namespace MOBWEB_TEST.sqllite
                                 existingPlot.Slope = plot.Slope;
                                 existingPlot.Aspect = plot.Aspect;
                                 existingPlot.Date = DateTime.Now;
+
+                                // PERSIST THE OVERRIDDEN GPS COORDINATES
+                                existingPlot.Latitude = (float)plot.Latitude;
+                                existingPlot.Longitude = (float)plot.Longitude;
+
                                 tran.Update(existingPlot);
                             }
                             else

@@ -132,12 +132,15 @@ public partial class LocationDemo : ContentPage
     }
     private async void OnOverridePlotClicked(object sender, EventArgs e)
     {
-        //Overrides current Plot Center
-        DataService.CurrentPlot.Latitude=-_viewModel.Latitude;
-        DataService.CurrentPlot.Longitude = _viewModel.Longitude;
+        if (_viewModel != null && DataService.CurrentPlot != null)
+        {
+            // 1. Remove the rogue minus sign so coordinates remain accurate
+            DataService.CurrentPlot.Latitude = _viewModel.Latitude;
+            DataService.CurrentPlot.Longitude = _viewModel.Longitude;
+        }
+
         await Shell.Current.GoToAsync("PlotEntryScreen");
     }
-
     private double DegreesToRadians(double degrees)
     {
         return degrees * (Math.PI / 180);
