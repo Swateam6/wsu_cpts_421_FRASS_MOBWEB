@@ -1,0 +1,115 @@
+# Sprint 4 Report 
+
+  
+
+## YouTube link of Sprint * Video (Make this video unlisted) 
+
+https://youtu.be/G3YdKjd3TL0 
+
+## What's New (User Facing) 
+
+ 
+
+Being able to measure trees and height out of order 
+
+Moving away from Gyroscope 
+
+Being able to override plot location 
+
+Measuring defects out of order 
+
+New Login Frontend 
+
+Data Upload Backend 
+
+FRASS Data Reception Backend 
+
+ 
+
+  
+
+## Work Summary (Developer Facing) 
+
+On the data collection end of our app, we refined important features and trimmed those that were less helpful or needed. When meeting with the client, we would present our current progress on certain features, showing how they fit into the wider pipeline. Dr. Bill would often respond to these demos with more clarification on what should be a priority, and what could be discarded. For example, this is how we came to focus more on out-of-order tree data entry, while cutting more troublesome features such as measuring height via gyroscope. 
+
+For voice recognition, we met with the client to more explicitly define a minimum-viable grammar for the commands and demoed this on a separate whisper prototype. After more back-and-forth we planned a path forward for integration with the app, while still leaving room for the model to be refined afterwards.  
+
+Connecting to the authentication system was the other area that required frequent meetings with FRASS employees, alongside Dr. Bill. After meetings with other teams, we defined the necessary endpoints to be added to the site for downloading and uploading cruises to and from the app. Starting from this template, we began in-app implementations for the cruise download and upload steps. 
+
+ 
+
+## Unfinished Work 
+
+Much progress was made on the remaining core features, but the final integrations steps are not fully done. For example, models were developed for voice command detection, but the whisper-based process has not been packed into the app. The same goes for communication with the FRASS server. Endpoints have been made, but the final polishing step before connecting them still needs to be finished. 
+
+ 
+
+## Completed Issues/User Stories 
+
+Here are links to the issues that we completed in this sprint: 
+
+ https://github.com/Swateam6/wsu_cpts_421_FRASS_MOBWEB/issues/52 
+
+https://github.com/Swateam6/wsu_cpts_421_FRASS_MOBWEB/issues/54 
+
+https://github.com/Swateam6/wsu_cpts_421_FRASS_MOBWEB/issues/41 
+
+https://github.com/Swateam6/wsu_cpts_421_FRASS_MOBWEB/issues/40 
+
+  
+
+ ## Incomplete Issues/User Stories 
+
+ Here are links to issues we worked on but did not complete in this sprint: 
+
+Prototype Data Reception Waiting for other teams and upload test 
+
+Integrate Voice Commands into Tree Data Collectionhttps://github.com/Swateam6/wsu_cpts_421_FRASS_MOBWEB/issues/57  Issues with C# integration 
+
+Remove Gyroscope Functionality & Replace Issues with developers being pulled onto other work 
+
+  
+
+  
+
+## Code Files for Review 
+
+Please review the following code files, which were actively developed during this sprint, for quality: 
+
+ * https://github.com/Swateam6/FRASS-MOBWEB/blob/test/Screens/DataTransferSubsystems/DataUploadScreen.xaml 
+
+ *https://github.com/Swateam6/FRASS-MOBWEB/blob/test/Screens/DataTransferSubsystems/DataUploadScreen.xaml.cs 
+
+ * https://github.com/Swateam6/FRASS-MOBWEB/blob/test/Screens/DataEntrySubsystems/DefectScreen.xaml.cs 
+
+  
+
+## Retrospective Summary 
+
+Here's what went well: 
+
+  * Frequent and helpful communication with the client. 
+
+  * Revising current implementations based on client feedback. 
+
+  * Progress on prototyping core features. 
+
+  
+
+Here's what we'd like to improve: 
+
+   * Smoother integration of new features into the current app. 
+
+   * Actively writing documentation as soon as a change is made. 
+
+   * Documenting the wider connections between subsystems. 
+
+   
+
+Here are changes we plan to implement in the next sprint: 
+
+   * Live documentation within the repository 
+
+   * More actively tending to the kanban board 
+
+   * Write additional documentation for other groups and future teams.
