@@ -1,7 +1,11 @@
-﻿namespace MOBWEB_TEST.Screens
+﻿using MOBWEB_TEST.Services;
+
+namespace MOBWEB_TEST.Screens
 {
     public partial class EntryScreen : ContentPage
     {
+        private readonly AuthService _auth = new AuthService();
+
         public EntryScreen()
         {
             InitializeComponent();
@@ -9,23 +13,36 @@
 
         private async void OnLoginClicked(object? sender, EventArgs e)
         {
-            // if null set to empty
-            string username = UsernameEntry.Text ?? string.Empty;
-            string password = PasswordEntry.Text ?? string.Empty;
-
-            //TODO: IMPLEMENT PROPER AUTHENTICATION
-            if (username.ToLower() == "admin" && password.ToLower() == "admin")
+            LoginButton.IsEnabled = false;
+            try
             {
-                //go to data upload/download 
-                await Shell.Current.GoToAsync("DataOverviewScreen");
-            }
-            else
-            {
-                await DisplayAlert("Login Failed", "Invalid username or password. Please try again.", "OK");
+                var result = await _auth.LoginAsync();
 
-                UsernameEntry.Text = string.Empty;
-                PasswordEntry.Text = string.Empty;
+                switch (result)
+                {
+                    case AuthService.LoginResult.Success:
+                        await Shell.Current.GoToAsync("DataOverviewScreen");
+                        break;
+
+                    case AuthService.LoginResult.Cancelled:
+                        break; // user backed out, no message needed
+
+                    case AuthService.LoginResult.NetworkError:
+                        await DisplayAlert("No Connection",
+                            "Could not reach the FRASS server. Check your connection and try again.", "OK");
+                        break;
+
+                    default:
+                        await DisplayAlert("Login Failed",
+                            "Could not complete the login. Please try again.", "OK");
+                        break;
+                }
             }
+            finally
+            {
+                LoginButton.IsEnabled = true;
+            }
+
         }
     }
 }
