@@ -1,6 +1,7 @@
-﻿using MOBWEB_TEST.sqllite;
-using System.Linq;
+﻿using CommunityToolkit.Maui.Storage;
+using MOBWEB_TEST.sqllite;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MOBWEB_TEST.Screens;
 
@@ -80,6 +81,39 @@ public partial class DatabaseTestScreen : ContentPage
         }
     }
 
+    private async void OnDownloadDatabaseClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            // store the .db file in the user's Downloads folder
+            string dbFilePath = _db.GetCurrentDatabasePath();
+            if (string.IsNullOrEmpty(dbFilePath) || !File.Exists(dbFilePath))
+            {
+                OutputLabel.Text = "Database file not found.";
+                return;
+            }
+            using var stream = new FileStream(
+            dbFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+            // let user save to local storage
+            var result = await FileSaver.Default.SaveAsync(
+                "MOBWEB_TEST_Database.db", stream, CancellationToken.None);
+
+            if (result.IsSuccessful)
+            {
+                OutputLabel.Text = $"Database saved to: {result.FilePath}";
+            }
+            else
+            {
+                // cancelled or failed
+                OutputLabel.Text = $"Save cancelled or failed: {result.Exception?.Message}";
+            }
+        }
+        catch (Exception ex)
+        {
+            OutputLabel.Text = $"Error: {ex.Message}";
+        }
+    }
     private async void OnBackClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("///HomeScreen");

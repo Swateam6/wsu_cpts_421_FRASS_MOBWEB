@@ -2,7 +2,7 @@
 using MOBWEB_TEST.Location;
 using MOBWEB_TEST.Screens;
 using MOBWEB_TEST.sqllite;
-
+using CommunityToolkit.Maui;
 namespace MOBWEB_TEST
 {
     public static class MauiProgram
@@ -12,6 +12,7 @@ namespace MOBWEB_TEST
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

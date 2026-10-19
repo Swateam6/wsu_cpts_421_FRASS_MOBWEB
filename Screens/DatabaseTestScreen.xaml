@@ -27,6 +27,9 @@
                         <Button Text="Clear Database"
                                 Clicked="OnClearDatabaseClicked"
                                 HorizontalOptions="Fill"/>
+                        <Button Text="Download Database"
+                                Clicked="OnDownloadDatabaseClicked"
+                                HorizontalOptions="Fill"/>
 
                         <Border BackgroundColor="AliceBlue"
                                         HeightRequest="350">
