@@ -96,8 +96,9 @@ public partial class DatabaseTestScreen : ContentPage
             dbFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             // let user save to local storage
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             var result = await FileSaver.Default.SaveAsync(
-                "MOBWEB_TEST_Database.db", stream, CancellationToken.None);
+                $"FlexCruiser_Database_{timestamp}.db", stream, CancellationToken.None);
 
             if (result.IsSuccessful)
             {
